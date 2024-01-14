@@ -40,6 +40,17 @@
       "audio",
       "bookmarks",
       "browsingData"
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "static/onboarding.html"
+        ], 
+        "matches": [
+          "https://mail.google.com/*"
+        ]
+      }
     ]
+    
   }
 }

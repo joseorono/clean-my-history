@@ -44,8 +44,8 @@ function IndexPopup() {
           Extension!
         </h2>
         <input onChange={(e) => setData(e.target.value)} value={data} />
-        <a href="https://docs.plasmo.com" target="_blank">
-          View Docs
+        <a href="/static/onboarding.html" target="_blank">
+          Go to Onboarding.
         </a>
 
         <div className="border rounded-xl shadow bg-slate-300 text-jet mt-6 p-4">
