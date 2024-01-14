@@ -1,6 +1,44 @@
-This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
+# About Section
+Chrome Extension to remove any blemishes (Social Media posts, Memes, NSFW sites...) from your browser history,
 
-## Getting Started
+
+This is a Browser Extension project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
+
+
+# To-Do
+
+## Foundations
+- [x] Set Up a Basic Exception
+- [x] Create Static pages
+- [ ] Set Up Folder Structure
+- [ ] Install Router and UI Tabs
+
+## Features
+
+- [ ] Create Utils folder for functions
+- [ ] Tabs Functions
+- [ ] History Functions
+- [ ] Implement Radial Progress with Signals.
+- [ ] Remove history by Category
+- [ ] Program PANIC function (close all problematic tabs)
+- [ ] Program Panic Button
+
+# Design Decisions & Considerations
+
+- Any and all libraries chosen must be lightweight and fast to load.
+- Use as little 
+
+## Current Dependecies
+- React
+- Preact Signals
+- Tailwind
+- MaterialUI (mui) 
+
+## Considered Dependecies
+- Wouter (lighter than React Router)
+- Zustand
+
+# For Devs
 
 First, run the development server:
 
