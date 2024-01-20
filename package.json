@@ -16,6 +16,7 @@
     "@mui/base": "5.0.0-beta.31",
     "@mui/icons-material": "^5.15.4",
     "@mui/material": "^5.15.4",
+    "@plasmohq/storage": "^1.9.0",
     "@preact/signals-react": "^2.0.0",
     "plasmo": "0.84.0",
     "react": "18.2.0",
@@ -39,10 +40,13 @@
       "https://*/*"
     ],
     "permissions": [
-      "activeTab",
       "audio",
       "bookmarks",
-      "browsingData"
+      "browsingData",
+      "downloads",
+      "history",
+      "tabs",
+      "storage"
     ],
     "web_accessible_resources": [
       {
