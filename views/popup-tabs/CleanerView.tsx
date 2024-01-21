@@ -3,7 +3,7 @@ export default function CleanerView() {
     return (
         <>
             <div>
-            <h1>Panic Button</h1>
+            <h1>Cleaning Section</h1>
             </div>
     
             <div className="border rounded-xl shadow bg-slate-300 text-jet mt-6 p-4">

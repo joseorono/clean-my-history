@@ -62,12 +62,16 @@ function IndexPopup() {
 
           success: {
             style: {
-              background: 'green',
+              background: '#030e18',
+              color: "#fff",
+              fontWeight: "500",
             },
           },
           error: {
             style: {
-              background: 'red',
+              background: '#d32f2f',
+              color: "#fff",
+              fontWeight: "500",
             },
           },
         }}
