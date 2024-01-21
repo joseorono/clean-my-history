@@ -11,6 +11,10 @@ import WelcomePopUp from "~views/WelcomePopUp";
 import PopUpLayout from "~views/PopUpLayout";
 import TestView from "~views/TestView";
 
+import toast from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
+
+
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -43,6 +47,31 @@ function IndexPopup() {
           <WelcomePopUp />
         
         <PopUpLayout />
+        {/* configure global toast settings, like theme */}
+        <Toaster
+        
+        toastOptions={{
+          // Aria
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+
+          // Styling 
+          className: '',
+
+          success: {
+            style: {
+              background: 'green',
+            },
+          },
+          error: {
+            style: {
+              background: 'red',
+            },
+          },
+        }}
+        />
       </CssBaseline>
     </ThemeProvider>
   )
