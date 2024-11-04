@@ -1,17 +1,17 @@
-import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import Paper from "@mui/material/Paper"
-import Stack from "@mui/material/Stack"
-import { styled } from "@mui/material/styles"
-import TextField from "@mui/material/TextField"
-import { useDispatch, useSelector } from "react-redux"
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import { useDispatch, useSelector } from "react-redux";
 
-import { decrement, increment } from "~store/features/counter/counterSlice"
-import type { RootState } from "~store/store"
+import { decrement, increment } from "~store/features/counter/counterSlice";
+import type { RootState } from "~store/store";
 
 export default function StoreTest() {
-  const count = useSelector((state: RootState) => state.counter.value)
-  const dispatch = useDispatch()
+  const count = useSelector((state: RootState) => state.counter.value);
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -44,5 +44,5 @@ export default function StoreTest() {
         </Stack>
       </div>
     </div>
-  )
+  );
 }

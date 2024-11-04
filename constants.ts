@@ -28,7 +28,7 @@ export const nsfwKeywords: string[] = [
   "dirty",
   "naughty",
   "milf"
-]
+];
 
 // I've excluded Social Media sites that might be useful for work, like
 const socialMediaKeywords: string[] = [
@@ -54,7 +54,7 @@ const socialMediaKeywords: string[] = [
   "tinder",
   "match",
   "hinge"
-]
+];
 
 const gamingKeywords: string[] = [
   "game",
@@ -88,11 +88,11 @@ const gamingKeywords: string[] = [
   "fps",
   "joystick",
   "twitch"
-]
+];
 
 // The Spread operator is a perfomrance killer. We can probably optimize this later.
 export const allBadKeywords = [
   ...nsfwKeywords,
   ...gamingKeywords,
   ...socialMediaKeywords
-]
+];

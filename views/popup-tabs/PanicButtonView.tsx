@@ -5,10 +5,10 @@ export default function PanicButtonView() {
         <h1>Panic Button</h1>
       </div>
 
-      <div className="border rounded-xl shadow bg-slate-300 text-jet mt-6 p-4">
+      <div className="text-jet mt-6 rounded-xl border bg-slate-300 p-4 shadow">
         <h3>Beware!</h3>
         <p>This is a work in progress. It's not ready yet.</p>
       </div>
     </>
-  )
+  );
 }

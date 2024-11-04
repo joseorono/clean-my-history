@@ -1,22 +1,22 @@
-import Box from "@mui/material/Box"
-import Tab from "@mui/material/Tab"
-import Tabs from "@mui/material/Tabs"
-import Typography from "@mui/material/Typography"
-import * as React from "react"
-import { Link, Route } from "wouter"
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
+import { Link, Route } from "wouter";
 
-import CleanerView from "./popup-tabs/CleanerView"
-import PanicButtonView from "./popup-tabs/PanicButtonView"
-import SettingsView from "./popup-tabs/SettingsVIew"
+import CleanerView from "./popup-tabs/CleanerView";
+import PanicButtonView from "./popup-tabs/PanicButtonView";
+import SettingsView from "./popup-tabs/SettingsVIew";
 
 interface TabPanelProps {
-  children?: React.ReactNode
-  index: number
-  value: number
+  children?: React.ReactNode;
+  index: number;
+  value: number;
 }
 
 function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props
+  const { children, value, index, ...other } = props;
 
   return (
     <div
@@ -31,15 +31,15 @@ function CustomTabPanel(props: TabPanelProps) {
         </Box>
       )}
     </div>
-  )
+  );
 }
 
 export default function PopUpLayout() {
-  const [value, setValue] = React.useState(0)
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue)
-  }
+    setValue(newValue);
+  };
 
   return (
     <>
@@ -75,5 +75,5 @@ export default function PopUpLayout() {
         }
       </div>
     </>
-  )
+  );
 }

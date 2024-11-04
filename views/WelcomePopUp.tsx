@@ -1,6 +1,6 @@
-import Button from "@mui/material/Button"
+import Button from "@mui/material/Button";
 
-import { openOnboardingTab } from "~lib/utils"
+import { openOnboardingTab } from "~lib/utils";
 
 export default function WelcomePopUp() {
   return (
@@ -18,5 +18,5 @@ export default function WelcomePopUp() {
         </Button>
       </div>
     </>
-  )
+  );
 }

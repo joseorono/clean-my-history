@@ -1,29 +1,29 @@
-import { useState } from "react"
+import { useState } from "react";
 
-import "./style.css"
+import "./style.css";
 
-import CssBaseline from "@mui/material/CssBaseline"
-import { createTheme, ThemeProvider } from "@mui/material/styles"
-import useMediaQuery from "@mui/material/useMediaQuery"
-import React from "react"
-import toast, { Toaster } from "react-hot-toast"
-import { Provider } from "react-redux"
+import CssBaseline from "@mui/material/CssBaseline";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import React from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { Provider } from "react-redux";
 
 // Redux Store
-import { store } from "~store/store"
-import PopUpLayout from "~views/PopUpLayout"
-import TestView from "~views/TestView"
-import WelcomePopUp from "~views/WelcomePopUp"
+import { store } from "~store/store";
+import PopUpLayout from "~views/PopUpLayout";
+import TestView from "~views/TestView";
+import WelcomePopUp from "~views/WelcomePopUp";
 
 const darkTheme = createTheme({
   palette: {
     mode: "dark"
   }
-})
+});
 
 function IndexPopup() {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
-  const [data, setData] = useState("")
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const [data, setData] = useState("");
 
   const theme = React.useMemo(
     () =>
@@ -34,7 +34,7 @@ function IndexPopup() {
         }
       }),
     [prefersDarkMode]
-  )
+  );
 
   return (
     <Provider store={store}>
@@ -81,7 +81,7 @@ function IndexPopup() {
         </CssBaseline>
       </ThemeProvider>
     </Provider>
-  )
+  );
 }
 
-export default IndexPopup
+export default IndexPopup;

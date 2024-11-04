@@ -6,5 +6,5 @@ Go to Onboarding.
 */
 
 export function openOnboardingTab() {
-  chrome.tabs.create({ url: "/static/onboarding.html" })
+  chrome.tabs.create({ url: "/static/onboarding.html" });
 }

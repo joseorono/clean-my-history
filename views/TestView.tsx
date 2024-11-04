@@ -1,10 +1,10 @@
-import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import Stack from "@mui/material/Stack"
-import Typography from "@mui/material/Typography"
-import toast, { Toaster } from "react-hot-toast"
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import toast, { Toaster } from "react-hot-toast";
 
-import StoreTest from "~components/store-test"
+import StoreTest from "~components/store-test";
 
 export default function TestView() {
   return (
@@ -28,5 +28,5 @@ export default function TestView() {
         </Button>
       </Box>
     </>
-  )
+  );
 }

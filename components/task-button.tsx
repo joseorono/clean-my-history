@@ -1,7 +1,7 @@
-import Button from "@mui/material/Button"
-import { styled } from "@mui/material/styles"
-import { useMutation } from "@tanstack/react-query"
-import toast from "react-hot-toast"
+import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 export default function TaskButton({
   text,
@@ -18,22 +18,22 @@ export default function TaskButton({
     gcTime: 0,
     // Don't retry on failure
     retry: 0
-  })
+  });
 
   if (mutation.isSuccess) {
-    console.log("Mutation success")
-    toast.success(successText || "Task completed successfully.")
+    console.log("Mutation success");
+    toast.success(successText || "Task completed successfully.");
   }
 
   if (mutation.isError) {
-    console.error(errorText)
-    console.error(mutation.error)
-    toast.error(errorText || "An error occurred.")
+    console.error(errorText);
+    console.error(mutation.error);
+    toast.error(errorText || "An error occurred.");
   }
 
   const handleClick = () => {
-    mutation.mutate()
-  }
+    mutation.mutate();
+  };
 
   return (
     <Button
@@ -42,5 +42,5 @@ export default function TaskButton({
       disabled={disabled || mutation.isPending}>
       {mutation.isPending ? loadingText : text}
     </Button>
-  )
+  );
 }
