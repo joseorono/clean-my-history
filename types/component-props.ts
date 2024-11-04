@@ -1,6 +1,11 @@
-export interface ITaskButtonProps {
+type muiButtonVariant = "text" | "outlined" | "contained"
+
+interface ITaskButtonProps {
   text: string
-  asyncCallback: Function
+  successText: Nullable<string>
+  errorText: Nullable<string>
+  loadingText?: string
+  fnQuery: Function
   disabled?: boolean
-  variant?: "text" | "outlined" | "contained"
+  variant?: muiButtonVariant
 }

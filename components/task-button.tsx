@@ -3,16 +3,6 @@ import { styled } from "@mui/material/styles"
 import { useMutation } from "@tanstack/react-query"
 import toast from "react-hot-toast"
 
-interface ITaskButtonProps {
-  text: string
-  successText: Nullable<string>
-  errorText: Nullable<string>
-  loadingText?: string
-  fnQuery: Function
-  disabled?: boolean
-  variant?: "text" | "outlined" | "contained"
-}
-
 export default function TaskButton({
   text,
   successText = null,
