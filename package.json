@@ -18,10 +18,14 @@
     "@mui/material": "^5.15.4",
     "@plasmohq/storage": "^1.9.0",
     "@preact/signals-react": "^2.0.0",
+    "@reduxjs/toolkit": "^2.1.0",
     "plasmo": "0.84.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.1",
+    "react-redux": "^9.1.0",
+    "redux": "^5.0.1",
+    "redux-persist-webextension-storage": "^1.0.2",
     "wouter": "^2.12.1"
   },
   "devDependencies": {
@@ -30,6 +34,7 @@
     "@types/node": "20.9.0",
     "@types/react": "18.2.37",
     "@types/react-dom": "18.2.15",
+    "@types/redux-persist-webextension-storage": "^1.0.3",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.33",
     "prettier": "3.0.3",
