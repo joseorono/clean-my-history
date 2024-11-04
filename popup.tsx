@@ -2,83 +2,86 @@ import { useState } from "react"
 
 import "./style.css"
 
+import CssBaseline from "@mui/material/CssBaseline"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
+import useMediaQuery from "@mui/material/useMediaQuery"
+import React from "react"
+import toast, { Toaster } from "react-hot-toast"
+import { Provider } from "react-redux"
 
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import React from "react";
-import WelcomePopUp from "~views/WelcomePopUp";
-import PopUpLayout from "~views/PopUpLayout";
-import TestView from "~views/TestView";
-
-import toast from 'react-hot-toast';
-import { Toaster } from "react-hot-toast";
-
+// Redux Store
+import { store } from "~store/store"
+import PopUpLayout from "~views/PopUpLayout"
+import TestView from "~views/TestView"
+import WelcomePopUp from "~views/WelcomePopUp"
 
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
-  },
-});
+    mode: "dark"
+  }
+})
 
 function IndexPopup() {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
   const [data, setData] = useState("")
 
   const theme = React.useMemo(
     () =>
       createTheme({
         palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
-        },
+          //mode: prefersDarkMode ? 'dark' : 'light',
+          mode: "dark"
+        }
       }),
-    [prefersDarkMode],
-  );
-
+    [prefersDarkMode]
+  )
 
   return (
-    <ThemeProvider  theme={theme}>
-      <CssBaseline>
-
-          { // Only show the test view in development mode
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline>
+          {
+            // Only show the test view in development mode
             process.env.NODE_ENV === "development" && <TestView />
           }
 
           <WelcomePopUp />
-        
-        <PopUpLayout />
-        {/* configure global toast settings, like theme */}
-        <Toaster
-        
-        toastOptions={{
-          // Aria
-          ariaProps: {
-            role: 'status',
-            'aria-live': 'polite',
-          },
 
-          // Styling 
-          className: '',
+          <PopUpLayout />
+          {/* configure global toast settings, like theme */}
+          <Toaster
+            toastOptions={{
+              position: "bottom-center",
 
-          success: {
-            style: {
-              background: '#030e18',
-              color: "#fff",
-              fontWeight: "500",
-            },
-          },
-          error: {
-            style: {
-              background: '#d32f2f',
-              color: "#fff",
-              fontWeight: "500",
-            },
-          },
-        }}
-        />
-      </CssBaseline>
-    </ThemeProvider>
+              // Aria
+              ariaProps: {
+                role: "status",
+                "aria-live": "polite"
+              },
+
+              // Styling
+              className: "",
+
+              success: {
+                style: {
+                  background: "#030e18",
+                  color: "#fff",
+                  fontWeight: "500"
+                }
+              },
+              error: {
+                style: {
+                  background: "#d32f2f",
+                  color: "#fff",
+                  fontWeight: "500"
+                }
+              }
+            }}
+          />
+        </CssBaseline>
+      </ThemeProvider>
+    </Provider>
   )
 }
 
-export default IndexPopup;
+export default IndexPopup
