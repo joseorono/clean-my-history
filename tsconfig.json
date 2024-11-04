@@ -2,6 +2,8 @@
   "extends": "plasmo/templates/tsconfig.base",
   "exclude": ["node_modules"],
   "include": [".plasmo/index.d.ts", "./**/*.ts", "./**/*.tsx"],
+  "typeRoots": ["./types", "./node_modules/@types"],
+
   "compilerOptions": {
     "lib": ["es6", "dom"],
     "noImplicitAny": true,
