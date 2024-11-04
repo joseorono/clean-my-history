@@ -3,40 +3,16 @@ import Button from "@mui/material/Button"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import toast, { Toaster } from "react-hot-toast"
-import { useDispatch, useSelector } from "react-redux"
 
-import { decrement, increment } from "~store/features/counter/counterSlice"
-// Utilities...
-
-// Redix Stuff
-import type { RootState } from "~store/store"
+import StoreTest from "~components/store-test"
 
 export default function TestView() {
-  /*
-   */
-  const count = useSelector((state: RootState) => state.counter.value)
-  const dispatch = useDispatch()
-
   return (
     <>
       <Box sx={{ p: 3 }}>
-        <Typography variant="h2">Test View</Typography>
+        <Typography variant="h2">Test View 0.1</Typography>
 
-        <div>
-          <div>
-            <button
-              aria-label="Increment value"
-              onClick={() => dispatch(increment())}>
-              Increment
-            </button>
-            <span>{count}</span>
-            <button
-              aria-label="Decrement value"
-              onClick={() => dispatch(decrement())}>
-              Decrement
-            </button>
-          </div>
-        </div>
+        <StoreTest />
 
         <Stack spacing={2} direction="column">
           <Button variant="contained">Clean Favorites</Button>
