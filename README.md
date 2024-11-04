@@ -1,13 +1,13 @@
 # About Section
+
 Chrome Extension to remove any blemishes (Social Media posts, Memes, NSFW sites...) from your browser history,
 
-
 This is a Browser Extension project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
-
 
 # To-Do
 
 ## Foundations
+
 - [x] Set Up a Basic Exception
 - [x] Create Static pages
 - [ ] Set Up Folder Structure
@@ -26,15 +26,17 @@ This is a Browser Extension project bootstrapped with [`plasmo init`](https://ww
 # Design Decisions & Considerations
 
 - Any and all libraries chosen must be lightweight and fast to load.
-- Use as little 
+- Use as little
 
 ## Current Dependecies
+
 - React
 - Preact Signals
 - Tailwind
-- MaterialUI (mui) 
+- MaterialUI (mui)
 
 ## Considered Dependecies
+
 - Wouter (lighter than React Router)
 - Zustand
 

@@ -4,8 +4,7 @@ module.exports = {
   darkMode: "class",
   content: ["./**/*.tsx", "./**/*.html"],
   theme: {
-    extend: {},
+    extend: {}
   },
-  plugins: [],
+  plugins: []
 }
-
