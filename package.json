@@ -7,7 +7,18 @@
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
-    "test": "plasmo test"
+    "test": "plasmo test",
+    "dev-expose-host": "vite --host",
+    "dev-expose-port": "vite --port",
+    "prettier-format": "prettier --config .prettierrc --write src/**/*.ts src/**/*.tsx spec/**/*.ts",
+    "prettier-watch": "onchange src/**/*.ts src/**/*.tsx spec/**/*.ts -- prettier --write {{changed}}",
+    "visualize-bundle": "vite-bundle-visualizer & vite-bundle-visualizer -t sunburst & vite-bundle-visualizer -t network",
+    "check-updates": "ncu",
+    "update-deps": "ncu -u && npm install",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
@@ -19,6 +30,7 @@
     "@plasmohq/storage": "^1.9.0",
     "@preact/signals-react": "^2.0.0",
     "@reduxjs/toolkit": "^2.1.0",
+    "npm-check-updates": "^17.1.10",
     "plasmo": "0.84.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -36,8 +48,10 @@
     "@types/react-dom": "18.2.15",
     "@types/redux-persist-webextension-storage": "^1.0.3",
     "autoprefixer": "^10.4.16",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
     "postcss": "^8.4.33",
-    "prettier": "3.0.3",
+    "prettier": "^3.0.3",
     "tailwindcss": "^3.4.1",
     "typescript": "5.2.2"
   },
