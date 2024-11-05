@@ -1,8 +1,24 @@
+import { useEffect, useState } from "react";
+
+import { getAllTabs, getCurrentTab } from "../../lib/panic";
+
 export default function AllTabsView() {
+  const [tabs, setTabs] = useState([]);
+
+  const fetchAllTabs = async () => {
+    const allTabs = await getAllTabs();
+    setTabs(allTabs);
+    console.log("All Tabs:", allTabs);
+  };
+
+  useEffect(() => {
+    fetchAllTabs();
+  }, []);
+
   return (
     <>
       <button className="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-gradient-to-r from-[#fb7185] via-[#e11d48] to-[#be123c] px-4 font-semibold text-white shadow-2xl duration-300 hover:scale-105 hover:from-[#be123c] hover:to-[#fb7185] hover:shadow-xl hover:shadow-red-500">
-        Panic Buttom
+        Panic Button
         <svg viewBox="0 0 15 15" className="w-5 fill-white">
           <svg
             className="h-6 w-6"
@@ -19,6 +35,12 @@ export default function AllTabsView() {
           Button
         </svg>
       </button>
+      {/* Uncomment to see all tabs */}
+      {/* {tabs.map((tab) => (
+        <div key={tab.id}>
+          <p>{tab.title}</p>
+        </div>
+      ))} */}
     </>
   );
 }
