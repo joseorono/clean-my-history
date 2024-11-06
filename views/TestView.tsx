@@ -6,6 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 import StoreTest from "~components/store-test";
 import { allBadKeywords } from "~constants";
+import { cleanAllHistory } from "~lib/history";
 import { closeTabsWithKeywords } from "~lib/tabs";
 
 export default function TestView() {
@@ -18,7 +19,9 @@ export default function TestView() {
 
         <Stack spacing={2} direction="column">
           <Button variant="contained">Clean Favorites</Button>
-          <Button variant="contained">Clean History</Button>
+          <Button variant="contained" onClick={async () => cleanAllHistory()}>
+            Clean History
+          </Button>
           <Button
             variant="contained"
             onClick={async () => closeTabsWithKeywords(allBadKeywords)}>
