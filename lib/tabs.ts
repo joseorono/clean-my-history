@@ -10,7 +10,7 @@ type tabsClosingResponse = {
   tabsClosed: number;
 };
 
-function closeTabsWithKeywords(
+export function closeTabsWithKeywords(
   keywords: string[]
 ): Promise<tabsClosingResponse> {
   return new Promise((resolve) => {
