@@ -6,10 +6,12 @@ import toast, { Toaster } from "react-hot-toast";
 
 import StoreTest from "~components/store-test";
 import { allBadKeywords } from "~constants";
-import { cleanAllHistory } from "~lib/history";
+import { useCleanHistoryMutation } from "~lib/history";
 import { closeTabsWithKeywords } from "~lib/tabs";
 
 export default function TestView() {
+  const { mutate: cleanAllHistory } = useCleanHistoryMutation();
+
   return (
     <>
       <Box sx={{ p: 3 }}>
