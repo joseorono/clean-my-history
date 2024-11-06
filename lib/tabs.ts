@@ -1,4 +1,7 @@
-export function closeTabsByIds(tabIds: number[]) {
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+
+function closeTabsByIds(tabIds: number[]) {
   return new Promise((resolve) => {
     chrome.tabs.remove(tabIds, resolve);
   });
@@ -10,7 +13,7 @@ type tabsClosingResponse = {
   tabsClosed: number;
 };
 
-export function closeTabsWithKeywords(
+function closeTabsWithKeywords(
   keywords: string[]
 ): Promise<tabsClosingResponse> {
   return new Promise((resolve) => {
@@ -55,3 +58,14 @@ export function closeTabsWithKeywords(
     resolve(response);
   });
 }
+
+export const useCloseTabsMutation = () => {
+  return useMutation(closeTabsWithKeywords, {
+    onSuccess: () => {
+      toast.success("Tab's closed successfully!");
+    },
+    onError: (error: any) => {
+      toast.error(`Error closing tab's: ${error.message}`);
+    }
+  });
+};
