@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import toast, { Toaster } from "react-hot-toast";
 
 import StoreTest from "~components/store-test";
+import { allBadKeywords } from "~constants";
+import { closeTabsWithKeywords } from "~lib/tabs";
 
 export default function TestView() {
   return (
@@ -17,7 +19,11 @@ export default function TestView() {
         <Stack spacing={2} direction="column">
           <Button variant="contained">Clean Favorites</Button>
           <Button variant="contained">Clean History</Button>
-          <Button variant="contained">Close Tabs</Button>
+          <Button
+            variant="contained"
+            onClick={async () => closeTabsWithKeywords(allBadKeywords)}>
+            Close Tabs
+          </Button>
         </Stack>
 
         <Button onClick={() => toast.success("Test Succesful!")}>
