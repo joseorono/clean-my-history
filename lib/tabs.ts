@@ -13,9 +13,10 @@ type tabsClosingResponse = {
   tabsClosed: number;
 };
 
-function closeTabsWithKeywords(
+export async function closeTabsWithKeywords(
   keywords: string[]
 ): Promise<tabsClosingResponse> {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   return new Promise((resolve) => {
     let message = "";
     let tabIdsClosed: number[] = [];
