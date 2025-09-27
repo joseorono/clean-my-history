@@ -2,7 +2,7 @@
   "name": "clean-my-history",
   "displayName": "Clean my history",
   "version": "0.0.1",
-  "description": "Chrome Extension to remove any blemishes (NSFW, twitter...) from your browser history",
+  "description": "Chrome Extension to remove any time-wasters from your browser history and tabs, and get you ready to work",
   "author": " Jose Orono <joseomaker@gmail.com>",
   "scripts": {
     "dev": "plasmo dev",
