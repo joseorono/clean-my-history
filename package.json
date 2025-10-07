@@ -16,7 +16,8 @@
     "visualize-bundle": "vite-bundle-visualizer & vite-bundle-visualizer -t sunburst & vite-bundle-visualizer -t network",
     "check-updates": "ncu",
     "update-deps": "ncu -u && npm install",
-    "prepare": "husky"
+    "prepare": "husky",
+    "build-static-tailwind": "npx tailwindcss -i ./style.css -o ./style.css --minify"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
