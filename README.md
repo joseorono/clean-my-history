@@ -15,12 +15,12 @@ This is a Browser Extension project bootstrapped with [`plasmo init`](https://ww
 
 ## Features
 
-- [ ] Create Utils folder for functions
-- [ ] Tabs Functions
-- [ ] History Functions
-- [ ] Implement Radial Progress with Signals.
+- [x] Create Utils folder for functions
+- [x] Tabs Functions
+- [x] History Functions
+- [ ] Implement Radial Progress
 - [ ] Remove history by Category
-- [ ] Program PANIC function (close all problematic tabs)
+- [ ] Program PANIC function (create new tab and switch to it, close all problematic tabs)
 - [ ] Program Panic Button
 
 # Design Decisions & Considerations
