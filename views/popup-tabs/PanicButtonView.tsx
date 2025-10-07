@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { closeTabsWithKeywords } from "~lib/tabs";
 
-import { getAllTabs, getCurrentTab } from "../../lib/panic";
+import { getAllTabs, getCurrentTab } from "../../lib/tabs";
 
 export default function AllTabsView() {
   const [tabs, setTabs] = useState([]);
