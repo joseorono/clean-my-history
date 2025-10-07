@@ -2,11 +2,11 @@
 
     This file contains all the constants used in the project.
 
-    Including the keywords to block, the list of websites to block. 
+    Including the keywords to block, the list of websites to block.
     We do not want to hardcode the list of websites to block, so as to prevent this
     file from being used to access those sites. We'll simply block generic keywords
     like lots of security software out there.
-    
+
 
 */
 
@@ -96,3 +96,11 @@ export const allBadKeywords = [
   ...gamingKeywords,
   ...socialMediaKeywords
 ];
+
+export const badKeyboardCategories = [
+  "nsfw",
+  "gaming",
+  "social"
+];
+
+export type BadKeyboardCategory = typeof badKeyboardCategories[number];
