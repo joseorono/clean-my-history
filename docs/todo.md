@@ -20,7 +20,8 @@
     - [ ] Para poder pasarle parametros a la mutacion, necesitarias añadirle un nuevo prop a TaskButton
 
 ## 🐛 Bug Fixes
-- [ ] For some reason, Tailwind isn't working on the onboarding.html page
+
+- [x] For some reason, Tailwind isn't working on the onboarding.html page
 
 ## ✅ Completed
 - [x] Initial project setup
