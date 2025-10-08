@@ -2,10 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import { localStorage } from "redux-persist-webextension-storage";
 
 import counterReducer from "./features/counter/counterSlice";
+import settingsReducer from "./features/settings/settingsSlice";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer
+    counter: counterReducer,
+    settings: settingsReducer
   }
 });
 
