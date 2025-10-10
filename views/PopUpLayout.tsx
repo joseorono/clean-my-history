@@ -5,7 +5,7 @@ import * as React from "react";
 import { Link, Route } from "wouter";
 
 import CleanerView from "./popup-tabs/CleanerView";
-import PanicButtonView from "./popup-tabs/PanicButtonView";
+import SessionCleanerView from "./popup-tabs/SessionCleanerView";
 import SettingsView from "./popup-tabs/SettingsVIew";
 
 interface TabPanelProps {
@@ -55,7 +55,7 @@ export default function PopUpLayout() {
         </Box>
 
         <CustomTabPanel value={value} index={0}>
-          <PanicButtonView />
+          <SessionCleanerView />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <CleanerView />
