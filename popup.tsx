@@ -8,6 +8,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import React from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Redux Store
 import { store } from "~store/store";
@@ -24,6 +25,8 @@ const darkTheme = createTheme({
 function IndexPopup() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [data, setData] = useState("");
+  // Create a client
+  const queryClient = new QueryClient();
 
   const theme = React.useMemo(
     () =>
@@ -38,8 +41,9 @@ function IndexPopup() {
 
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline>
           {
             // Only show the test view in development mode
             process.env.NODE_ENV === "development" && <TestView />
@@ -78,8 +82,9 @@ function IndexPopup() {
               }
             }}
           />
-        </CssBaseline>
-      </ThemeProvider>
+          </CssBaseline>
+        </ThemeProvider>
+      </QueryClientProvider>
     </Provider>
   );
 }
