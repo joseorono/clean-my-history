@@ -29,8 +29,11 @@ importers:
       '@parcel/runtime-js':
         specifier: ^2.16.0
         version: 2.16.0(@parcel/core@2.9.3)
+      '@plasmohq/redux-persist':
+        specifier: ^6.1.0
+        version: 6.1.0(redux@5.0.1)
       '@plasmohq/storage':
-        specifier: ^1.9.0
+        specifier: ^1.15.0
         version: 1.15.0(react@18.2.0)
       '@preact/signals-react':
         specifier: ^2.0.0
@@ -1445,6 +1448,11 @@ packages:
   '@plasmohq/parcel-transformer-vue@0.5.0':
     resolution: {integrity: sha512-/3oVbajt+DRqtbM0RkKFtfyZR8DVjcsYpj1jHqPParGVBiXwgP0D/8Bj5p5/5Iqihs08gzasTcjKcwQKKdj0og==}
     engines: {parcel: '>= 2.7.0'}
+
+  '@plasmohq/redux-persist@6.1.0':
+    resolution: {integrity: sha512-12mDmEotgMH/+4g9Hput5DDAIVAnmo8cZGPBsi106i8t/GuySX439XF8gEdEY2sEZaFkminq2smXnMTNysfD+A==}
+    peerDependencies:
+      redux: '>4.0.0'
 
   '@plasmohq/storage@1.15.0':
     resolution: {integrity: sha512-zBZ2NyVyvZlql2XHsjkZDL0+bqF6lir9RygeTnkYGF253M8DZttuSvjpsmpK6OWYmRXjhEqJeubd3+Zq9kuZ0w==}
@@ -5593,6 +5601,10 @@ snapshots:
       - velocityjs
       - walrus
       - whiskers
+
+  '@plasmohq/redux-persist@6.1.0(redux@5.0.1)':
+    dependencies:
+      redux: 5.0.1
 
   '@plasmohq/storage@1.15.0(react@18.2.0)':
     dependencies:

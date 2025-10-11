@@ -19,6 +19,31 @@ export const settingsSlice = createSlice({
   name: "settings",
   initialState,
   reducers: {
+    // Handle state initialization from storage
+    initializeFromStorage: (state, action: PayloadAction<any>) => {
+      if (action.payload?.settings) {
+        // Validate and ensure the structure matches our state
+        const savedSettings = action.payload.settings;
+        
+        // Restore selected categories if they exist
+        if (Array.isArray(savedSettings.selectedCategories)) {
+          // Filter to ensure only valid categories are included
+          state.selectedCategories = savedSettings.selectedCategories.filter(
+            (cat: string) => badKeyboardCategories.includes(cat as BadKeyboardCategory)
+          ) as BadKeyboardCategory[];
+        }
+        
+        // Restore custom keywords if they exist
+        if (Array.isArray(savedSettings.customKeywords)) {
+          state.customKeywords = savedSettings.customKeywords;
+        }
+        
+        // Restore whitelisted domains if they exist
+        if (Array.isArray(savedSettings.whitelistedDomains)) {
+          state.whitelistedDomains = savedSettings.whitelistedDomains;
+        }
+      }
+    },
     toggleCategory: (state, action: PayloadAction<BadKeyboardCategory>) => {
       const category = action.payload;
       const index = state.selectedCategories.indexOf(category);
@@ -64,6 +89,7 @@ export const settingsSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { 
+  initializeFromStorage,
   toggleCategory, 
   addCustomKeyword, 
   removeCustomKeyword, 

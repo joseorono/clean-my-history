@@ -1,15 +1,42 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { localStorage } from "redux-persist-webextension-storage";
+import { Storage } from "@plasmohq/storage";
 
-import counterReducer from "./features/counter/counterSlice";
-import settingsReducer from "./features/settings/settingsSlice";
+import counterReducer, { initializeFromStorage as initializeCounter } from "./features/counter/counterSlice";
+import settingsReducer, { initializeFromStorage as initializeSettings } from "./features/settings/settingsSlice";
 
+// Configure store
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     settings: settingsReducer
   }
 });
+
+// Set up storage to sync state between browser contexts
+const storage = new Storage();
+
+// Subscribe to Redux store changes and save to storage
+store.subscribe(() => {
+  const state = store.getState();
+  storage.set("reduxState", state);
+});
+
+// Load state from storage on startup
+async function loadStateFromStorage() {
+  try {
+    const savedState = await storage.get("reduxState");
+    if (savedState) {
+      // Dispatch actions to initialize each slice with saved state
+      store.dispatch(initializeCounter(savedState));
+      store.dispatch(initializeSettings(savedState));
+    }
+  } catch (error) {
+    console.error("Failed to load state from storage:", error);
+  }
+}
+
+// Load state when the extension starts
+loadStateFromStorage();
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
