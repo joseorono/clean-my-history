@@ -54,7 +54,8 @@ export const socialMediaKeywords: string[] = [
   "okcupid",
   "tinder",
   "match",
-  "hinge"
+  "hinge",
+  "youtube"
 ];
 
 export const gamingKeywords: string[] = [
