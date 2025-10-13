@@ -145,7 +145,7 @@ export default function SettingsView() {
         <div className="mb-4 flex">
           <input
             type="text"
-            placeholder="Domain (e.g., example.com)"
+            placeholder="New Domain"
             className="mr-2 flex-1 rounded-md border border-gray-600 bg-gray-700 p-2 text-white"
             value={newDomain}
             onChange={(e: React.ChangeEvent) => setNewDomain(e.target.value)}
@@ -154,30 +154,30 @@ export default function SettingsView() {
             }
           />
           <button
-            className="rounded-md bg-blue-500 p-2 text-white"
+            className="rounded-md bg-blue-500 px-8 py-2 text-white"
             onClick={handleAddDomain}>
             Add
           </button>
         </div>
 
-        <ul className="m-0 list-none p-0">
+        <div className="flex flex-wrap">
           {settings.whitelistedDomains.map((domain: string) => (
-            <li
+            <span
               key={domain}
-              className="mb-1 flex items-center justify-between rounded-md border-b border-gray-700 p-2 hover:bg-gray-700">
-              <span>{domain}</span>
+              className="mb-2 mr-2 flex items-center rounded-md border border-gray-600 bg-gray-700 p-2 text-sm">
+              {domain}
               <button
-                className="text-gray-400 hover:text-white"
+                className="ml-2 text-gray-400 hover:text-white"
                 onClick={() => handleRemoveDomain(domain)}
                 aria-label="Remove domain">
                 &times;
               </button>
-            </li>
+            </span>
           ))}
           {settings.whitelistedDomains.length === 0 && (
             <p className="text-gray-400">No domains whitelisted yet</p>
           )}
-        </ul>
+        </div>
       </div>
 
       {/* Reset Settings */}
