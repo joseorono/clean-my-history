@@ -96,12 +96,9 @@ export default function SessionCleanerView() {
       <Typography variant="h5" component="h1" gutterBottom>
         Session Cleaner
       </Typography>
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        className="mb-2 text-gray-400">
+      <p className="mb-2 text-gray-400">
         Close tabs that might distract you from work
-      </Typography>
+      </p>
 
       {/* Display selected categories */}
       <Box className="mb-4 flex flex-wrap gap-1">
@@ -171,13 +168,13 @@ export default function SessionCleanerView() {
         </button>
 
         {/* Status text */}
-        <Typography variant="body2" className="text-center">
+        <p className="text-center">
           {closeTabsMutation.isPending
             ? "Cleaning up tabs..."
             : closedTabsCount > 0
               ? `Closed ${closedTabsCount} distracting tabs`
               : `Currently open tabs: ${tabs.length}`}
-        </Typography>
+        </p>
       </div>
     </Box>
   );

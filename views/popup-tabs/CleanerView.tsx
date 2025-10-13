@@ -84,9 +84,9 @@ export default function CleanerView() {
           <Typography variant="h6" gutterBottom>
             Delete all your browsing history, cookies, cache, and tabs
           </Typography>
-          <Typography variant="body2" className="mb-3 text-gray-400">
+          <p className="mb-3 text-gray-400">
             This will delete all your browsing history, cookies, cache, and tabs
-          </Typography>
+          </p>
           <div className="flex flex-wrap gap-4 py-4">
             <TaskButton
               text="Clear History"
