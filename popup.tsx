@@ -5,10 +5,10 @@ import "./style.css";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Redux Store
 import { store } from "~store/store";
@@ -44,44 +44,44 @@ function IndexPopup() {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <CssBaseline>
-          {
-            // Only show the test view in development mode
-            process.env.NODE_ENV === "development" && <TestView />
-          }
+            {
+              // Only show the test view in development mode
+              // process.env.NODE_ENV === "development" && <TestView />
+            }
 
-          <WelcomePopUp />
+            <WelcomePopUp />
 
-          <PopUpLayout />
-          {/* configure global toast settings, like theme */}
-          <Toaster
-            toastOptions={{
-              position: "bottom-center",
+            <PopUpLayout />
+            {/* configure global toast settings, like theme */}
+            <Toaster
+              toastOptions={{
+                position: "bottom-center",
 
-              // Aria
-              ariaProps: {
-                role: "status",
-                "aria-live": "polite"
-              },
+                // Aria
+                ariaProps: {
+                  role: "status",
+                  "aria-live": "polite"
+                },
 
-              // Styling
-              className: "",
+                // Styling
+                className: "",
 
-              success: {
-                style: {
-                  background: "#030e18",
-                  color: "#fff",
-                  fontWeight: "500"
+                success: {
+                  style: {
+                    background: "#030e18",
+                    color: "#fff",
+                    fontWeight: "500"
+                  }
+                },
+                error: {
+                  style: {
+                    background: "#d32f2f",
+                    color: "#fff",
+                    fontWeight: "500"
+                  }
                 }
-              },
-              error: {
-                style: {
-                  background: "#d32f2f",
-                  color: "#fff",
-                  fontWeight: "500"
-                }
-              }
-            }}
-          />
+              }}
+            />
           </CssBaseline>
         </ThemeProvider>
       </QueryClientProvider>

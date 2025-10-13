@@ -5,8 +5,8 @@ import { openOnboardingTab } from "~lib/utils";
 export default function WelcomePopUp() {
   return (
     <>
-      <div className="p-4">
-        <h2>
+      <div className="flex items-center justify-between p-4">
+        <h2 className="text-xl font-bold">
           Welcome to the{" "}
           <a href="https://www.plasmo.com" target="_blank">
             Clean My History
