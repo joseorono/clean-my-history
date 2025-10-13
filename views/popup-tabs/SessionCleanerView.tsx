@@ -126,7 +126,7 @@ export default function SessionCleanerView() {
         )}
         {settings.whitelistedDomains.length > 0 && (
           <Chip
-            label={`+${settings.whitelistedDomains.length} whitelisted`}
+            label={`${settings.whitelistedDomains.length} whitelisted`}
             size="small"
             color="secondary"
             variant="outlined"
