@@ -31,7 +31,7 @@ export const nsfwKeywords: string[] = [
 ];
 
 // I've excluded Social Media sites that might be useful for work, like
-const socialMediaKeywords: string[] = [
+export const socialMediaKeywords: string[] = [
   "facebook",
   "twitter",
   "instagram",
@@ -56,7 +56,7 @@ const socialMediaKeywords: string[] = [
   "hinge"
 ];
 
-const gamingKeywords: string[] = [
+export const gamingKeywords: string[] = [
   "game",
   "gaming",
   "gamer",
@@ -97,10 +97,6 @@ export const allBadKeywords = [
   ...socialMediaKeywords
 ];
 
-export const badKeyboardCategories = [
-  "nsfw",
-  "gaming",
-  "social"
-];
+export const badKeyboardCategories = ["nsfw", "gaming", "social"];
 
-export type BadKeyboardCategory = typeof badKeyboardCategories[number];
+export type BadKeyboardCategory = (typeof badKeyboardCategories)[number];

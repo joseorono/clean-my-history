@@ -1,50 +1,77 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useEffect, useState } from "react";
+import Typography from "@mui/material/Typography";
+import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
-import { allBadKeywords } from "../../constants";
+import {
+  gamingKeywords,
+  nsfwKeywords,
+  socialMediaKeywords
+} from "../../constants";
 import { getAllTabs, useCloseTabsMutation } from "../../lib/tabs";
-import type { RootState } from "../../store/store";
 import type { SettingsState } from "../../store/features/settings/settingsSlice";
+import type { RootState } from "../../store/store";
 
 export default function SessionCleanerView() {
   const [tabs, setTabs] = useState<chrome.tabs.Tab[]>([]);
   const [closedTabsCount, setClosedTabsCount] = useState<number>(0);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
-  
+
   // Get settings from Redux store
   const settings = useSelector(
     (state: RootState) => state.settings
   ) as SettingsState;
-  
+
   // Use the proper mutation hook
   const closeTabsMutation = useCloseTabsMutation();
-  
+
   const fetchAllTabs = async () => {
     const allTabs = await getAllTabs();
     if (allTabs) {
       setTabs(allTabs);
     }
   };
-  
+
   useEffect(() => {
     fetchAllTabs();
   }, []);
-  
+
   // Generate keywords based on selected categories and custom keywords
   const getKeywordsFromSettings = (): string[] => {
-    // Just use all keywords for simplicity
-    return [...allBadKeywords, ...settings.customKeywords];
+    const selectedKeywords: string[] = [];
+
+    // Add keywords from selected categories
+    if (settings.selectedCategories.includes("nsfw")) {
+      selectedKeywords.push(...nsfwKeywords);
+    }
+
+    if (settings.selectedCategories.includes("social")) {
+      selectedKeywords.push(...socialMediaKeywords);
+    }
+
+    if (settings.selectedCategories.includes("gaming")) {
+      selectedKeywords.push(...gamingKeywords);
+    }
+
+    // Add custom keywords
+    if (settings.customKeywords.length > 0) {
+      selectedKeywords.push(...settings.customKeywords);
+    }
+
+    return selectedKeywords;
   };
-  
+
+  // Get the active keywords for display
+  const activeKeywords = useMemo(() => getKeywordsFromSettings(), [settings]);
+
   // Handle the clean session action
   const handleCleanSession = () => {
     setIsAnimating(true);
     const keywords = getKeywordsFromSettings();
-    
+
     // Use the mutation to close tabs
     closeTabsMutation.mutate(keywords, {
       onSuccess: (data) => {
@@ -66,9 +93,32 @@ export default function SessionCleanerView() {
       <Typography
         variant="body2"
         color="text.secondary"
-        className="mb-4 text-gray-400">
+        className="mb-2 text-gray-400">
         Close tabs that might distract you from work
       </Typography>
+
+      {/* Display selected categories */}
+      <Box className="mb-4 flex flex-wrap gap-1">
+        {settings.selectedCategories.map((category) => (
+          <Chip
+            key={category}
+            label={category}
+            size="small"
+            color="primary"
+            variant="outlined"
+            className="text-xs"
+          />
+        ))}
+        {settings.customKeywords.length > 0 && (
+          <Chip
+            label={`+${settings.customKeywords.length} custom`}
+            size="small"
+            color="secondary"
+            variant="outlined"
+            className="text-xs"
+          />
+        )}
+      </Box>
 
       <div className="flex flex-col items-center gap-6 pt-4">
         {/* Main session cleaner button */}
@@ -84,7 +134,7 @@ export default function SessionCleanerView() {
               height="32"
               viewBox="0 0 24 24"
               fill="none"
-              className={`transition-transform duration-300 ${isAnimating ? 'animate-[tabClose_0.6s_ease-in-out]' : 'group-hover:scale-110'}`}>
+              className={`transition-transform duration-300 ${isAnimating ? "animate-[tabClose_0.6s_ease-in-out]" : "group-hover:scale-110"}`}>
               <rect
                 x="2"
                 y="4"
@@ -104,16 +154,14 @@ export default function SessionCleanerView() {
             </svg>
           )}
         </button>
-        
+
         {/* Status text */}
         <Typography variant="body2" className="text-center">
-          {closeTabsMutation.isPending ? (
-            "Cleaning up tabs..."
-          ) : closedTabsCount > 0 ? (
-            `Closed ${closedTabsCount} distracting tabs`
-          ) : (
-            `Currently open tabs: ${tabs.length}`
-          )}
+          {closeTabsMutation.isPending
+            ? "Cleaning up tabs..."
+            : closedTabsCount > 0
+              ? `Closed ${closedTabsCount} distracting tabs`
+              : `Currently open tabs: ${tabs.length}`}
         </Typography>
       </div>
     </Box>
