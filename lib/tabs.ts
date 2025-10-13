@@ -25,7 +25,7 @@ function isUrlWhitelisted(url: string, whitelistedDomains: string[]): boolean {
   if (!whitelistedDomains || whitelistedDomains.length === 0) {
     return false;
   }
-  
+
   const lowerUrl = url.toLowerCase();
   return whitelistedDomains.some((domain) => {
     const lowerDomain = domain.toLowerCase();
@@ -34,14 +34,14 @@ function isUrlWhitelisted(url: string, whitelistedDomains: string[]): boolean {
   });
 }
 
-export async function closeTabsWithKeywords(
+export async function cleanSession(
   params: CloseTabsParams
 ): Promise<tabsClosingResponse> {
-  const { keywords, whitelistedDomains = [] } = params;
-  
+  const { keywords = [], whitelistedDomains = [] } = params;
+
   // Add a small delay to simulate processing
   await new Promise((resolve) => setTimeout(resolve, 500));
-  
+
   return new Promise((resolve) => {
     let message = "";
     let tabIdsClosed: number[] = [];
@@ -51,45 +51,45 @@ export async function closeTabsWithKeywords(
       // First, identify tabs to close
       const tabsToClose = tabs.filter((tab) => {
         const url = tab.url?.toLowerCase();
-        
+
         // Skip if URL doesn't exist
         if (!url) {
           return false;
         }
-        
+
         // Skip if URL is whitelisted
         if (isUrlWhitelisted(url, whitelistedDomains)) {
           return false;
         }
-        
+
         // Check if URL matches any keyword
         return keywords.some((keyword) => url.includes(keyword.toLowerCase()));
       });
-      
+
       // Update counts
       tabsClosed = tabsToClose.length;
       tabIdsClosed = tabsToClose
-        .map(tab => tab.id)
+        .map((tab) => tab.id)
         .filter((id): id is number => id !== undefined);
-      
+
       // Log tabs to be closed
       console.log(`Closing ${tabsClosed} tabs with matching keywords`);
-      
+
       // Close the tabs if any were found
       if (tabIdsClosed.length > 0) {
         chrome.tabs.remove(tabIdsClosed);
       }
-      
+
       // Prepare response message
       message = `Closed ${tabsClosed} tabs`;
-      
+
       // Resolve with response
       const response: tabsClosingResponse = {
         message: message,
         tabIdsClosed: tabIdsClosed,
         tabsClosed: tabsClosed
       };
-      
+
       resolve(response);
     });
   });
@@ -97,7 +97,7 @@ export async function closeTabsWithKeywords(
 
 export const useCloseTabsMutation = () => {
   return useMutation({
-    mutationFn: (params: CloseTabsParams) => closeTabsWithKeywords(params),
+    mutationFn: (params: CloseTabsParams) => cleanSession(params),
     onSuccess: () => {
       toast.success("Tab's closed successfully!");
     },

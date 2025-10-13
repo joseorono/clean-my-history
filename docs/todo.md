@@ -24,7 +24,7 @@
   - [x] Added proper keyword filtering based on selected categories
   - [x] Enhanced UI to show selected categories and keywords
 - [x] Update cleaner functions to respect whitelisted domains
-  - [x] Modified closeTabsWithKeywords to accept whitelisted domains
+  - [x] Modified cleanSession to accept whitelisted domains
   - [x] Added helper function to check if URL is whitelisted
   - [x] Updated SessionCleanerView to pass whitelisted domains
   - [x] Added visual indicator for whitelisted domains count
