@@ -7,15 +7,38 @@ function closeTabsByIds(tabIds: number[]) {
   });
 }
 
-type tabsClosingResponse = {
+export type tabsClosingResponse = {
   message?: string;
   tabIdsClosed: number[];
   tabsClosed: number;
 };
 
+export type CloseTabsParams = {
+  keywords: string[];
+  whitelistedDomains?: string[];
+};
+
+/**
+ * Helper function to check if a URL is whitelisted
+ */
+function isUrlWhitelisted(url: string, whitelistedDomains: string[]): boolean {
+  if (!whitelistedDomains || whitelistedDomains.length === 0) {
+    return false;
+  }
+  
+  const lowerUrl = url.toLowerCase();
+  return whitelistedDomains.some((domain) => {
+    const lowerDomain = domain.toLowerCase();
+    // Check if the URL contains the whitelisted domain
+    return lowerUrl.includes(lowerDomain);
+  });
+}
+
 export async function closeTabsWithKeywords(
-  keywords: string[]
+  params: CloseTabsParams
 ): Promise<tabsClosingResponse> {
+  const { keywords, whitelistedDomains = [] } = params;
+  
   // Add a small delay to simulate processing
   await new Promise((resolve) => setTimeout(resolve, 500));
   
@@ -28,7 +51,19 @@ export async function closeTabsWithKeywords(
       // First, identify tabs to close
       const tabsToClose = tabs.filter((tab) => {
         const url = tab.url?.toLowerCase();
-        return url && keywords.some((keyword) => url.includes(keyword.toLowerCase()));
+        
+        // Skip if URL doesn't exist
+        if (!url) {
+          return false;
+        }
+        
+        // Skip if URL is whitelisted
+        if (isUrlWhitelisted(url, whitelistedDomains)) {
+          return false;
+        }
+        
+        // Check if URL matches any keyword
+        return keywords.some((keyword) => url.includes(keyword.toLowerCase()));
       });
       
       // Update counts
@@ -62,7 +97,7 @@ export async function closeTabsWithKeywords(
 
 export const useCloseTabsMutation = () => {
   return useMutation({
-    mutationFn: (keywords: string[]) => closeTabsWithKeywords(keywords),
+    mutationFn: (params: CloseTabsParams) => closeTabsWithKeywords(params),
     onSuccess: () => {
       toast.success("Tab's closed successfully!");
     },

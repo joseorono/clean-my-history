@@ -73,16 +73,22 @@ export default function SessionCleanerView() {
     const keywords = getKeywordsFromSettings();
 
     // Use the mutation to close tabs
-    closeTabsMutation.mutate(keywords, {
-      onSuccess: (data) => {
-        setClosedTabsCount(data.tabsClosed);
-        fetchAllTabs(); // Refresh tabs list
-        setTimeout(() => setIsAnimating(false), 1000); // Reset animation after 1 second
+    closeTabsMutation.mutate(
+      {
+        keywords,
+        whitelistedDomains: settings.whitelistedDomains
       },
-      onError: () => {
-        setIsAnimating(false);
+      {
+        onSuccess: (data) => {
+          setClosedTabsCount(data.tabsClosed);
+          fetchAllTabs(); // Refresh tabs list
+          setTimeout(() => setIsAnimating(false), 1000); // Reset animation after 1 second
+        },
+        onError: () => {
+          setIsAnimating(false);
+        }
       }
-    });
+    );
   };
 
   return (
@@ -112,6 +118,15 @@ export default function SessionCleanerView() {
         {settings.customKeywords.length > 0 && (
           <Chip
             label={`+${settings.customKeywords.length} custom`}
+            size="small"
+            color="secondary"
+            variant="outlined"
+            className="text-xs"
+          />
+        )}
+        {settings.whitelistedDomains.length > 0 && (
+          <Chip
+            label={`+${settings.whitelistedDomains.length} whitelisted`}
             size="small"
             color="secondary"
             variant="outlined"
