@@ -34,6 +34,7 @@ export const nsfwKeywords: string[] = [
 export const socialMediaKeywords: string[] = [
   "facebook",
   "twitter",
+  "x.com/",
   "instagram",
   "tiktok",
   "snapchat",

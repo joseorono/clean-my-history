@@ -48,8 +48,8 @@ export default function PopUpLayout() {
 
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs value={value} onChange={handleChange} aria-label="Section Tabs">
-            <Tab label="Close Tabs" />
-            <Tab label="Clean Browser" />
+            <Tab label="Session Cleaner" />
+            <Tab label="Browser Cleaner" />
             <Tab label="Settings" />
           </Tabs>
         </Box>
