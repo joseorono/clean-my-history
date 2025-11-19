@@ -11,7 +11,7 @@ import StoreTest from "~components/store-test";
 import TaskButton from "~components/task-button";
 import { allBadKeywords } from "~constants";
 import { cleanAllHistory } from "~lib/history";
-import { closeTabsWithKeywords } from "~lib/tabs";
+import { cleanSession } from "~lib/tabs";
 
 export default function TestView() {
   const queryClient = new QueryClient();
@@ -30,7 +30,7 @@ export default function TestView() {
           </Button>
           <Button
             variant="contained"
-            onClick={async () => closeTabsWithKeywords(allBadKeywords)}>
+            onClick={async () => cleanSession({ keywords: allBadKeywords })}>
             Close Tabs
           </Button>
         </Stack>

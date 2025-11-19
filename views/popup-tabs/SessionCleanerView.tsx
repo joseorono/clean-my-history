@@ -6,11 +6,10 @@ import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
-import {
-  gamingKeywords,
-  nsfwKeywords,
-  socialMediaKeywords
-} from "../../constants";
+import { useGetKeywordsFromSettings } from "~hooks/useGetKeywordsFromSetting";
+import useTabsPersisted from "~hooks/useTabsStored";
+import { sendNotification } from "~lib/notification";
+
 import { getAllTabs, useCloseTabsMutation } from "../../lib/tabs";
 import type { SettingsState } from "../../store/features/settings/settingsSlice";
 import type { RootState } from "../../store/store";
@@ -39,38 +38,10 @@ export default function SessionCleanerView() {
     fetchAllTabs();
   }, []);
 
-  // Generate keywords based on selected categories and custom keywords
-  const getKeywordsFromSettings = (): string[] => {
-    const selectedKeywords: string[] = [];
-
-    // Add keywords from selected categories
-    if (settings.selectedCategories.includes("nsfw")) {
-      selectedKeywords.push(...nsfwKeywords);
-    }
-
-    if (settings.selectedCategories.includes("social")) {
-      selectedKeywords.push(...socialMediaKeywords);
-    }
-
-    if (settings.selectedCategories.includes("gaming")) {
-      selectedKeywords.push(...gamingKeywords);
-    }
-
-    // Add custom keywords
-    if (settings.customKeywords.length > 0) {
-      selectedKeywords.push(...settings.customKeywords);
-    }
-
-    return selectedKeywords;
-  };
-
-  // Get the active keywords for display
-  const activeKeywords = useMemo(() => getKeywordsFromSettings(), [settings]);
-
   // Handle the clean session action
   const handleCleanSession = () => {
     setIsAnimating(true);
-    const keywords = getKeywordsFromSettings();
+    const keywords = useGetKeywordsFromSettings(settings);
 
     // Use the mutation to close tabs
     closeTabsMutation.mutate(
@@ -82,6 +53,7 @@ export default function SessionCleanerView() {
         onSuccess: (data) => {
           setClosedTabsCount(data.tabsClosed);
           fetchAllTabs(); // Refresh tabs list
+          refreshTabsCheck(); // Refresh persisted tabs check
           setTimeout(() => setIsAnimating(false), 1000); // Reset animation after 1 second
         },
         onError: () => {
@@ -91,6 +63,25 @@ export default function SessionCleanerView() {
     );
   };
 
+  const {
+    tabs: tabsWithKeywords,
+    hasTabsWithKeywords,
+    isLoading: isLoadingPersistedTabs,
+    refresh: refreshTabsCheck
+  } = useTabsPersisted();
+
+  // Send notification every 3 seconds
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (tabsWithKeywords.length > 0) {
+        sendNotification(tabsWithKeywords.length);
+      }
+    }, 60000);
+
+    // Cleanup interval on unmount
+    return () => clearInterval(intervalId);
+  }, [tabsWithKeywords.length]);
+
   return (
     <Box className="p-4 text-white">
       <Typography variant="h5" component="h1" gutterBottom>
@@ -99,6 +90,14 @@ export default function SessionCleanerView() {
       <p className="mb-2 text-gray-400">
         Close tabs that might distract you from work
       </p>
+
+      {/* Auto-check indicator */}
+      <Box className="mb-3 flex items-center gap-2">
+        <div className="h-2 w-2 animate-pulse rounded-full bg-green-500"></div>
+        <Typography variant="caption" className="text-gray-400">
+          Auto-checking every minute
+        </Typography>
+      </Box>
 
       {/* Display selected categories */}
       <Box className="mb-4 flex flex-wrap gap-1">
@@ -132,6 +131,16 @@ export default function SessionCleanerView() {
         )}
       </Box>
 
+      {/* Display tabs with keywords indicator */}
+      {(hasTabsWithKeywords || isLoadingPersistedTabs) && (
+        <Box className="mb-2 rounded-md bg-yellow-900/30 p-2">
+          <Typography variant="body2" className="text-yellow-200">
+            ⚠️ Found {tabsWithKeywords.length} tab
+            {tabsWithKeywords.length !== 1 ? "s" : ""} with distracting content
+          </Typography>
+        </Box>
+      )}
+
       <div className="flex flex-col items-center gap-6 pt-4">
         {/* Main session cleaner button */}
         <button
@@ -147,7 +156,11 @@ export default function SessionCleanerView() {
               height="32"
               viewBox="0 0 24 24"
               fill="none"
-              className={`transition-transform duration-300 ${isAnimating ? "animate-[tabClose_0.6s_ease-in-out]" : "group-hover:scale-110"}`}>
+              className={`transition-transform duration-300 ${
+                isAnimating
+                  ? "animate-[tabClose_0.6s_ease-in-out]"
+                  : "group-hover:scale-110"
+              }`}>
               <rect
                 x="2"
                 y="4"
@@ -173,9 +186,20 @@ export default function SessionCleanerView() {
           {closeTabsMutation.isPending
             ? "Cleaning up tabs..."
             : closedTabsCount > 0
-              ? `Closed ${closedTabsCount} distracting tabs`
-              : `Currently open tabs: ${tabs.length}`}
+            ? `Closed ${closedTabsCount} distracting tabs`
+            : `Currently open tabs: ${tabs.length}`}
         </p>
+
+        {/* Test notification button */}
+        <button
+          className="mt-4 rounded-md bg-purple-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-purple-700"
+          onClick={async () => {
+            console.log("🧪 Test notification button clicked");
+            toast.success("Sending test notification...");
+            await sendNotification(tabsWithKeywords.length || 1);
+          }}>
+          🔔 Test Notification
+        </button>
       </div>
     </Box>
   );

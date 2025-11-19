@@ -72,7 +72,8 @@
       "downloads",
       "history",
       "tabs",
-      "storage"
+      "storage",
+      "notifications"
     ],
     "web_accessible_resources": [
       {
