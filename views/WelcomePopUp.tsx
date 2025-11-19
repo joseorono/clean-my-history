@@ -7,11 +7,11 @@ export default function WelcomePopUp() {
     <>
       <div className="flex items-center justify-between p-4">
         <h2 className="text-xl font-bold">
-          Welcome to the{" "}
+          Welcome to{" "}
           <a href="https://www.plasmo.com" target="_blank">
-            Clean My History
-          </a>{" "}
-          Extension!
+            FocusSpace
+          </a>
+          !
         </h2>
         <Button variant="contained" onClick={() => openOnboardingTab()}>
           Go to Onboarding

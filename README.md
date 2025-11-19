@@ -1,6 +1,6 @@
-# About Section
+# FocusSpace
 
-Productivity Tool for Chrome Extension that allows you to to remove any blemishes (Social Media posts, Memes, NSFW sites...) from your browser history, current tabs, etc.
+Productivity Tool for Chrome Extension that allows you to remove distractions (Social Media posts, Memes, NSFW sites...) from your browser history and current tabs to prepare for deep work.
 
 This is a Browser Extension project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
 

@@ -1,8 +1,8 @@
 {
   "name": "clean-my-history",
-  "displayName": "Clean my history",
+  "displayName": "FocusSpace",
   "version": "0.0.1",
-  "description": "Chrome Extension to remove any time-wasters from your browser history and tabs, and get you ready to work",
+  "description": "A productivity workspace cleaner that removes distractions from your history and tabs, preparing you for deep work.",
   "author": " Jose Orono <joseomaker@gmail.com>",
   "scripts": {
     "dev": "plasmo dev",

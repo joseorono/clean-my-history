@@ -21,7 +21,7 @@ export const sendNotification = async (tabCount: number) => {
   const hasPermission = await requestNotificationPermission();
 
   if (hasPermission) {
-    const notification = await new Notification("Clean My History", {
+    const notification = await new Notification("FocusSpace", {
       icon: chrome.runtime.getURL("icon.png"),
       body: `Found ${tabCount} tabs with distracting content`,
       tag: "clean-my-history-alert",
