@@ -1,6 +1,6 @@
 # About Section
 
-Chrome Extension to remove any blemishes (Social Media posts, Memes, NSFW sites...) from your browser history,
+Productivity Tool for Chrome Extension that allows you to to remove any blemishes (Social Media posts, Memes, NSFW sites...) from your browser history, current tabs, etc.
 
 This is a Browser Extension project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
 
@@ -10,35 +10,36 @@ This is a Browser Extension project bootstrapped with [`plasmo init`](https://ww
 
 - [x] Set Up a Basic Exception
 - [x] Create Static pages
-- [ ] Set Up Folder Structure
-- [ ] Install Router and UI Tabs
+- [x] Set Up Folder Structure
+- [x] Implement Router and UI Tabs
 
 ## Features
 
 - [x] Create Utils folder for functions
 - [x] Tabs Functions
 - [x] History Functions
-- [ ] Implement Radial Progress
-- [ ] Remove history by Category
-- [ ] Program PANIC function (create new tab and switch to it, close all problematic tabs)
-- [ ] Program Panic Button
+- [x] Implement Radial Progress
+- [x] Remove history by Category
+- [x] Program PANIC function (create new tab and switch to it, close all problematic tabs)
+- [x] Program Session Cleaner' Quick Productivity Button
+- [x] Real-time Notifications when distracting tabs are opened
 
 # Design Decisions & Considerations
 
 - Any and all libraries chosen must be lightweight and fast to load.
-- Use as little
+- Use as little assets as possible.
 
 ## Current Dependecies
 
 - React
-- Preact Signals
+- Redux Toolkit
+- Plasmo
 - Tailwind
-- MaterialUI (mui)
+- MaterialUI (MUI)
+- React Hot Toast
 
 ## Considered Dependecies
-
-- Wouter (lighter than React Router)
-- Zustand
+- N/A
 
 # For Devs
 

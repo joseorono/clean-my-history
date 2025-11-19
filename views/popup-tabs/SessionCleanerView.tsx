@@ -135,6 +135,7 @@ export default function SessionCleanerView() {
       <div className="flex flex-col items-center gap-6 pt-4">
         {/* Main session cleaner button */}
         <button
+          id="quick-productivity-button"
           className="group relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-[#90CAF9] font-semibold shadow-lg transition-all duration-500 hover:bg-[#64B5F6] hover:shadow-xl disabled:opacity-50"
           onClick={handleCleanSession}
           disabled={closeTabsMutation.isPending || isAnimating}>

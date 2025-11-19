@@ -6,15 +6,14 @@
 - [x] Clean All Browsing History
 - [x] Onboarding page after install
 - [x] Seems like our Redux Store doesn't Persist. Enable persistence:
-  - Implemented using @plasmohq/storage for cross-context state synchronization
-
+  - [x] Implemented using @plasmohq/storage for cross-context state synchronization
 - [x] Implement Settings View
-  - [x] Allow selecting Categories to clean based on badKeyboardCategories [x]
+  - [x] Allow selecting Categories to clean based on badKeyboardCategories
   - [x] Allow adding custom keywords
   - [x] Support for whitelisting domains
   - [x] Settings must be saved on Redux and made persistant
 - [x] Implement Clean Browser View
-  - It's a Section with a bunch of buttons to clean history, tabs, etc
+  - [x] It's a Section with a bunch of buttons to clean history, tabs, etc
 - [x] Rename "Panic Button" to "Session Cleaner" [x]
   - [x] It's not a delete button, maybe use something like a "Play" icon or something.
   - [x] Implement Session Cleaner with proper mutation handling
@@ -40,11 +39,11 @@
 - [x] Simple UI for history management
 - [x] Clean All Browsing History
 - [x] Onboarding after install
+- [x] Session Cleaner Quick Productivity Button
 
 ## 💡 Future Ideas
 
 - Add export/import settings functionality
 - Integrate with multiple browsers (Firefox, Edge)
-- Password-protect sensitive settings
-- Cloud sync for settings and preferences
+- Cloud sync for settings and preferences using Firebase
 - Keyboard shortcuts for quick actions
