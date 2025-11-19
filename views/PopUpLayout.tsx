@@ -2,7 +2,6 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import * as React from "react";
-import { Link, Route } from "wouter";
 
 import CleanerView from "./popup-tabs/CleanerView";
 import SessionCleanerView from "./popup-tabs/SessionCleanerView";
