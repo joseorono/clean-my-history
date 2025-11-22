@@ -2,7 +2,12 @@
 module.exports = {
   mode: "jit",
   darkMode: "class",
-  content: ["./**/*.tsx", "./**/*.html"],
+  content: [
+    "./*.tsx",
+    "./components/**/*.{tsx,ts}",
+    "./views/**/*.{tsx,ts}",
+    "./static/**/*.html"
+  ],
   theme: {
     extend: {}
   },
