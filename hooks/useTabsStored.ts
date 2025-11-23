@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import { useStorage } from "@plasmohq/storage/hook";
 
 import { useGetKeywordsFromSettings } from "~hooks/useGetKeywordsFromSetting";
 import { getAllTabs } from "~lib/tabs";
-import { useSelector } from "~node_modules/react-redux/dist/react-redux";
 import type { SettingsState } from "~store/features/settings/settingsSlice";
 import type { RootState } from "~store/store";
 
@@ -69,7 +69,13 @@ export default function useTabsPersisted(): UseTabsPersistedReturn {
     if (tabs.length > 0) {
       setPersistedTabs(tabsWithKeywords);
     }
-  }, [tabs, settings.selectedCategories, settings.customKeywords]);
+  }, [
+    tabs,
+    tabsWithKeywords,
+    settings.selectedCategories,
+    settings.customKeywords,
+    settings.whitelistedDomains
+  ]);
 
   return {
     tabs: persistedTabs || [],
