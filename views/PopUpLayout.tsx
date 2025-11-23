@@ -1,4 +1,8 @@
+import HistoryIcon from "@mui/icons-material/History";
+import SettingsIcon from "@mui/icons-material/Settings";
+import StorageIcon from "@mui/icons-material/Storage";
 import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import * as React from "react";
@@ -45,13 +49,37 @@ export default function PopUpLayout() {
           //</Link>
         }
 
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs value={value} onChange={handleChange} aria-label="Section Tabs">
-            <Tab label="Session Cleaner" />
-            <Tab label="Browser Cleaner" />
-            <Tab label="Settings" />
+        <Paper elevation={2} sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="Section Tabs"
+            variant="fullWidth"
+            sx={{
+              "& .MuiTab-root": {
+                minHeight: "64px",
+                textTransform: "none",
+                fontSize: "0.95rem",
+                fontWeight: 500
+              }
+            }}>
+            <Tab
+              icon={<HistoryIcon />}
+              label="Session Cleaner"
+              iconPosition="start"
+            />
+            <Tab
+              icon={<StorageIcon />}
+              label="Browser Cleaner"
+              iconPosition="start"
+            />
+            <Tab
+              icon={<SettingsIcon />}
+              label="Settings"
+              iconPosition="start"
+            />
           </Tabs>
-        </Box>
+        </Paper>
 
         <CustomTabPanel value={value} index={0}>
           <SessionCleanerView />
