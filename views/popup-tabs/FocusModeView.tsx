@@ -20,14 +20,25 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 
+import { breakEncouragementMessages, focusEncouragementMessages } from "~constants";
 import { sendNotification } from "~lib/notification";
 import { getRandomElement } from "~lib/utils";
-import { addTodo, completeSession, deleteTodo, pauseTimer, resetTimer, startTimer, switchMode, tick, toggleTodo, type TimerMode } from "~store/features/focus/focusSlice";
+import {
+  addTodo,
+  completeSession,
+  deleteTodo,
+  pauseTimer,
+  resetTimer,
+  startTimer,
+  switchMode,
+  tick,
+  toggleTodo,
+  type TimerMode
+} from "~store/features/focus/focusSlice";
 import type { RootState } from "~store/store";
 
 
 
-import { breakEncouragementMessages, focusEncouragementMessages } from "../../constants";
 
 
 const formatTime = (seconds: number): string => {
