@@ -18,20 +18,17 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
+
+
 import { sendNotification } from "~lib/notification";
-import {
-  addTodo,
-  completeSession,
-  deleteTodo,
-  pauseTimer,
-  resetTimer,
-  startTimer,
-  switchMode,
-  tick,
-  toggleTodo,
-  type TimerMode
-} from "~store/features/focus/focusSlice";
+import { getRandomElement } from "~lib/utils";
+import { addTodo, completeSession, deleteTodo, pauseTimer, resetTimer, startTimer, switchMode, tick, toggleTodo, type TimerMode } from "~store/features/focus/focusSlice";
 import type { RootState } from "~store/store";
+
+
+
+import { breakEncouragementMessages, focusEncouragementMessages } from "../../constants";
+
 
 const formatTime = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
@@ -76,8 +73,8 @@ export default function FocusModeView() {
           const nextMode = focus.timerMode === "work" ? "break" : "work";
           const message =
             nextMode === "work"
-              ? "Break time is over! Ready to focus?"
-              : "Great work! Time for a break.";
+              ? getRandomElement(focusEncouragementMessages)
+              : getRandomElement(breakEncouragementMessages);
           sendNotification(0, message);
           toast.success(message);
         }

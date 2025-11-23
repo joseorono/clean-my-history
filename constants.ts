@@ -102,3 +102,19 @@ export const allBadKeywords = [
 export const badKeyboardCategories = ["nsfw", "gaming", "social"];
 
 export type BadKeyboardCategory = (typeof badKeyboardCategories)[number];
+
+export const focusEncouragementMessages: string[] = [
+  "Break time is over! Ready to focus?",
+  "Deep work awaits. Let’s get back in the zone.",
+  "Shift back into focus mode—you’ve got this.",
+  "Time to tune out distractions and dial in.",
+  "Let’s pick up where you left off and push a little further."
+];
+
+export const breakEncouragementMessages: string[] = [
+  "Great work! Time for a break.",
+  "Nice session—take a moment to recharge.",
+  "You’ve earned a breather. Step away for a bit.",
+  "Stand up, stretch, and enjoy a short break.",
+  "Pause and reset—your next focus block will be even better."
+];
