@@ -8,20 +8,18 @@ import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
+import { useCloseTabsMutation } from "~hooks/mutations";
 import { useGetKeywordsFromSettings } from "~hooks/useGetKeywordsFromSetting";
 import useTabsPersisted from "~hooks/useTabsStored";
 import { sendNotification } from "~lib/notification";
-
-import { getAllTabs, useCloseTabsMutation } from "../../lib/tabs";
-import type { SettingsState } from "../../store/features/settings/settingsSlice";
-import type { RootState } from "../../store/store";
+import type { SettingsState } from "~store/features/settings/settingsSlice";
+import type { RootState } from "~store/store";
 
 export default function SessionCleanerView() {
-  const [tabs, setTabs] = useState<chrome.tabs.Tab[]>([]);
   const [closedTabsCount, setClosedTabsCount] = useState<number>(0);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
@@ -35,17 +33,6 @@ export default function SessionCleanerView() {
 
   // Use the proper mutation hook
   const closeTabsMutation = useCloseTabsMutation();
-
-  const fetchAllTabs = async () => {
-    const allTabs = await getAllTabs();
-    if (allTabs) {
-      setTabs(allTabs);
-    }
-  };
-
-  useEffect(() => {
-    fetchAllTabs();
-  }, []);
 
   // Handle the clean session action
   const handleCleanSession = () => {
@@ -61,7 +48,6 @@ export default function SessionCleanerView() {
       {
         onSuccess: (data) => {
           setClosedTabsCount(data.tabsClosed);
-          fetchAllTabs(); // Refresh tabs list
           refreshTabsCheck(); // Refresh persisted tabs check
           setTimeout(() => setIsAnimating(false), 1000); // Reset animation after 1 second
         },
@@ -232,7 +218,7 @@ export default function SessionCleanerView() {
             ? "Cleaning up tabs..."
             : closedTabsCount > 0
               ? `Closed ${closedTabsCount} distracting tabs`
-              : `Currently open tabs: ${tabs.length}`}
+              : `Currently open tabs with distractions: ${tabsWithKeywords.length}`}
         </Typography>
 
         {/* Test notification button */}
