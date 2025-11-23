@@ -16,14 +16,15 @@ const requestNotificationPermission = async () => {
   return false;
 };
 
-// Send notification with tab count
-export const sendNotification = async (tabCount: number) => {
+// Send notification with tab count or custom message
+export const sendNotification = async (tabCount: number, customMessage?: string) => {
   const hasPermission = await requestNotificationPermission();
 
   if (hasPermission) {
+    const body = customMessage || `Found ${tabCount} tabs with distracting content`;
     const notification = await new Notification("FocusSpace", {
       icon: chrome.runtime.getURL("icon.png"),
-      body: `Found ${tabCount} tabs with distracting content`,
+      body,
       tag: "clean-my-history-alert",
       requireInteraction: false,
       silent: false

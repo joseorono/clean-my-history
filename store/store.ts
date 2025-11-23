@@ -1,14 +1,22 @@
 import { configureStore } from "@reduxjs/toolkit";
+
+
+
 import { Storage } from "@plasmohq/storage";
 
+
+
 import counterReducer, { initializeFromStorage as initializeCounter } from "./features/counter/counterSlice";
+import focusReducer, { initializeFromStorage as initializeFocus } from "./features/focus/focusSlice";
 import settingsReducer, { initializeFromStorage as initializeSettings } from "./features/settings/settingsSlice";
+
 
 // Configure store
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    settings: settingsReducer
+    settings: settingsReducer,
+    focus: focusReducer
   }
 });
 
@@ -29,6 +37,7 @@ async function loadStateFromStorage() {
       // Dispatch actions to initialize each slice with saved state
       store.dispatch(initializeCounter(savedState));
       store.dispatch(initializeSettings(savedState));
+      store.dispatch(initializeFocus(savedState));
     }
   } catch (error) {
     console.error("Failed to load state from storage:", error);

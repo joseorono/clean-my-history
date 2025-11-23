@@ -1,6 +1,7 @@
 import HistoryIcon from "@mui/icons-material/History";
 import SettingsIcon from "@mui/icons-material/Settings";
 import StorageIcon from "@mui/icons-material/Storage";
+import TimerIcon from "@mui/icons-material/Timer";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Tab from "@mui/material/Tab";
@@ -8,6 +9,7 @@ import Tabs from "@mui/material/Tabs";
 import * as React from "react";
 
 import CleanerView from "./popup-tabs/CleanerView";
+import FocusModeView from "./popup-tabs/FocusModeView";
 import SessionCleanerView from "./popup-tabs/SessionCleanerView";
 import SettingsView from "./popup-tabs/SettingsVIew";
 
@@ -63,6 +65,7 @@ export default function PopUpLayout() {
                 fontWeight: 500
               }
             }}>
+            <Tab icon={<TimerIcon />} label="Focus Mode" iconPosition="start" />
             <Tab
               icon={<HistoryIcon />}
               label="Session Cleaner"
@@ -82,12 +85,15 @@ export default function PopUpLayout() {
         </Paper>
 
         <CustomTabPanel value={value} index={0}>
-          <SessionCleanerView />
+          <FocusModeView />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <CleanerView />
+          <SessionCleanerView />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
+          <CleanerView />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={3}>
           <SettingsView />
         </CustomTabPanel>
 
