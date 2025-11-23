@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-
-
-import { badKeyboardCategories } from "../../constants";
-import type { BadKeyboardCategory } from "../../constants";
-import { addCustomKeyword, addWhitelistedDomain, removeCustomKeyword, removeWhitelistedDomain, resetSettings, toggleCategory, type SettingsState } from "../../store/features/settings/settingsSlice";
-import type { RootState } from "../../store/store";
-import formatCategoryLabel from "../../utils/format-category-label";
-
+import { badKeyboardCategories } from "~constants";
+import type { BadKeyboardCategory } from "~constants";
+import {
+  addCustomKeyword,
+  addWhitelistedDomain,
+  removeCustomKeyword,
+  removeWhitelistedDomain,
+  resetSettings,
+  toggleCategory,
+  type SettingsState
+} from "~store/features/settings/settingsSlice";
+import type { RootState } from "~store/store";
+import formatCategoryLabel from "~utils/format-category-label";
 
 export default function SettingsView() {
   const dispatch = useDispatch();
@@ -97,10 +102,10 @@ export default function SettingsView() {
             placeholder="New Keyword"
             className="mr-2 flex-1 rounded-md border border-gray-600 bg-gray-700 p-2 text-white"
             value={newKeyword}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setNewKeyword(e.target.value)
             }
-            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+            onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
               e.key === "Enter" && handleAddKeyword()
             }
           />
@@ -144,10 +149,10 @@ export default function SettingsView() {
             placeholder="New Domain"
             className="mr-2 flex-1 rounded-md border border-gray-600 bg-gray-700 p-2 text-white"
             value={newDomain}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setNewDomain(e.target.value)
             }
-            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+            onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
               e.key === "Enter" && handleAddDomain()
             }
           />
