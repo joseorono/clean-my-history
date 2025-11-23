@@ -1,6 +1,3 @@
-import { useMutation } from "@tanstack/react-query";
-import toast from "react-hot-toast";
-
 function closeTabsByIds(tabIds: number[]) {
   return new Promise((resolve) => {
     chrome.tabs.remove(tabIds, resolve);
@@ -94,19 +91,6 @@ export async function cleanSession(
     });
   });
 }
-
-export const useCloseTabsMutation = () => {
-  return useMutation({
-    mutationFn: (params: CloseTabsParams) => cleanSession(params),
-    onSuccess: () => {
-      toast.success("Tab's closed successfully!");
-    },
-    onError: (error: unknown) => {
-      const message = error instanceof Error ? error.message : "Unknown error";
-      toast.error(`Error closing tab's: ${message}`);
-    }
-  });
-};
 
 export async function getCurrentTab() {
   let queryOptions = { active: true, lastFocusedWindow: true };
