@@ -1,38 +1,37 @@
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import PauseIcon from "@mui/icons-material/Pause";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import DeleteIcon from "@mui/icons-material/Delete";
+import PauseIcon from "@mui/icons-material/Pause";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
-import LinearProgress from "@mui/material/LinearProgress";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 
-import type { RootState } from "../../store/store";
+import { sendNotification } from "~lib/notification";
 import {
-  startTimer,
+  addTodo,
+  completeSession,
+  deleteTodo,
   pauseTimer,
   resetTimer,
-  tick,
-  completeSession,
+  startTimer,
   switchMode,
-  addTodo,
+  tick,
   toggleTodo,
-  deleteTodo,
   type TimerMode
-} from "../../store/features/focus/focusSlice";
-import { sendNotification } from "../../lib/notification";
+} from "~store/features/focus/focusSlice";
+import type { RootState } from "~store/store";
 
 const formatTime = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
@@ -75,9 +74,10 @@ export default function FocusModeView() {
         } else {
           dispatch(completeSession());
           const nextMode = focus.timerMode === "work" ? "break" : "work";
-          const message = nextMode === "work"
-            ? "Break time is over! Ready to focus?"
-            : "Great work! Time for a break.";
+          const message =
+            nextMode === "work"
+              ? "Break time is over! Ready to focus?"
+              : "Great work! Time for a break.";
           sendNotification(0, message);
           toast.success(message);
         }
@@ -116,8 +116,11 @@ export default function FocusModeView() {
     }
   };
 
-  const totalDuration = focus.settings[`${focus.timerMode}Duration` as keyof typeof focus.settings] as number;
-  const progress = ((totalDuration - focus.timeRemaining) / totalDuration) * 100;
+  const totalDuration = focus.settings[
+    `${focus.timerMode}Duration` as keyof typeof focus.settings
+  ] as number;
+  const progress =
+    ((totalDuration - focus.timeRemaining) / totalDuration) * 100;
   const modeColor = getModeColor(focus.timerMode);
 
   return (
@@ -132,7 +135,10 @@ export default function FocusModeView() {
       </Box>
 
       {/* Mode Selector */}
-      <Stack direction="row" spacing={1} sx={{ mb: 3, justifyContent: "center" }}>
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{ mb: 3, justifyContent: "center" }}>
         <Chip
           label="Deep Work"
           onClick={() => handleModeSwitch("work")}
@@ -180,14 +186,16 @@ export default function FocusModeView() {
                     borderRadius: "50%",
                     background: `conic-gradient(${modeColor} ${progress}%, transparent ${progress}%)`,
                     mask: "radial-gradient(farthest-side, transparent calc(100% - 8px), white calc(100% - 8px))",
-                    WebkitMask: "radial-gradient(farthest-side, transparent calc(100% - 8px), white calc(100% - 8px))"
+                    WebkitMask:
+                      "radial-gradient(farthest-side, transparent calc(100% - 8px), white calc(100% - 8px))"
                   }
                 }}>
                 <Typography variant="h3" sx={{ fontWeight: 700, mb: 1 }}>
                   {formatTime(focus.timeRemaining)}
                 </Typography>
                 <Typography variant="caption" color="textSecondary">
-                  {focus.sessionsCompleted} of {focus.settings.sessionsUntilLongBreak} sessions
+                  {focus.sessionsCompleted} of{" "}
+                  {focus.settings.sessionsUntilLongBreak} sessions
                 </Typography>
               </Box>
             </Box>
@@ -272,7 +280,10 @@ export default function FocusModeView() {
 
           <Stack spacing={1}>
             {focus.todos.length === 0 ? (
-              <Typography variant="body2" color="textSecondary" sx={{ textAlign: "center", py: 2 }}>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                sx={{ textAlign: "center", py: 2 }}>
                 No tasks yet. Add one to get started!
               </Typography>
             ) : (
