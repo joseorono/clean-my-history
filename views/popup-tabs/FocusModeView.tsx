@@ -18,9 +18,12 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
+import { Storage } from "@plasmohq/storage";
 
-
-import { breakEncouragementMessages, focusEncouragementMessages } from "~constants";
+import {
+  breakEncouragementMessages,
+  focusEncouragementMessages
+} from "~constants";
 import { sendNotification } from "~lib/notification";
 import { getRandomElement } from "~lib/utils";
 import {
@@ -36,10 +39,6 @@ import {
   type TimerMode
 } from "~store/features/focus/focusSlice";
 import type { RootState } from "~store/store";
-
-
-
-
 
 const formatTime = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
@@ -69,39 +68,66 @@ const getModeColor = (mode: TimerMode): string => {
   }
 };
 
+// Create storage instance outside component to avoid re-creation on every render
+const storage = new Storage();
+
 export default function FocusModeView() {
   const dispatch = useDispatch();
   const focus = useSelector((state: RootState) => state.focus);
   const [newTodoText, setNewTodoText] = useState("");
 
+  // Watch for storage changes from background timer
   useEffect(() => {
-    if (focus.timerStatus === "running") {
-      const interval = setInterval(() => {
-        if (focus.timeRemaining > 0) {
-          dispatch(tick());
-        } else {
-          dispatch(completeSession());
-          const nextMode = focus.timerMode === "work" ? "break" : "work";
-          const message =
-            nextMode === "work"
-              ? getRandomElement(focusEncouragementMessages)
-              : getRandomElement(breakEncouragementMessages);
-          sendNotification(0, message);
-          toast.success(message);
+    // Set up storage watcher once on mount
+    storage.watch({
+      reduxState: (change) => {
+        if (change.newValue?.focus) {
+          // Dispatch action to update Redux state from storage
+          dispatch({
+            type: "focus/initializeFromStorage",
+            payload: change.newValue
+          });
         }
-      }, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [focus.timerStatus, focus.timeRemaining, focus.timerMode, dispatch]);
+      }
+    });
+
+    // No cleanup needed - Plasmo storage watchers are persistent
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Run only once on mount
 
   const handleStart = () => {
+    // Prevent starting if already running
+    if (focus.timerStatus === "running") {
+      return;
+    }
+
+    // Prevent starting if time is zero
+    if (focus.timeRemaining === 0) {
+      toast.error("Please reset the timer before starting.");
+      return;
+    }
+
+    // Dispatch Redux action immediately for instant UI feedback
     dispatch(startTimer());
+
+    // Show toast immediately (non-blocking)
     if (focus.timerMode === "work") {
-      sendNotification(0, "🎯 Deep Work session started! Stay focused.");
       toast.success("Deep Work session started!");
     } else {
-      sendNotification(0, "☕ Break time! Relax and recharge.");
       toast.success("Break time started!");
+    }
+
+    // Send notification asynchronously (non-blocking, runs in background)
+    if (focus.timerMode === "work") {
+      sendNotification(0, "🎯 Deep Work session started! Stay focused.").catch(
+        (err) => {
+          console.error("Notification error:", err);
+        }
+      );
+    } else {
+      sendNotification(0, "☕ Break time! Relax and recharge.").catch((err) => {
+        console.error("Notification error:", err);
+      });
     }
   };
 
@@ -114,6 +140,11 @@ export default function FocusModeView() {
   };
 
   const handleModeSwitch = (mode: TimerMode) => {
+    // Prevent mode switching when timer is running
+    if (focus.timerStatus === "running") {
+      toast.error("Please pause or reset the timer before switching modes.");
+      return;
+    }
     dispatch(switchMode(mode));
   };
 
@@ -152,18 +183,27 @@ export default function FocusModeView() {
           onClick={() => handleModeSwitch("work")}
           color={focus.timerMode === "work" ? "error" : "default"}
           variant={focus.timerMode === "work" ? "filled" : "outlined"}
+          disabled={
+            focus.timerStatus === "running" && focus.timerMode !== "work"
+          }
         />
         <Chip
           label="Short Break"
           onClick={() => handleModeSwitch("shortBreak")}
           color={focus.timerMode === "shortBreak" ? "success" : "default"}
           variant={focus.timerMode === "shortBreak" ? "filled" : "outlined"}
+          disabled={
+            focus.timerStatus === "running" && focus.timerMode !== "shortBreak"
+          }
         />
         <Chip
           label="Long Break"
           onClick={() => handleModeSwitch("longBreak")}
           color={focus.timerMode === "longBreak" ? "primary" : "default"}
           variant={focus.timerMode === "longBreak" ? "filled" : "outlined"}
+          disabled={
+            focus.timerStatus === "running" && focus.timerMode !== "longBreak"
+          }
         />
       </Stack>
 

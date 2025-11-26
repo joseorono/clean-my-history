@@ -57,6 +57,19 @@ export const focusSlice = createSlice({
         if (savedFocus.settings) {
           state.settings = { ...state.settings, ...savedFocus.settings };
         }
+        // Restore timer state
+        if (savedFocus.timerStatus !== undefined) {
+          state.timerStatus = savedFocus.timerStatus;
+        }
+        if (savedFocus.timerMode !== undefined) {
+          state.timerMode = savedFocus.timerMode;
+        }
+        if (savedFocus.timeRemaining !== undefined) {
+          state.timeRemaining = savedFocus.timeRemaining;
+        }
+        if (savedFocus.currentSessionStartTime !== undefined) {
+          state.currentSessionStartTime = savedFocus.currentSessionStartTime;
+        }
       }
     },
 
@@ -74,7 +87,10 @@ export const focusSlice = createSlice({
     resetTimer: (state) => {
       state.timerStatus = "idle";
       state.currentSessionStartTime = null;
-      const duration = state.settings[`${state.timerMode}Duration` as keyof typeof state.settings];
+      const duration =
+        state.settings[
+          `${state.timerMode}Duration` as keyof typeof state.settings
+        ];
       state.timeRemaining = duration as number;
     },
 
@@ -87,7 +103,8 @@ export const focusSlice = createSlice({
     completeSession: (state) => {
       if (state.timerMode === "work") {
         state.sessionsCompleted += 1;
-        const shouldTakeLongBreak = state.sessionsCompleted % state.settings.sessionsUntilLongBreak === 0;
+        const shouldTakeLongBreak =
+          state.sessionsCompleted % state.settings.sessionsUntilLongBreak === 0;
         state.timerMode = shouldTakeLongBreak ? "longBreak" : "shortBreak";
         state.timeRemaining = shouldTakeLongBreak
           ? state.settings.longBreakDuration
@@ -104,7 +121,10 @@ export const focusSlice = createSlice({
       state.timerMode = action.payload;
       state.timerStatus = "idle";
       state.currentSessionStartTime = null;
-      const duration = state.settings[`${action.payload}Duration` as keyof typeof state.settings];
+      const duration =
+        state.settings[
+          `${action.payload}Duration` as keyof typeof state.settings
+        ];
       state.timeRemaining = duration as number;
     },
 
@@ -129,10 +149,16 @@ export const focusSlice = createSlice({
       state.todos = state.todos.filter((t) => t.id !== action.payload);
     },
 
-    updateSettings: (state, action: PayloadAction<Partial<FocusState["settings"]>>) => {
+    updateSettings: (
+      state,
+      action: PayloadAction<Partial<FocusState["settings"]>>
+    ) => {
       state.settings = { ...state.settings, ...action.payload };
       if (state.timerStatus === "idle") {
-        const duration = state.settings[`${state.timerMode}Duration` as keyof typeof state.settings];
+        const duration =
+          state.settings[
+            `${state.timerMode}Duration` as keyof typeof state.settings
+          ];
         state.timeRemaining = duration as number;
       }
     }
