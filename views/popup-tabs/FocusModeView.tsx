@@ -28,8 +28,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Storage } from "@plasmohq/storage";
 
-import ViewHeader from "../../components/view-header";
-
 import {
   breakEncouragementMessages,
   focusEncouragementMessages
@@ -49,6 +47,8 @@ import {
   type TimerMode
 } from "~store/features/focus/focusSlice";
 import type { RootState } from "~store/store";
+
+import ViewHeader from "../../components/view-header";
 
 const formatTime = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
@@ -177,6 +177,7 @@ export default function FocusModeView() {
     <Box
       sx={{ p: 1, height: "100%", display: "flex", flexDirection: "column" }}>
       {/* Header with back button and mode name */}
+
       <Stack
         direction="row"
         spacing={1}
@@ -186,16 +187,10 @@ export default function FocusModeView() {
           borderBottom: "1px solid rgba(255,255,255,0.1)"
         }}></Stack>
 
-      <Box sx={{ p: 2 }}>
-        <ViewHeader
-          title="Focus Mode"
-          subtitle="Stay productive with the Pomodoro technique"
-        />
-
-        {/* Mode Selector */}
-        <Stack
-          direction="row"
-          spacing={0.75}
+      {/* Mode Selector */}
+      <Stack
+        direction="row"
+        spacing={0.75}
         sx={{ mb: 1.5, justifyContent: "center" }}>
         <Chip
           label="Deep Work"
