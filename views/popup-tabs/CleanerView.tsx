@@ -1,6 +1,11 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import Checkbox from "@mui/material/Checkbox";
+import Tooltip from "@mui/material/Tooltip";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import React, { useState } from "react";
 
 import ViewHeader from "../../components/view-header";
@@ -47,11 +52,23 @@ class ErrorBoundary extends React.Component<
   }
 }
 
-export default function CleanerView() {
-  // We'll just use a single function for now to test if the component works
-  const [debugMessage, setDebugMessage] = useState<string>("");
+type TimeRange = "15min" | "1hour" | "24hours" | "7days" | "30days" | "1year";
 
-  const handleCleanHistory = async () => {
+export default function CleanerView() {
+  const [debugMessage, setDebugMessage] = useState<string>("");
+  const [timeRange, setTimeRange] = useState<TimeRange>("24hours");
+  const [onlyMatchingResults, setOnlyMatchingResults] = useState<boolean>(true);
+
+  const handleTimeRangeChange = (
+    _event: React.MouseEvent<HTMLElement>,
+    newTimeRange: TimeRange | null
+  ): void => {
+    if (newTimeRange !== null) {
+      setTimeRange(newTimeRange);
+    }
+  };
+
+  const handleCleanHistory = async (): Promise<boolean> => {
     try {
       setDebugMessage("Cleaning history...");
       await cleanAllHistory();
@@ -73,6 +90,72 @@ export default function CleanerView() {
           title="History Cleaner"
           subtitle="Delete all your browsing history, cookies, cache, and tabs"
         />
+
+        {/* Time Range Toggle Buttons */}
+        <Box className="mb-6 rounded border border-gray-700 bg-gray-800 p-4">
+          <Typography variant="subtitle2" className="mb-3 block text-gray-300">
+            Time Range
+          </Typography>
+          <ToggleButtonGroup
+            value={timeRange}
+            exclusive
+            onChange={handleTimeRangeChange}
+            className="flex flex-wrap gap-2"
+            sx={{
+              "& .MuiToggleButton-root": {
+                color: "#9ca3af",
+                borderColor: "#4b5563",
+                "&.Mui-selected": {
+                  backgroundColor: "#1e40af",
+                  color: "#fff",
+                  borderColor: "#1e40af",
+                  "&:hover": {
+                    backgroundColor: "#1e3a8a",
+                  },
+                },
+                "&:hover": {
+                  backgroundColor: "rgba(30, 64, 175, 0.1)",
+                },
+              },
+            }}>
+            <ToggleButton value="15min">Last 15 min</ToggleButton>
+            <ToggleButton value="1hour">Last hour</ToggleButton>
+            <ToggleButton value="24hours">Last 24 hours</ToggleButton>
+            <ToggleButton value="7days">Last 7 days</ToggleButton>
+            <ToggleButton value="30days">Last 30 days</ToggleButton>
+            <ToggleButton value="1year">Last year</ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
+
+        {/* Only Matching Results Checkbox */}
+        <Box className="mb-6 rounded border border-gray-700 bg-gray-800 p-4">
+          <Tooltip
+            title="Only delete history entries that match your configured keywords"
+            arrow
+            placement="top">
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={onlyMatchingResults}
+                  onChange={(e) => setOnlyMatchingResults(e.target.checked)}
+                  sx={{
+                    color: "#9ca3af",
+                    "&.Mui-checked": {
+                      color: "#1e40af",
+                    },
+                  }}
+                />
+              }
+              label="Only matching results"
+              sx={{
+                color: "#e5e7eb",
+                "& .MuiFormControlLabel-label": {
+                  fontSize: "0.95rem",
+                },
+              }}
+            />
+          </Tooltip>
+        </Box>
 
         {/* Debug message */}
         {debugMessage && (
