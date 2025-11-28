@@ -8,17 +8,23 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
+      * {
+        box-sizing: border-box;
+      }
+
       body {
         font-family: "Roboto", sans-serif;
         font-weight: 300;
         font-size: 16px;
-        line-height: 1.5;
+        line-height: 1.6;
         color: rgb(16, 20, 24);
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         margin: 0;
         padding: 0;
         min-height: 100vh;
+        overflow-x: hidden;
       }
+
       h1,
       h2,
       h3,
@@ -26,33 +32,160 @@
       h5,
       h6 {
         font-family: "Open Sans", sans-serif;
+        font-weight: 600;
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+      }
+
+      .hero-icon {
+        animation: pulse 3s ease-in-out infinite;
+      }
+
+      .fade-in-up {
+        animation: fadeInUp 0.8s ease-out;
+      }
+
+      .slide-in-down {
+        animation: slideInDown 0.6s ease-out;
+      }
+
+      /* Card Styles */
+      .card {
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Feature Cards */
+      .feature-card {
+        border-radius: 12px;
+        padding: 24px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      }
+
+      /* Button Styles */
+      .btn {
+        display: inline-block;
+        padding: 12px 28px;
+        border-radius: 8px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      /* Gradient Text */
+      .gradient-text {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        body {
+          padding: 0;
+        }
+        h1 {
+          font-size: 2.5rem !important;
+        }
+        h2 {
+          font-size: 1.75rem !important;
+        }
       }
     </style>
   </head>
   <body class="px-4 py-12">
     <div class="mx-auto max-w-4xl">
       <!-- Hero Section -->
-      <div class="mb-12 text-center">
+      <div class="mb-16 text-center slide-in-down">
         <div
-          class="mb-6 inline-block rounded-full bg-white/20 p-4 backdrop-blur-sm">
-          <span class="text-6xl">🎯</span>
+          class="mb-8 inline-block rounded-full bg-white/20 p-6 backdrop-blur-md hero-icon">
+          <span class="text-7xl">🎯</span>
         </div>
-        <h1 class="mb-4 text-5xl font-bold text-white">
+        <h1 class="mb-4 text-6xl font-bold text-white fade-in-up">
           Welcome to FocusSpace
         </h1>
-        <p class="mb-6 text-xl text-white/90">
-          Your environment for deep work is ready.
+        <p class="mb-8 text-xl text-white/95 fade-in-up">
+          Your environment for deep work is ready. Clean distractions. Reclaim focus.
         </p>
-        <div class="flex items-center justify-center gap-4">
+        <div class="flex flex-wrap items-center justify-center gap-4">
           <a
             href="https://github.com/joseorono/"
-            class="rounded-lg bg-white/20 px-6 py-3 font-medium text-white backdrop-blur-sm transition-all hover:bg-white/30 hover:shadow-lg"
+            class="btn btn-secondary"
             target="_blank">
             🔗 GitHub
           </a>
           <a
             href="https://www.linkedin.com/in/joseorono/"
-            class="rounded-lg bg-white/20 px-6 py-3 font-medium text-white backdrop-blur-sm transition-all hover:bg-white/30 hover:shadow-lg"
+            class="btn btn-secondary"
             target="_blank">
             💼 LinkedIn
           </a>
@@ -60,17 +193,17 @@
       </div>
 
       <!-- Disclaimer Card -->
-      <div class="mb-12 rounded-2xl bg-white p-8 shadow-2xl">
+      <div class="card mb-12 bg-white p-8 fade-in-up">
         <div class="flex items-start gap-4">
           <div class="flex-shrink-0">
             <div
-              class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
+              class="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-blue-100 to-blue-200">
               <span class="text-2xl">ℹ️</span>
             </div>
           </div>
           <div class="flex-1">
-            <h3 class="mb-2 text-2xl font-bold text-gray-900">Note</h3>
-            <p class="text-gray-600">
+            <h3 class="mb-3 text-xl font-bold text-gray-900">Important Note</h3>
+            <p class="text-gray-700 leading-relaxed">
               FocusSpace is designed to help you curate a distraction-free digital environment.
               Please use it responsibly. We are not liable for any data loss resulting from the cleaning features.
             </p>
@@ -80,91 +213,91 @@
 
       <!-- Tagline -->
       <div
-        class="mb-12 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 p-8 text-center shadow-2xl">
-        <h2 class="text-3xl font-bold text-white">
+        class="card mb-12 bg-gradient-to-r from-purple-600 to-indigo-600 p-10 text-center fade-in-up">
+        <h2 class="text-4xl font-bold text-white">
           Clear the noise. Find your flow.
         </h2>
       </div>
 
       <!-- Features Section -->
-      <div class="rounded-2xl bg-white p-8 shadow-2xl">
-        <h2 class="mb-8 text-center text-4xl font-bold text-gray-900">
-          Design Your Workflow
+      <div class="card bg-white p-8 fade-in-up">
+        <h2 class="mb-12 text-center text-4xl font-bold text-gray-900">
+          Powerful Features
         </h2>
 
         <div class="grid gap-6 md:grid-cols-2">
           <!-- Feature 1 -->
           <div
-            class="rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 p-6 transition-all hover:shadow-lg">
-            <div class="mb-3 flex items-center gap-3">
-              <span class="text-3xl">⚡</span>
-              <h3 class="text-xl font-bold text-gray-900">Session Cleaner</h3>
+            class="feature-card bg-gradient-to-br from-blue-50 to-blue-100">
+            <div class="mb-4 flex items-center gap-3">
+              <span class="text-4xl">⚡</span>
+              <h3 class="text-lg font-bold text-gray-900">Session Cleaner</h3>
             </div>
-            <p class="text-gray-700">
+            <p class="text-gray-700 leading-relaxed">
               Instantly clear the clutter. The Session Cleaner intelligently closes distracting tabs based on your custom filters, allowing you to reclaim your attention.
             </p>
           </div>
 
           <!-- Feature 2 -->
           <div
-            class="rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 p-6 transition-all hover:shadow-lg">
-            <div class="mb-3 flex items-center gap-3">
-              <span class="text-3xl">✨</span>
-              <h3 class="text-xl font-bold text-gray-900">Digital Declutter</h3>
+            class="feature-card bg-gradient-to-br from-purple-50 to-purple-100">
+            <div class="mb-4 flex items-center gap-3">
+              <span class="text-4xl">✨</span>
+              <h3 class="text-lg font-bold text-gray-900">Digital Declutter</h3>
             </div>
-            <p class="text-gray-700">
+            <p class="text-gray-700 leading-relaxed">
               Remove non-essential history entries. FocusSpace acts as a filter for your digital footprint, keeping your history professional and relevant.
             </p>
           </div>
 
           <!-- Feature 3 -->
           <div
-            class="rounded-xl bg-gradient-to-br from-green-50 to-green-100 p-6 transition-all hover:shadow-lg">
-            <div class="mb-3 flex items-center gap-3">
-              <span class="text-3xl">⚙️</span>
-              <h3 class="text-xl font-bold text-gray-900">
+            class="feature-card bg-gradient-to-br from-green-50 to-green-100">
+            <div class="mb-4 flex items-center gap-3">
+              <span class="text-4xl">⚙️</span>
+              <h3 class="text-lg font-bold text-gray-900">
                 Smart Customization
               </h3>
             </div>
-            <p class="text-gray-700">
+            <p class="text-gray-700 leading-relaxed">
               Tailor the experience to your workflow. Define what constitutes a distraction with granular category controls and custom keywords.
             </p>
           </div>
 
           <!-- Feature 4 -->
           <div
-            class="rounded-xl bg-gradient-to-br from-pink-50 to-pink-100 p-6 transition-all hover:shadow-lg">
-            <div class="mb-3 flex items-center gap-3">
-              <span class="text-3xl">🛡️</span>
-              <h3 class="text-xl font-bold text-gray-900">Privacy First</h3>
+            class="feature-card bg-gradient-to-br from-pink-50 to-pink-100">
+            <div class="mb-4 flex items-center gap-3">
+              <span class="text-4xl">🛡️</span>
+              <h3 class="text-lg font-bold text-gray-900">Privacy First</h3>
             </div>
-            <p class="text-gray-700">
+            <p class="text-gray-700 leading-relaxed">
               Your data stays on your device. FocusSpace respects your privacy while helping you maintain a clean digital slate.
             </p>
           </div>
 
           <!-- Feature 5 -->
           <div
-            class="rounded-xl bg-gradient-to-br from-yellow-50 to-yellow-100 p-6 transition-all hover:shadow-lg">
-            <div class="mb-3 flex items-center gap-3">
-              <span class="text-3xl">🚀</span>
-              <h3 class="text-xl font-bold text-gray-900">
+            class="feature-card bg-gradient-to-br from-yellow-50 to-yellow-100">
+            <div class="mb-4 flex items-center gap-3">
+              <span class="text-4xl">🚀</span>
+              <h3 class="text-lg font-bold text-gray-900">
                 Seamless Performance
               </h3>
             </div>
-            <p class="text-gray-700">
+            <p class="text-gray-700 leading-relaxed">
               Efficient by design. Perform clean-up actions in seconds without interrupting your browser's performance.
             </p>
           </div>
 
           <!-- Feature 6 -->
           <div
-            class="rounded-xl bg-gradient-to-br from-indigo-50 to-indigo-100 p-6 transition-all hover:shadow-lg">
-            <div class="mb-3 flex items-center gap-3">
-              <span class="text-3xl">✅</span>
-              <h3 class="text-xl font-bold text-gray-900">Whitelist Support</h3>
+            class="feature-card bg-gradient-to-br from-indigo-50 to-indigo-100">
+            <div class="mb-4 flex items-center gap-3">
+              <span class="text-4xl">✅</span>
+              <h3 class="text-lg font-bold text-gray-900">Whitelist Support</h3>
             </div>
-            <p class="text-gray-700">
+            <p class="text-gray-700 leading-relaxed">
               Protect what matters. Ensure vital work tools and documentation remain open while clearing away the noise.
             </p>
           </div>
@@ -172,16 +305,19 @@
 
         <!-- Footer Text -->
         <div
-          class="mt-8 rounded-xl bg-gradient-to-r from-purple-100 to-indigo-100 p-6 text-center">
-          <p class="text-lg font-medium text-gray-800">
+          class="mt-10 rounded-xl bg-gradient-to-r from-purple-100 to-indigo-100 p-8 text-center">
+          <p class="text-lg font-semibold text-gray-800">
             Ready to focus on what matters?
+          </p>
+          <p class="mt-2 text-gray-700">
+            Start using FocusSpace today and transform your digital environment.
           </p>
         </div>
       </div>
 
       <!-- Bottom Spacing -->
-      <div class="mt-12 text-center">
-        <p class="text-white/80">Made with ❤️ by Jose Orono</p>
+      <div class="mt-16 text-center fade-in-up">
+        <p class="text-white/90 text-sm font-light">Made with ❤️ by Jose Orono</p>
       </div>
     </div>
   </body>
