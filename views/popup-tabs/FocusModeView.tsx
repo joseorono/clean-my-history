@@ -28,6 +28,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Storage } from "@plasmohq/storage";
 
+import ViewHeader from "../../components/view-header";
+
 import {
   breakEncouragementMessages,
   focusEncouragementMessages
@@ -184,10 +186,16 @@ export default function FocusModeView() {
           borderBottom: "1px solid rgba(255,255,255,0.1)"
         }}></Stack>
 
-      {/* Mode Selector */}
-      <Stack
-        direction="row"
-        spacing={0.75}
+      <Box sx={{ p: 2 }}>
+        <ViewHeader
+          title="Focus Mode"
+          subtitle="Stay productive with the Pomodoro technique"
+        />
+
+        {/* Mode Selector */}
+        <Stack
+          direction="row"
+          spacing={0.75}
         sx={{ mb: 1.5, justifyContent: "center" }}>
         <Chip
           label="Deep Work"

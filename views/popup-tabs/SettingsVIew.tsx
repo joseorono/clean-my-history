@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import ViewHeader from "../../components/view-header";
 import { badKeyboardCategories } from "~constants";
 import type { BadKeyboardCategory } from "~constants";
 import {
@@ -58,12 +59,10 @@ export default function SettingsView() {
 
   return (
     <div className="p-2 text-white">
-      <div className="mb-2">
-        <h1 className="mb-2 text-xl font-bold">Settings</h1>
-        <p className="text-gray-400">
-          Configure which content to clean from your browser
-        </p>
-      </div>
+      <ViewHeader
+        title="Settings"
+        subtitle="Configure which content to clean from your browser"
+      />
 
       {/* Categories Section */}
       <div className="mb-4 rounded-lg border border-gray-700 bg-gray-800 p-4">
