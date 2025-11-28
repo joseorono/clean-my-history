@@ -20,6 +20,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Storage } from "@plasmohq/storage";
 
+import ViewHeader from "../../components/view-header";
+
 import {
   breakEncouragementMessages,
   focusEncouragementMessages
@@ -164,14 +166,10 @@ export default function FocusModeView() {
 
   return (
     <Box sx={{ p: 2 }}>
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>
-          Focus Mode
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-          Stay productive with the Pomodoro technique
-        </Typography>
-      </Box>
+      <ViewHeader
+        title="Focus Mode"
+        subtitle="Stay productive with the Pomodoro technique"
+      />
 
       {/* Mode Selector */}
       <Stack
