@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
+import ViewHeader from "../../components/view-header";
 import TaskButton from "../../components/task-button";
 import { cleanAllHistory } from "../../lib/history";
 
@@ -68,9 +69,10 @@ export default function CleanerView() {
   return (
     <ErrorBoundary>
       <Box className="p-4 text-white">
-        {/* <Typography variant="h5" component="h1" gutterBottom>
-          Clean Browser Data, Tabs, Cookies, and Cache
-        </Typography> */}
+        <ViewHeader
+          title="History Cleaner"
+          subtitle="Delete all your browsing history, cookies, cache, and tabs"
+        />
 
         {/* Debug message */}
         {debugMessage && (
@@ -81,12 +83,6 @@ export default function CleanerView() {
 
         {/* Just one button for testing */}
         <Box className="mb-4 rounded border border-gray-700 bg-gray-800 p-4">
-          <Typography variant="h6" gutterBottom>
-            Delete all your browsing history, cookies, cache, and tabs
-          </Typography>
-          <p className="mb-3 text-gray-400">
-            This will delete all your browsing history, cookies, cache, and tabs
-          </p>
           <div className="flex flex-wrap gap-4 py-4">
             <TaskButton
               text="Clear History"
