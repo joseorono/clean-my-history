@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
+import ViewHeader from "../../components/view-header";
 import { useCloseTabsMutation } from "~hooks/mutations";
 import { useGetKeywordsFromSettings } from "~hooks/useGetKeywordsFromSetting";
 import useTabsPersisted from "~hooks/useTabsStored";
@@ -86,14 +87,10 @@ export default function SessionCleanerView() {
 
   return (
     <Box sx={{ p: 2 }}>
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>
-          Session Cleaner
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-          Close tabs that might distract you from work
-        </Typography>
-      </Box>
+      <ViewHeader
+        title="Session Cleaner"
+        subtitle="Close tabs that might distract you from work"
+      />
 
       {/* Auto-check indicator */}
       <Box sx={{ mb: 3, display: "flex", alignItems: "center", gap: 1 }}>
