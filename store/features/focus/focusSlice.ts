@@ -169,6 +169,9 @@ export const focusSlice = createSlice({
         createdAt: Date.now()
       };
       state.tasks.push(newTask);
+      if (state.tasks.length === 1) {
+        state.currentTaskIndex = 0;
+      }
     },
 
     updateTask: (

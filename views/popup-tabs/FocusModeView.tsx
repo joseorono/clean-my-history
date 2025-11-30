@@ -43,7 +43,8 @@ import {
   setCurrentTaskIndex,
   startTimer,
   switchMode,
-  tick
+  tick,
+  updateTask
 } from "~store/features/focus/focusSlice";
 import type { RootState } from "~store/store";
 import type { TimerMode } from "~types/focus";
@@ -174,6 +175,45 @@ export default function FocusModeView() {
     setShowTaskSelection(false);
   };
 
+  const handleSwitchTask = () => {
+    const activeTasks = focus.tasks.filter((task) => !task.completed);
+    if (activeTasks.length === 0) return;
+
+    const currentTaskId = focus.tasks[focus.currentTaskIndex]?.id;
+    const currentActiveIndex = activeTasks.findIndex(
+      (task) => task.id === currentTaskId
+    );
+
+    const nextActiveIndex =
+      currentActiveIndex === -1
+        ? 0
+        : (currentActiveIndex + 1) % activeTasks.length;
+    const nextTask = activeTasks[nextActiveIndex];
+    const nextTaskIndex = focus.tasks.findIndex(
+      (task) => task.id === nextTask.id
+    );
+
+    dispatch(setCurrentTaskIndex(nextTaskIndex));
+  };
+
+  const handleDoneTask = () => {
+    const currentTask = focus.tasks[focus.currentTaskIndex];
+    if (currentTask) {
+      dispatch(
+        updateTask({ id: currentTask.id, updates: { completed: true } })
+      );
+      // Switch to next task if available
+      const activeTasks = focus.tasks.filter((task) => !task.completed);
+      if (activeTasks.length > 0) {
+        const nextTask = activeTasks[0];
+        const nextTaskIndex = focus.tasks.findIndex(
+          (task) => task.id === nextTask.id
+        );
+        dispatch(setCurrentTaskIndex(nextTaskIndex));
+      }
+    }
+  };
+
   const totalDuration = focus.settings[
     `${focus.timerMode}Duration` as keyof typeof focus.settings
   ] as number;
@@ -219,7 +259,9 @@ export default function FocusModeView() {
               whiteSpace: "nowrap",
               lineHeight: 1.2
             }}>
-            {currentTask?.name || "No task selected"}
+            {focus.tasks.filter((task) => !task.completed).length === 0
+              ? "Add a task"
+              : currentTask?.name || "No task selected"}
           </Typography>
           <Button
             size="small"
@@ -453,6 +495,7 @@ export default function FocusModeView() {
           <Button
             variant="text"
             startIcon={<CheckIcon fontSize="small" />}
+            onClick={handleDoneTask}
             sx={{
               color: "text.secondary",
               textTransform: "none",
@@ -465,6 +508,7 @@ export default function FocusModeView() {
           <Button
             variant="text"
             startIcon={<SwapHorizIcon fontSize="small" />}
+            onClick={handleSwitchTask}
             sx={{
               color: "text.primary",
               textTransform: "none",
