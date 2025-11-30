@@ -17,6 +17,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Checkbox from "@mui/material/Checkbox";
 import Chip from "@mui/material/Chip";
+import Fade from "@mui/material/Fade";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
@@ -30,24 +31,22 @@ import { Storage } from "@plasmohq/storage";
 
 import {
   breakEncouragementMessages,
+  FOCUS_VIEW_TRANSITION_DURATION,
   focusEncouragementMessages
 } from "~constants";
 import { sendNotification } from "~lib/notification";
 import { getRandomElement } from "~lib/utils";
 import {
-  addTodo,
   completeSession,
-  deleteTodo,
   pauseTimer,
   resetTimer,
-  setCurrentTask,
+  setCurrentTaskIndex,
   startTimer,
   switchMode,
-  tick,
-  toggleTodo,
-  type TimerMode
+  tick
 } from "~store/features/focus/focusSlice";
 import type { RootState } from "~store/store";
+import type { TimerMode } from "~types/focus";
 
 import ViewHeader from "../../components/view-header";
 import TaskSelectionView from "./TaskSelectionView";
@@ -92,11 +91,6 @@ export default function FocusModeView() {
 
   // Watch for storage changes from background timer
   useEffect(() => {
-    // TEMPORARY: Clear storage to load mock tasks (remove this after testing)
-    storage.remove("reduxState").then(() => {
-      console.log("Storage cleared - mock tasks will load");
-    });
-
     // Set up storage watcher once on mount
     storage.watch({
       reduxState: (change) => {
@@ -167,15 +161,8 @@ export default function FocusModeView() {
     dispatch(switchMode(mode));
   };
 
-  const handleAddTodo = () => {
-    if (newTodoText.trim()) {
-      dispatch(addTodo(newTodoText.trim()));
-      setNewTodoText("");
-    }
-  };
-
-  const handleTaskSelect = (taskId: string) => {
-    dispatch(setCurrentTask(taskId));
+  const handleTaskSelect = (taskIndex: number) => {
+    dispatch(setCurrentTaskIndex(taskIndex));
     setShowTaskSelection(false);
   };
 
@@ -204,27 +191,61 @@ export default function FocusModeView() {
     );
   }
 
+  const currentTask = focus.tasks[focus.currentTaskIndex];
+
   return (
-    <Box
-      sx={{ p: 1, height: "100%", display: "flex", flexDirection: "column" }}>
-      {/* Header with back button and mode name */}
+    <Fade in timeout={FOCUS_VIEW_TRANSITION_DURATION}>
+      <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+        {/* Current Task Title and Change Button */}
+        <Stack
+          direction="row"
+          spacing={0.5}
+          sx={{
+            mb: 0.25,
+            justifyContent: "space-between",
+            alignItems: "center",
+            px: 1,
+            py: 0
+          }}>
+          <Typography
+            variant="h6"
+            sx={{
+              color: "text.primary",
+              fontWeight: 500,
+              fontSize: "1.1rem",
+              flex: 1,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              lineHeight: 1.2
+            }}>
+            {currentTask?.name || "No task selected"}
+          </Typography>
+          <Button
+            size="small"
+            onClick={handleShowTaskSelection}
+            endIcon={<SwapHorizIcon sx={{ fontSize: 24 }} />}
+            sx={{
+              color: "text.secondary",
+              textTransform: "none",
+              fontSize: "0.875rem",
+              px: 1.5,
+              py: 0.25,
+              minWidth: "auto",
+              height: "auto",
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.08)"
+              }
+            }}>
+            Tasks
+          </Button>
+        </Stack>
 
-      {/* Current Task Title and Change Button */}
-
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{
-          mb: 2,
-          justifyContent: "center",
-          alignItems: "center",
-          px: 2
-        }}>
         {/* Pomodoro Cycles Indicator */}
         <Stack
           className="pomodoro-cycles"
           direction="row"
-          sx={{ justifyContent: "center", alignItems: "center" }}>
+          sx={{ justifyContent: "start", alignItems: "center", mb: 2, mt: 0 }}>
           {Array.from({ length: focus.settings.sessionsUntilLongBreak }).map(
             (_, index) => {
               const isCompleted = index < focus.sessionsCompleted;
@@ -232,15 +253,15 @@ export default function FocusModeView() {
                 <Box
                   key={index}
                   sx={{
-                    width: 36,
-                    height: 36,
+                    width: 28,
+                    height: 28,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center"
                   }}>
                   <svg
-                    width="20"
-                    height="20"
+                    width="16"
+                    height="16"
                     viewBox="0 0 32 32"
                     xmlns="http://www.w3.org/2000/svg">
                     <circle
@@ -259,262 +280,232 @@ export default function FocusModeView() {
             }
           )}
         </Stack>
-        <Typography
-          variant="body2"
+
+        <Stack
+          direction="row"
+          spacing={1}
           sx={{
-            color: "text.primary",
-            fontWeight: 500,
-            fontSize: "0.9rem",
-            flex: 1,
-            textAlign: "center",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap"
-          }}>
-          {focus.currentTaskId
-            ? focus.todos.find((todo) => todo.id === focus.currentTaskId)?.text
-            : focus.todos.find((todo) => !todo.completed)?.text ||
-              "No task selected"}
-        </Typography>
-        <Button
-          size="small"
-          onClick={handleShowTaskSelection}
-          endIcon={<SwapHorizIcon sx={{ fontSize: 24 }} />}
-          sx={{
-            color: "text.secondary",
-            textTransform: "none",
-            fontSize: "0.875rem",
-            px: 1.5,
-            py: 0.5,
-            minWidth: "auto",
-            "&:hover": {
-              backgroundColor: "rgba(255, 255, 255, 0.08)"
+            mb: 2,
+            alignItems: "center",
+            borderBottom: "1px solid rgba(255,255,255,0.1)"
+          }}></Stack>
+
+        {/* Mode Selector */}
+        <Stack
+          direction="row"
+          spacing={0.75}
+          sx={{ mb: 1.5, justifyContent: "center" }}>
+          <Chip
+            label="Deep Work"
+            onClick={() => handleModeSwitch("work")}
+            color={focus.timerMode === "work" ? "error" : "default"}
+            variant={focus.timerMode === "work" ? "filled" : "outlined"}
+            disabled={
+              focus.timerStatus === "running" && focus.timerMode !== "work"
             }
+            size="small"
+            sx={{ height: 24, fontSize: "0.75rem" }}
+          />
+          <Chip
+            label="Short Break"
+            onClick={() => handleModeSwitch("shortBreak")}
+            color={focus.timerMode === "shortBreak" ? "success" : "default"}
+            variant={focus.timerMode === "shortBreak" ? "filled" : "outlined"}
+            disabled={
+              focus.timerStatus === "running" &&
+              focus.timerMode !== "shortBreak"
+            }
+            size="small"
+            sx={{ height: 24, fontSize: "0.75rem" }}
+          />
+          <Chip
+            label="Long Break"
+            onClick={() => handleModeSwitch("longBreak")}
+            color={focus.timerMode === "longBreak" ? "primary" : "default"}
+            variant={focus.timerMode === "longBreak" ? "filled" : "outlined"}
+            disabled={
+              focus.timerStatus === "running" && focus.timerMode !== "longBreak"
+            }
+            size="small"
+            sx={{ height: 24, fontSize: "0.75rem" }}
+          />
+        </Stack>
+
+        {/* Timer Display with Circular Progress */}
+        <Box
+          sx={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            mb: 2
           }}>
-          Tasks
-        </Button>
-      </Stack>
+          <Box sx={{ position: "relative", display: "inline-flex", mb: 2 }}>
+            {/* Circular Progress Ring */}
+            <svg
+              width="220"
+              height="220"
+              style={{ transform: "rotate(-90deg)" }}>
+              {/* Background circle */}
+              <circle
+                cx="110"
+                cy="110"
+                r="100"
+                fill="none"
+                stroke="rgba(66, 165, 245, 0.2)"
+                strokeWidth="6"
+              />
+              {/* Progress circle */}
+              <circle
+                cx="110"
+                cy="110"
+                r="100"
+                fill="none"
+                stroke={modeColor}
+                strokeWidth="6"
+                strokeDasharray={`${2 * Math.PI * 100}`}
+                strokeDashoffset={`${2 * Math.PI * 100 * (1 - progress / 100)}`}
+                strokeLinecap="round"
+              />
+            </svg>
 
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{
-          mb: 2,
-          alignItems: "center",
-          borderBottom: "1px solid rgba(255,255,255,0.1)"
-        }}></Stack>
-
-      {/* Mode Selector */}
-      <Stack
-        direction="row"
-        spacing={0.75}
-        sx={{ mb: 1.5, justifyContent: "center" }}>
-        <Chip
-          label="Deep Work"
-          onClick={() => handleModeSwitch("work")}
-          color={focus.timerMode === "work" ? "error" : "default"}
-          variant={focus.timerMode === "work" ? "filled" : "outlined"}
-          disabled={
-            focus.timerStatus === "running" && focus.timerMode !== "work"
-          }
-          size="small"
-          sx={{ height: 24, fontSize: "0.75rem" }}
-        />
-        <Chip
-          label="Short Break"
-          onClick={() => handleModeSwitch("shortBreak")}
-          color={focus.timerMode === "shortBreak" ? "success" : "default"}
-          variant={focus.timerMode === "shortBreak" ? "filled" : "outlined"}
-          disabled={
-            focus.timerStatus === "running" && focus.timerMode !== "shortBreak"
-          }
-          size="small"
-          sx={{ height: 24, fontSize: "0.75rem" }}
-        />
-        <Chip
-          label="Long Break"
-          onClick={() => handleModeSwitch("longBreak")}
-          color={focus.timerMode === "longBreak" ? "primary" : "default"}
-          variant={focus.timerMode === "longBreak" ? "filled" : "outlined"}
-          disabled={
-            focus.timerStatus === "running" && focus.timerMode !== "longBreak"
-          }
-          size="small"
-          sx={{ height: 24, fontSize: "0.75rem" }}
-        />
-      </Stack>
-
-      {/* Timer Display with Circular Progress */}
-      <Box
-        sx={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          mb: 2
-        }}>
-        <Box sx={{ position: "relative", display: "inline-flex", mb: 2 }}>
-          {/* Circular Progress Ring */}
-          <svg width="220" height="220" style={{ transform: "rotate(-90deg)" }}>
-            {/* Background circle */}
-            <circle
-              cx="110"
-              cy="110"
-              r="100"
-              fill="none"
-              stroke="rgba(66, 165, 245, 0.2)"
-              strokeWidth="6"
-            />
-            {/* Progress circle */}
-            <circle
-              cx="110"
-              cy="110"
-              r="100"
-              fill="none"
-              stroke={modeColor}
-              strokeWidth="6"
-              strokeDasharray={`${2 * Math.PI * 100}`}
-              strokeDashoffset={`${2 * Math.PI * 100 * (1 - progress / 100)}`}
-              strokeLinecap="round"
-            />
-          </svg>
-
-          {/* Timer text in center */}
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              textAlign: "center"
-            }}>
-            <Typography
-              variant="h2"
+            {/* Timer text in center */}
+            <Box
               sx={{
-                fontWeight: 300,
-                fontSize: "3rem",
-                color: modeColor,
-                letterSpacing: "-0.02em"
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                textAlign: "center"
               }}>
-              {formatTime(focus.timeRemaining)}
-            </Typography>
+              <Typography
+                variant="h2"
+                sx={{
+                  fontWeight: 300,
+                  fontSize: "3rem",
+                  color: modeColor,
+                  letterSpacing: "-0.02em"
+                }}>
+                {formatTime(focus.timeRemaining)}
+              </Typography>
+            </Box>
           </Box>
+
+          {/* Control Buttons below timer */}
+          <Stack direction="row" spacing={1.5}>
+            {/* Stop button */}
+            <IconButton
+              onClick={handleReset}
+              sx={{
+                width: 48,
+                height: 48,
+                backgroundColor: modeColor,
+                color: "white",
+                "&:hover": {
+                  backgroundColor: modeColor,
+                  opacity: 0.9
+                }
+              }}>
+              <StopIcon sx={{ fontSize: 24 }} />
+            </IconButton>
+
+            {/* Play/Pause button */}
+            {focus.timerStatus === "running" ? (
+              <IconButton
+                onClick={handlePause}
+                sx={{
+                  width: 48,
+                  height: 48,
+                  backgroundColor: "white",
+                  color: modeColor,
+                  border: `2px solid ${modeColor}`,
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.9)"
+                  }
+                }}>
+                <PauseIcon sx={{ fontSize: 24 }} />
+              </IconButton>
+            ) : (
+              <IconButton
+                onClick={handleStart}
+                sx={{
+                  width: 48,
+                  height: 48,
+                  backgroundColor: "white",
+                  color: modeColor,
+                  border: `2px solid ${modeColor}`,
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.9)"
+                  }
+                }}>
+                <PlayArrowIcon sx={{ fontSize: 24 }} />
+              </IconButton>
+            )}
+          </Stack>
         </Box>
 
-        {/* Control Buttons below timer */}
-        <Stack direction="row" spacing={1.5}>
-          {/* Stop button */}
-          <IconButton
+        {/* Done and Switch Task buttons */}
+        <Stack
+          direction="row"
+          spacing={1.5}
+          sx={{ mb: 2, justifyContent: "center" }}>
+          <Button
+            variant="text"
+            startIcon={<CheckIcon fontSize="small" />}
+            sx={{
+              color: "text.secondary",
+              textTransform: "none",
+              fontSize: "0.8rem",
+              py: 0.5,
+              px: 1
+            }}>
+            Done
+          </Button>
+          <Button
+            variant="text"
+            startIcon={<SwapHorizIcon fontSize="small" />}
+            sx={{
+              color: "text.primary",
+              textTransform: "none",
+              fontSize: "0.8rem",
+              py: 0.5,
+              px: 1
+            }}>
+            Switch task
+          </Button>
+        </Stack>
+
+        {/* Reset Session button at bottom */}
+        <Box
+          sx={{
+            borderTop: "1px solid rgba(255,255,255,0.1)",
+            pt: 1.5,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+          <Button
+            variant="text"
+            startIcon={<RefreshIcon fontSize="small" />}
             onClick={handleReset}
             sx={{
-              width: 48,
-              height: 48,
-              backgroundColor: modeColor,
-              color: "white",
-              "&:hover": {
-                backgroundColor: modeColor,
-                opacity: 0.9
-              }
+              color: "text.secondary",
+              textTransform: "none",
+              fontSize: "0.75rem",
+              py: 0.5,
+              px: 1
             }}>
-            <StopIcon sx={{ fontSize: 24 }} />
-          </IconButton>
-
-          {/* Play/Pause button */}
-          {focus.timerStatus === "running" ? (
-            <IconButton
-              onClick={handlePause}
-              sx={{
-                width: 48,
-                height: 48,
-                backgroundColor: "white",
-                color: modeColor,
-                border: `2px solid ${modeColor}`,
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.9)"
-                }
-              }}>
-              <PauseIcon sx={{ fontSize: 24 }} />
-            </IconButton>
-          ) : (
-            <IconButton
-              onClick={handleStart}
-              sx={{
-                width: 48,
-                height: 48,
-                backgroundColor: "white",
-                color: modeColor,
-                border: `2px solid ${modeColor}`,
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.9)"
-                }
-              }}>
-              <PlayArrowIcon sx={{ fontSize: 24 }} />
-            </IconButton>
-          )}
-        </Stack>
+            Reset Session
+          </Button>
+          <Typography
+            variant="caption"
+            color="textSecondary"
+            sx={{ fontSize: "0.75rem" }}>
+            {focus.sessionsCompleted} / {focus.settings.sessionsUntilLongBreak}
+          </Typography>
+        </Box>
       </Box>
-
-      {/* Done and Switch Task buttons */}
-      <Stack
-        direction="row"
-        spacing={1.5}
-        sx={{ mb: 2, justifyContent: "center" }}>
-        <Button
-          variant="text"
-          startIcon={<CheckIcon fontSize="small" />}
-          sx={{
-            color: "text.secondary",
-            textTransform: "none",
-            fontSize: "0.8rem",
-            py: 0.5,
-            px: 1
-          }}>
-          Done
-        </Button>
-        <Button
-          variant="text"
-          startIcon={<SwapHorizIcon fontSize="small" />}
-          sx={{
-            color: "text.primary",
-            textTransform: "none",
-            fontSize: "0.8rem",
-            py: 0.5,
-            px: 1
-          }}>
-          Switch task
-        </Button>
-      </Stack>
-
-      {/* Reset Session button at bottom */}
-      <Box
-        sx={{
-          borderTop: "1px solid rgba(255,255,255,0.1)",
-          pt: 1.5,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between"
-        }}>
-        <Button
-          variant="text"
-          startIcon={<RefreshIcon fontSize="small" />}
-          onClick={handleReset}
-          sx={{
-            color: "text.secondary",
-            textTransform: "none",
-            fontSize: "0.75rem",
-            py: 0.5,
-            px: 1
-          }}>
-          Reset Session
-        </Button>
-        <Typography
-          variant="caption"
-          color="textSecondary"
-          sx={{ fontSize: "0.75rem" }}>
-          {focus.sessionsCompleted} / {focus.settings.sessionsUntilLongBreak}
-        </Typography>
-      </Box>
-    </Box>
+    </Fade>
   );
 }

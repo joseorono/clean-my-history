@@ -118,3 +118,6 @@ export const breakEncouragementMessages: string[] = [
   "Stand up, stretch, and enjoy a short break.",
   "Pause and reset—your next focus block will be even better."
 ];
+
+// Focus mode animation constants
+export const FOCUS_VIEW_TRANSITION_DURATION = 300; // milliseconds
