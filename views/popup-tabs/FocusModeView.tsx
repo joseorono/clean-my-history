@@ -222,6 +222,7 @@ export default function FocusModeView() {
         }}>
         {/* Pomodoro Cycles Indicator */}
         <Stack
+          className="pomodoro-cycles"
           direction="row"
           sx={{ justifyContent: "center", alignItems: "center" }}>
           {Array.from({ length: focus.settings.sessionsUntilLongBreak }).map(
