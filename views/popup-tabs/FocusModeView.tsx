@@ -334,6 +334,7 @@ export default function FocusModeView() {
 
         {/* Mode Selector */}
         <Stack
+          id="modeSelectorBottons"
           direction="row"
           spacing={0.75}
           sx={{ mb: 1.5, justifyContent: "center" }}>

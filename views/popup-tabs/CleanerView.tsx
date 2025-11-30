@@ -1,11 +1,12 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Checkbox from "@mui/material/Checkbox";
 import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import Chip from "@mui/material/Chip";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Stack from "@mui/material/Stack";
 import React, { useState } from "react";
 
 import ViewHeader from "../../components/view-header";
@@ -58,20 +59,25 @@ export default function CleanerView() {
   const [debugMessage, setDebugMessage] = useState<string>("");
   const [timeRange, setTimeRange] = useState<TimeRange>("24hours");
   const [onlyMatchingResults, setOnlyMatchingResults] = useState<boolean>(true);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleTimeRangeChange = (
-    _event: React.MouseEvent<HTMLElement>,
-    newTimeRange: TimeRange | null
-  ): void => {
-    if (newTimeRange !== null) {
-      setTimeRange(newTimeRange);
-    }
+  const handleTimeRangeChange = (newTimeRange: TimeRange): void => {
+    setTimeRange(newTimeRange);
+    setAnchorEl(null);
+  };
+
+  const handleMoreClick = (event: React.MouseEvent<HTMLElement>): void => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = (): void => {
+    setAnchorEl(null);
   };
 
   const handleCleanHistory = async (): Promise<boolean> => {
     try {
       setDebugMessage("Cleaning history...");
-      await cleanAllHistory();
+      await cleanAllHistory(timeRange);
       setDebugMessage("History cleaned successfully!");
       return true;
     } catch (error) {
@@ -91,111 +97,162 @@ export default function CleanerView() {
           subtitle="Delete all your browsing history, cookies, cache, and tabs"
         />
 
-        {/* Time Range Toggle Buttons */}
-        <Box className="mb-6 rounded border border-gray-700 bg-gray-800 p-4">
-          <Typography variant="subtitle2" className="mb-3 block text-gray-300">
-            Time Range
-          </Typography>
-          <ToggleButtonGroup
-            value={timeRange}
-            exclusive
-            onChange={handleTimeRangeChange}
-            className="flex flex-wrap gap-2"
-            sx={{
-              "& .MuiToggleButton-root": {
-                color: "#9ca3af",
-                borderColor: "#4b5563",
-                "&.Mui-selected": {
-                  backgroundColor: "#1e40af",
-                  color: "#fff",
-                  borderColor: "#1e40af",
-                  "&:hover": {
-                    backgroundColor: "#1e3a8a",
-                  },
-                },
-                "&:hover": {
-                  backgroundColor: "rgba(30, 64, 175, 0.1)",
-                },
-              },
-            }}>
-            <ToggleButton value="15min">Last 15 min</ToggleButton>
-            <ToggleButton value="1hour">Last hour</ToggleButton>
-            <ToggleButton value="24hours">Last 24 hours</ToggleButton>
-            <ToggleButton value="7days">Last 7 days</ToggleButton>
-            <ToggleButton value="30days">Last 30 days</ToggleButton>
-            <ToggleButton value="1year">Last year</ToggleButton>
-          </ToggleButtonGroup>
-        </Box>
+        {/* Time Range Selector */}
+        <Stack
+          direction="row"
+          spacing={0.75}
+          sx={{ mb: 2, justifyContent: "flex-start", flexWrap: "wrap" }}>
+          <Chip
+            label="Last 15 min"
+            onClick={() => handleTimeRangeChange("15min")}
+            color={timeRange === "15min" ? "primary" : "default"}
+            variant={timeRange === "15min" ? "filled" : "outlined"}
+            size="small"
+            sx={{ height: 24, fontSize: "0.75rem" }}
+          />
+          <Chip
+            label="Last hour"
+            onClick={() => handleTimeRangeChange("1hour")}
+            color={timeRange === "1hour" ? "primary" : "default"}
+            variant={timeRange === "1hour" ? "filled" : "outlined"}
+            size="small"
+            sx={{ height: 24, fontSize: "0.75rem" }}
+          />
+          <Chip
+            label="Last 24 hours"
+            onClick={() => handleTimeRangeChange("24hours")}
+            color={timeRange === "24hours" ? "primary" : "default"}
+            variant={timeRange === "24hours" ? "filled" : "outlined"}
+            size="small"
+            sx={{ height: 24, fontSize: "0.75rem" }}
+          />
+          <Chip
+            label="More"
+            onClick={handleMoreClick}
+            color="default"
+            variant="outlined"
+            size="small"
+            sx={{ height: 24, fontSize: "0.75rem" }}
+          />
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}>
+            <MenuItem onClick={() => handleTimeRangeChange("7days")}>
+              Last 7 days
+            </MenuItem>
+            <MenuItem onClick={() => handleTimeRangeChange("30days")}>
+              Last 30 days
+            </MenuItem>
+            <MenuItem onClick={() => handleTimeRangeChange("1year")}>
+              Last year
+            </MenuItem>
+          </Menu>
+        </Stack>
 
-        {/* Only Matching Results Checkbox */}
-        <Box className="mb-6 rounded border border-gray-700 bg-gray-800 p-4">
-          <Tooltip
-            title="Only delete history entries that match your configured keywords"
-            arrow
-            placement="top">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={onlyMatchingResults}
-                  onChange={(e) => setOnlyMatchingResults(e.target.checked)}
-                  sx={{
-                    color: "#9ca3af",
-                    "&.Mui-checked": {
-                      color: "#1e40af",
-                    },
-                  }}
-                />
-              }
-              label="Only matching results"
+        {/* Cleaning items list */}
+        <Box className="space-y-4">
+          {/* Browsing History */}
+          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-4">
+            <Checkbox
+              defaultChecked
               sx={{
-                color: "#e5e7eb",
-                "& .MuiFormControlLabel-label": {
-                  fontSize: "0.95rem",
+                color: "#9ca3af",
+                "&.Mui-checked": {
+                  color: "#1e40af",
                 },
               }}
             />
-          </Tooltip>
+            <Box className="flex-1">
+              <Typography variant="subtitle2" className="font-semibold text-white">
+                Browsing history
+              </Typography>
+              <Typography variant="body2" className="text-gray-400">
+                From github.com and 2 more sites (and more on synced devices)
+              </Typography>
+            </Box>
+          </Box>
+
+          {/* Cookies and site data */}
+          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-4">
+            <Checkbox
+              defaultChecked
+              sx={{
+                color: "#9ca3af",
+                "&.Mui-checked": {
+                  color: "#1e40af",
+                },
+              }}
+            />
+            <Box className="flex-1">
+              <Typography variant="subtitle2" className="font-semibold text-white">
+                Cookies and site data
+              </Typography>
+              <Typography variant="body2" className="text-gray-400">
+                From 147 sites. To delete Google cookies from this device, use Chrome settings.
+              </Typography>
+            </Box>
+          </Box>
+
+          {/* Cached images and files */}
+          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-4">
+            <Checkbox
+              defaultChecked
+              sx={{
+                color: "#9ca3af",
+                "&.Mui-checked": {
+                  color: "#1e40af",
+                },
+              }}
+            />
+            <Box className="flex-1">
+              <Typography variant="subtitle2" className="font-semibold text-white">
+                Cached images and files
+              </Typography>
+              <Typography variant="body2" className="text-gray-400">
+                Less than 317 MB
+              </Typography>
+            </Box>
+          </Box>
+
+          {/* Download history */}
+          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-4">
+            <Checkbox
+              defaultChecked
+              sx={{
+                color: "#9ca3af",
+                "&.Mui-checked": {
+                  color: "#1e40af",
+                },
+              }}
+            />
+            <Box className="flex-1">
+              <Typography variant="subtitle2" className="font-semibold text-white">
+                Download history
+              </Typography>
+              <Typography variant="body2" className="text-gray-400">
+                None
+              </Typography>
+            </Box>
+          </Box>
         </Box>
 
         {/* Debug message */}
         {debugMessage && (
-          <Box className="mb-4 rounded border border-gray-700 bg-gray-800 p-2">
+          <Box className="mt-4 rounded border border-gray-700 bg-gray-800 p-2">
             <Typography variant="body2">{debugMessage}</Typography>
           </Box>
         )}
 
-        {/* Just one button for testing */}
-        <Box className="mb-4 rounded border border-gray-700 bg-gray-800 p-4">
-          <div className="flex flex-wrap gap-4 py-4">
-            <TaskButton
-              text="Clear History"
-              successText="History cleared successfully"
-              errorText="Failed to clear history"
-              fnQuery={handleCleanHistory}
-              disabled={false}
-            />
-            <TaskButton
-              text="Clear Tabs"
-              successText="Tabs cleared successfully"
-              errorText="Failed to clear tabs"
-              fnQuery={() => {}}
-              disabled={false}
-            />
-            <TaskButton
-              text="Clear Cookies"
-              successText="Cookies cleared successfully"
-              errorText="Failed to clear cookies"
-              fnQuery={() => {}}
-              disabled={false}
-            />
-            <TaskButton
-              text="Clear Cache"
-              successText="Cache cleared successfully"
-              errorText="Failed to clear cache"
-              fnQuery={() => {}}
-              disabled={false}
-            />
-          </div>
+        {/* Action button */}
+        <Box className="mt-6">
+          <TaskButton
+            text="Clear Data"
+            successText="Data cleared successfully"
+            errorText="Failed to clear data"
+            fnQuery={handleCleanHistory}
+            disabled={false}
+          />
         </Box>
       </Box>
     </ErrorBoundary>
