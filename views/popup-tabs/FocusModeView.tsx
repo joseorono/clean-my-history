@@ -178,6 +178,88 @@ export default function FocusModeView() {
       sx={{ p: 1, height: "100%", display: "flex", flexDirection: "column" }}>
       {/* Header with back button and mode name */}
 
+      {/* Current Task Title and Change Button */}
+
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{
+          mb: 2,
+          justifyContent: "center",
+          alignItems: "center",
+          px: 2
+        }}>
+        {/* Pomodoro Cycles Indicator */}
+        <Stack
+          direction="row"
+          sx={{ justifyContent: "center", alignItems: "center" }}>
+          {Array.from({ length: focus.settings.sessionsUntilLongBreak }).map(
+            (_, index) => {
+              const isCompleted = index < focus.sessionsCompleted;
+              return (
+                <Box
+                  key={index}
+                  sx={{
+                    width: 36,
+                    height: 36,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 32 32"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <circle
+                      cx="16"
+                      cy="16"
+                      r="11"
+                      fill={isCompleted ? modeColor : "none"}
+                      stroke={modeColor}
+                      strokeWidth="3"
+                      strokeMiterlimit="10"
+                      opacity={isCompleted ? 1 : 0.4}
+                    />
+                  </svg>
+                </Box>
+              );
+            }
+          )}
+        </Stack>
+        <Typography
+          variant="body2"
+          sx={{
+            color: "text.primary",
+            fontWeight: 500,
+            fontSize: "0.9rem",
+            flex: 1,
+            textAlign: "center",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap"
+          }}>
+          {focus.todos.find((todo) => !todo.completed)?.text ||
+            "No task selected"}
+        </Typography>
+        <Button
+          size="small"
+          endIcon={<SwapHorizIcon sx={{ fontSize: 24 }} />}
+          sx={{
+            color: "text.secondary",
+            textTransform: "none",
+            fontSize: "0.875rem",
+            px: 1.5,
+            py: 0.5,
+            minWidth: "auto",
+            "&:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.08)"
+            }
+          }}>
+          Tasks
+        </Button>
+      </Stack>
+
       <Stack
         direction="row"
         spacing={1}
