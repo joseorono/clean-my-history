@@ -40,6 +40,7 @@ import {
   deleteTodo,
   pauseTimer,
   resetTimer,
+  setCurrentTask,
   startTimer,
   switchMode,
   tick,
@@ -49,6 +50,7 @@ import {
 import type { RootState } from "~store/store";
 
 import ViewHeader from "../../components/view-header";
+import TaskSelectionView from "./TaskSelectionView";
 
 const formatTime = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
@@ -86,9 +88,15 @@ export default function FocusModeView() {
   const focus = useSelector((state: RootState) => state.focus);
   const [newTodoText, setNewTodoText] = useState("");
   const [autoBreak, setAutoBreak] = useState(false);
+  const [showTaskSelection, setShowTaskSelection] = useState(false);
 
   // Watch for storage changes from background timer
   useEffect(() => {
+    // TEMPORARY: Clear storage to load mock tasks (remove this after testing)
+    storage.remove("reduxState").then(() => {
+      console.log("Storage cleared - mock tasks will load");
+    });
+
     // Set up storage watcher once on mount
     storage.watch({
       reduxState: (change) => {
@@ -166,12 +174,35 @@ export default function FocusModeView() {
     }
   };
 
+  const handleTaskSelect = (taskId: string) => {
+    dispatch(setCurrentTask(taskId));
+    setShowTaskSelection(false);
+  };
+
+  const handleShowTaskSelection = () => {
+    setShowTaskSelection(true);
+  };
+
+  const handleBackToTimer = () => {
+    setShowTaskSelection(false);
+  };
+
   const totalDuration = focus.settings[
     `${focus.timerMode}Duration` as keyof typeof focus.settings
   ] as number;
   const progress =
     ((totalDuration - focus.timeRemaining) / totalDuration) * 100;
   const modeColor = getModeColor(focus.timerMode);
+
+  // Show task selection view if active
+  if (showTaskSelection) {
+    return (
+      <TaskSelectionView
+        onTaskSelect={handleTaskSelect}
+        onTimerClick={handleBackToTimer}
+      />
+    );
+  }
 
   return (
     <Box
@@ -239,11 +270,14 @@ export default function FocusModeView() {
             textOverflow: "ellipsis",
             whiteSpace: "nowrap"
           }}>
-          {focus.todos.find((todo) => !todo.completed)?.text ||
-            "No task selected"}
+          {focus.currentTaskId
+            ? focus.todos.find((todo) => todo.id === focus.currentTaskId)?.text
+            : focus.todos.find((todo) => !todo.completed)?.text ||
+              "No task selected"}
         </Typography>
         <Button
           size="small"
+          onClick={handleShowTaskSelection}
           endIcon={<SwapHorizIcon sx={{ fontSize: 24 }} />}
           sx={{
             color: "text.secondary",

@@ -17,6 +17,7 @@ export interface FocusState {
   timeRemaining: number;
   sessionsCompleted: number;
   currentSessionStartTime: number | null;
+  currentTaskId: string | null;
   todos: Todo[];
   settings: {
     workDuration: number;
@@ -32,7 +33,27 @@ const initialState: FocusState = {
   timeRemaining: 25 * 60,
   sessionsCompleted: 0,
   currentSessionStartTime: null,
-  todos: [],
+  currentTaskId: null,
+  todos: [
+    {
+      id: "1",
+      text: "Task 1",
+      completed: false,
+      createdAt: Date.now() - 3000
+    },
+    {
+      id: "2",
+      text: "Task 2",
+      completed: false,
+      createdAt: Date.now() - 2000
+    },
+    {
+      id: "3",
+      text: "Task 3",
+      completed: false,
+      createdAt: Date.now() - 1000
+    }
+  ],
   settings: {
     workDuration: 25 * 60,
     shortBreakDuration: 5 * 60,
@@ -45,11 +66,19 @@ export const focusSlice = createSlice({
   name: "focus",
   initialState,
   reducers: {
-    initializeFromStorage: (state, action: PayloadAction<any>) => {
+    initializeFromStorage: (
+      state,
+      action: PayloadAction<{ focus?: Partial<FocusState> }>
+    ) => {
       if (action.payload?.focus) {
         const savedFocus = action.payload.focus;
-        if (savedFocus.todos) {
-          state.todos = savedFocus.todos;
+        if (savedFocus.todos !== undefined) {
+          // If saved todos is empty and we have mock data, keep the mock data
+          if (savedFocus.todos.length === 0 && state.todos.length > 0) {
+            // Keep the initial mock tasks
+          } else {
+            state.todos = savedFocus.todos;
+          }
         }
         if (savedFocus.sessionsCompleted !== undefined) {
           state.sessionsCompleted = savedFocus.sessionsCompleted;
@@ -69,6 +98,9 @@ export const focusSlice = createSlice({
         }
         if (savedFocus.currentSessionStartTime !== undefined) {
           state.currentSessionStartTime = savedFocus.currentSessionStartTime;
+        }
+        if (savedFocus.currentTaskId !== undefined) {
+          state.currentTaskId = savedFocus.currentTaskId;
         }
       }
     },
@@ -147,6 +179,13 @@ export const focusSlice = createSlice({
 
     deleteTodo: (state, action: PayloadAction<string>) => {
       state.todos = state.todos.filter((t) => t.id !== action.payload);
+      if (state.currentTaskId === action.payload) {
+        state.currentTaskId = null;
+      }
+    },
+
+    setCurrentTask: (state, action: PayloadAction<string | null>) => {
+      state.currentTaskId = action.payload;
     },
 
     updateSettings: (
@@ -176,6 +215,7 @@ export const {
   addTodo,
   toggleTodo,
   deleteTodo,
+  setCurrentTask,
   updateSettings
 } = focusSlice.actions;
 
