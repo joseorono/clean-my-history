@@ -168,9 +168,9 @@ export default function CleanerView() {
         </Stack>
 
         {/* Cleaning items list */}
-        <Box className="space-y-4">
+        <Box className="space-y-2">
           {/* Browsing History */}
-          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-4">
+          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-3">
             <Checkbox
               defaultChecked
               sx={{
@@ -191,7 +191,7 @@ export default function CleanerView() {
           </Box>
 
           {/* Cookies and site data */}
-          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-4">
+          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-3">
             <Checkbox
               defaultChecked
               sx={{
@@ -212,7 +212,7 @@ export default function CleanerView() {
           </Box>
 
           {/* Cached images and files */}
-          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-4">
+          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-3">
             <Checkbox
               defaultChecked
               sx={{
@@ -233,7 +233,7 @@ export default function CleanerView() {
           </Box>
 
           {/* Download history */}
-          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-4">
+          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-3">
             <Checkbox
               defaultChecked
               sx={{
@@ -262,7 +262,7 @@ export default function CleanerView() {
         )}
 
         {/* Action button */}
-        <Box className="mt-6">
+        <Box className="mt-2">
           <TaskButton
             text="Clear Data"
             successText="Data cleared successfully"
