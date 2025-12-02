@@ -47,7 +47,9 @@ export default function PopUpLayout() {
 
   return (
     <>
-      <div id="popup-tabs">
+      <Box
+        id="popup-tabs"
+        sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
         <Paper elevation={2} sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={value}
@@ -93,19 +95,21 @@ export default function PopUpLayout() {
           </Tabs>
         </Paper>
 
-        <CustomTabPanel value={value} index={0}>
-          <FocusModeView />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          <SessionCleanerView />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={2}>
-          <CleanerView />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={3}>
-          <SettingsView />
-        </CustomTabPanel>
-      </div>
+        <Box id="tabViewContainer" sx={{ flex: 1, overflowY: "auto" }}>
+          <CustomTabPanel value={value} index={0}>
+            <FocusModeView />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={1}>
+            <SessionCleanerView />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={2}>
+            <CleanerView />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={3}>
+            <SettingsView />
+          </CustomTabPanel>
+        </Box>
+      </Box>
     </>
   );
 }
