@@ -39,4 +39,46 @@
 
 body {
   font-family: "Roboto", sans-serif;
+  margin: 0;
+    overflow: hidden;
+}
+
+/* Global Scrollbar Styling */
+:root {
+  --scrollbar-bg: rgba(255, 255, 255, 0.04);
+  --scrollbar-thumb: rgb(144, 202, 249);
+  --scrollbar-thumb-hover: rgb(187, 222, 251);
+  --scrollbar-corner: transparent;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+/* WebKit (Chrome/Edge) */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg);
+  border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
+*::-webkit-scrollbar-corner {
+  background: var(--scrollbar-corner);
 }
