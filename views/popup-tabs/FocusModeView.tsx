@@ -1,3 +1,4 @@
+import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CheckIcon from "@mui/icons-material/Check";
@@ -237,100 +238,97 @@ export default function FocusModeView() {
     <Fade in timeout={FOCUS_VIEW_TRANSITION_DURATION}>
       <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
         {/* Current Task Title and Change Button */}
-        <Stack
-          direction="row"
-          spacing={0.5}
-          sx={{
-            mb: 0.25,
-            justifyContent: "space-between",
-            alignItems: "center",
-            px: 1,
-            py: 0
-          }}>
-          <Typography
-            variant="h6"
+        <div id="focus-mode-top-bar">
+          <Stack
+            direction="row"
+            spacing={0.75}
             sx={{
-              color: "text.primary",
-              fontWeight: 500,
-              fontSize: "1.1rem",
-              flex: 1,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-              lineHeight: 1.2
+              mb: 1,
+              justifyContent: "space-between",
+              alignItems: "center",
+              px: 1,
+              py: 0,
+              height: 32
             }}>
-            {focus.tasks.filter((task) => !task.completed).length === 0
-              ? "Add a task"
-              : currentTask?.name || "No task selected"}
-          </Typography>
-          <Button
-            size="small"
-            onClick={handleShowTaskSelection}
-            endIcon={<SwapHorizIcon sx={{ fontSize: 24 }} />}
+            <Typography
+              variant="h6"
+              sx={{
+                color: "text.primary",
+                fontWeight: 500,
+                fontSize: "1.1rem",
+                flex: 1,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                lineHeight: 1,
+                display: "flex",
+                alignItems: "center"
+              }}>
+              {focus.tasks.filter((task) => !task.completed).length === 0
+                ? "Add a task"
+                : currentTask?.name || "No task selected"}
+            </Typography>
+            <Button
+              size="small"
+              onClick={handleShowTaskSelection}
+              endIcon={<SwapHorizIcon sx={{ fontSize: 20 }} />}
+              sx={{
+                color: "text.secondary",
+                textTransform: "none",
+                fontSize: "0.8rem",
+                px: 1,
+                py: 0,
+                minWidth: "auto",
+                height: 32,
+                display: "flex",
+                alignItems: "center",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.08)"
+                }
+              }}>
+              Tasks
+            </Button>
+          </Stack>
+          {/* Pomodoro Cycles Indicator */}
+          <Stack
+            id="pomodoro-cycles"
+            direction="row"
             sx={{
-              color: "text.secondary",
-              textTransform: "none",
-              fontSize: "0.875rem",
-              px: 1.5,
-              py: 0.25,
-              minWidth: "auto",
-              height: "auto",
-              "&:hover": {
-                backgroundColor: "rgba(255, 255, 255, 0.08)"
-              }
+              justifyContent: "start",
+              alignItems: "center",
+              pb: 0.75,
+              mb: 1,
+              mt: 0,
+              gap: 0.25,
+              px: 1,
+              borderBottom: "1px solid rgba(255,255,255,0.1)"
             }}>
-            Tasks
-          </Button>
-        </Stack>
-
-        {/* Pomodoro Cycles Indicator */}
-        <Stack
-          className="pomodoro-cycles"
-          direction="row"
-          sx={{ justifyContent: "start", alignItems: "center", mb: 2, mt: 0 }}>
-          {Array.from({ length: focus.settings.sessionsUntilLongBreak }).map(
-            (_, index) => {
-              const isCompleted = index < focus.sessionsCompleted;
-              return (
-                <Box
-                  key={index}
-                  sx={{
-                    width: 28,
-                    height: 28,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center"
-                  }}>
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 32 32"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <circle
-                      cx="16"
-                      cy="16"
-                      r="11"
-                      fill={isCompleted ? modeColor : "none"}
-                      stroke={modeColor}
-                      strokeWidth="3"
-                      strokeMiterlimit="10"
-                      opacity={isCompleted ? 1 : 0.4}
+            {Array.from({ length: focus.settings.sessionsUntilLongBreak }).map(
+              (_, index) => {
+                const isCompleted = index < focus.sessionsCompleted;
+                return (
+                  <Box
+                    key={index}
+                    sx={{
+                      width: 20,
+                      height: 20,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}>
+                    <AccessAlarmIcon
+                      sx={{
+                        fontSize: 16,
+                        color: modeColor,
+                        opacity: isCompleted ? 1 : 0.4
+                      }}
                     />
-                  </svg>
-                </Box>
-              );
-            }
-          )}
-        </Stack>
-
-        <Stack
-          direction="row"
-          spacing={1}
-          sx={{
-            mb: 2,
-            alignItems: "center",
-            borderBottom: "1px solid rgba(255,255,255,0.1)"
-          }}></Stack>
+                  </Box>
+                );
+              }
+            )}
+          </Stack>
+        </div>
 
         {/* Mode Selector */}
         <Stack
