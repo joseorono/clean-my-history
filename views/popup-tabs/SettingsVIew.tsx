@@ -1,9 +1,10 @@
+import Button from "@mui/material/Button";
 import { useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import ViewHeader from "../../components/view-header";
 import { badKeyboardCategories } from "~constants";
 import type { BadKeyboardCategory } from "~constants";
+import { openOnboardingTab } from "~lib/utils";
 import {
   addCustomKeyword,
   addWhitelistedDomain,
@@ -15,6 +16,8 @@ import {
 } from "~store/features/settings/settingsSlice";
 import type { RootState } from "~store/store";
 import formatCategoryLabel from "~utils/format-category-label";
+
+import ViewHeader from "../../components/view-header";
 
 export default function SettingsView() {
   const dispatch = useDispatch();
@@ -63,6 +66,15 @@ export default function SettingsView() {
         title="Settings"
         subtitle="Configure which content to clean from your browser"
       />
+
+      <div className="mb-3 flex justify-end">
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => openOnboardingTab()}>
+          Go to Onboarding
+        </Button>
+      </div>
 
       {/* Categories Section */}
       <div className="mb-4 rounded-lg border border-gray-700 bg-gray-800 p-4">
