@@ -49,7 +49,13 @@ export default function PopUpLayout() {
     <>
       <Box
         id="popup-tabs"
-        sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+          minHeight: 0,
+          overflow: "hidden"
+        }}>
         <Paper elevation={2} sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={value}
