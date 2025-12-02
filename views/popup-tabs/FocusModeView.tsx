@@ -297,9 +297,11 @@ export default function FocusModeView() {
               justifyContent: "start",
               alignItems: "center",
               mt: 0,
-              mb: 0.5,
+              pb: 0.75,
+              mb: 1,
               gap: 0.25,
-              px: 1
+              px: 1,
+              borderBottom: "1px solid rgba(255,255,255,0.1)"
             }}>
             {Array.from({ length: focus.settings.sessionsUntilLongBreak }).map(
               (_, index) => {
