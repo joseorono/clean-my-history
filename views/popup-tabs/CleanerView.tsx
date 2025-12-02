@@ -171,48 +171,78 @@ export default function CleanerView() {
         </Stack>
 
         {/* Cleaning items list */}
-        <Box className="space-y-2">
+        <Box sx={{ mt: 2 }}>
           {/* Browsing History */}
-          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-3">
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 1.5,
+              p: 1.5,
+              borderRadius: 2,
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+              backgroundColor: "rgba(255, 255, 255, 0.05)",
+              transition: "all 0.2s ease",
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.08)"
+              }
+            }}>
             <Checkbox
               defaultChecked
+              size="small"
               sx={{
-                color: "#9ca3af",
+                color: "text.secondary",
+                p: 0.5,
                 "&.Mui-checked": {
-                  color: "#1e40af"
+                  color: "primary.main"
                 }
               }}
             />
-            <Box className="flex-1">
+            <Box sx={{ flex: 1 }}>
               <Typography
                 variant="subtitle2"
-                className="font-semibold text-white">
+                sx={{ fontWeight: 600, color: "text.primary" }}>
                 Browsing history
               </Typography>
-              <Typography variant="body2" className="text-gray-400">
+              <Typography variant="body2" sx={{ color: "text.secondary", fontSize: "0.8rem" }}>
                 From github.com and 2 more sites (and more on synced devices)
               </Typography>
             </Box>
           </Box>
 
           {/* Cookies and site data */}
-          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-3">
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 1.5,
+              p: 1.5,
+              borderRadius: 2,
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+              backgroundColor: "rgba(255, 255, 255, 0.05)",
+              transition: "all 0.2s ease",
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.08)"
+              }
+            }}>
             <Checkbox
               defaultChecked
+              size="small"
               sx={{
-                color: "#9ca3af",
+                color: "text.secondary",
+                p: 0.5,
                 "&.Mui-checked": {
-                  color: "#1e40af"
+                  color: "primary.main"
                 }
               }}
             />
-            <Box className="flex-1">
+            <Box sx={{ flex: 1 }}>
               <Typography
                 variant="subtitle2"
-                className="font-semibold text-white">
+                sx={{ fontWeight: 600, color: "text.primary" }}>
                 Cookies and site data
               </Typography>
-              <Typography variant="body2" className="text-gray-400">
+              <Typography variant="body2" sx={{ color: "text.secondary", fontSize: "0.8rem" }}>
                 From 147 sites. To delete Google cookies from this device, use
                 Chrome settings.
               </Typography>
@@ -220,46 +250,76 @@ export default function CleanerView() {
           </Box>
 
           {/* Cached images and files */}
-          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-3">
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 1.5,
+              p: 1.5,
+              borderRadius: 2,
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+              backgroundColor: "rgba(255, 255, 255, 0.05)",
+              transition: "all 0.2s ease",
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.08)"
+              }
+            }}>
             <Checkbox
               defaultChecked
+              size="small"
               sx={{
-                color: "#9ca3af",
+                color: "text.secondary",
+                p: 0.5,
                 "&.Mui-checked": {
-                  color: "#1e40af"
+                  color: "primary.main"
                 }
               }}
             />
-            <Box className="flex-1">
+            <Box sx={{ flex: 1 }}>
               <Typography
                 variant="subtitle2"
-                className="font-semibold text-white">
+                sx={{ fontWeight: 600, color: "text.primary" }}>
                 Cached images and files
               </Typography>
-              <Typography variant="body2" className="text-gray-400">
+              <Typography variant="body2" sx={{ color: "text.secondary", fontSize: "0.8rem" }}>
                 Less than 317 MB
               </Typography>
             </Box>
           </Box>
 
           {/* Download history */}
-          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-3">
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 1.5,
+              p: 1.5,
+              borderRadius: 2,
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+              backgroundColor: "rgba(255, 255, 255, 0.05)",
+              transition: "all 0.2s ease",
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.08)"
+              }
+            }}>
             <Checkbox
               defaultChecked
+              size="small"
               sx={{
-                color: "#9ca3af",
+                color: "text.secondary",
+                p: 0.5,
                 "&.Mui-checked": {
-                  color: "#1e40af"
+                  color: "primary.main"
                 }
               }}
             />
-            <Box className="flex-1">
+            <Box sx={{ flex: 1 }}>
               <Typography
                 variant="subtitle2"
-                className="font-semibold text-white">
+                sx={{ fontWeight: 600, color: "text.primary" }}>
                 Download history
               </Typography>
-              <Typography variant="body2" className="text-gray-400">
+              <Typography variant="body2" sx={{ color: "text.secondary", fontSize: "0.8rem" }}>
                 None
               </Typography>
             </Box>
@@ -268,7 +328,7 @@ export default function CleanerView() {
 
         {/* Debug message */}
         {debugMessage && (
-          <Box className="mt-4 rounded border border-gray-700 bg-gray-800 p-2">
+          <Box sx={{ mt: 2, p: 1, borderRadius: 2, border: "1px solid rgba(255, 255, 255, 0.1)", backgroundColor: "rgba(255, 255, 255, 0.05)" }}>
             <Typography variant="body2">{debugMessage}</Typography>
           </Box>
         )}
