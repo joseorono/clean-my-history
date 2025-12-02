@@ -54,56 +54,83 @@ export default function PopUpLayout() {
           flexDirection: "column",
           flex: 1,
           minHeight: 0,
-          overflow: "hidden"
+          overflow: "hidden",
+          position: "relative"
         }}>
-        <Paper elevation={2} sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Box sx={{ p: 2, pb: 1 }}>
           <Tabs
             value={value}
             onChange={handleChange}
             aria-label="Section Tabs"
             variant="fullWidth"
+            TabIndicatorProps={{
+              style: { display: "none" }
+            }}
             sx={{
+              backgroundColor: "rgba(30, 41, 59, 0.5)",
+              backdropFilter: "blur(12px)",
+              borderRadius: "16px",
+              p: 0.5,
+              border: "1px solid rgba(255, 255, 255, 0.08)",
+              minHeight: "48px",
               "& .MuiTab-root": {
-                minHeight: "44px",
+                minHeight: "40px",
                 textTransform: "none",
                 fontSize: "0.85rem",
-                fontWeight: 500,
-                px: 1
+                fontWeight: 600,
+                borderRadius: "12px",
+                transition: "all 0.2s ease",
+                color: "text.secondary",
+                opacity: 0.7,
+                "&:hover": {
+                  opacity: 1,
+                  backgroundColor: "rgba(255, 255, 255, 0.05)"
+                },
+                "&.Mui-selected": {
+                  color: "text.primary",
+                  backgroundColor: "rgba(59, 130, 246, 0.2)", // Blue tint
+                  opacity: 1
+                }
               }
             }}>
             <Tab
-              icon={<TimerIcon />}
-              label={"Focus"}
+              icon={<TimerIcon sx={{ fontSize: 20 }} />}
+              label="Focus"
               iconPosition="start"
-              sx={{ flex: 1, "& .MuiTab-iconWrapper": { mr: 0.5 } }}
+              sx={{ flex: 1, "& .MuiTab-iconWrapper": { mr: 1 } }}
             />
             <Tab
-              icon={<HistoryIcon />}
-              label="Session Cleaner"
+              icon={<HistoryIcon sx={{ fontSize: 20 }} />}
+              label="Session"
               iconPosition="start"
-              sx={{ flex: 1, "& .MuiTab-iconWrapper": { mr: 0.5 } }}
+              sx={{ flex: 1, "& .MuiTab-iconWrapper": { mr: 1 } }}
             />
             <Tab
-              icon={<StorageIcon />}
-              label="Browser Cleaner"
+              icon={<StorageIcon sx={{ fontSize: 20 }} />}
+              label="Cleaner"
               iconPosition="start"
-              sx={{ flex: 1, "& .MuiTab-iconWrapper": { mr: 0.5 } }}
+              sx={{ flex: 1, "& .MuiTab-iconWrapper": { mr: 1 } }}
             />
             <Tab
               icon={
                 <Tooltip title="Settings" placement="bottom">
-                  <SettingsIcon />
+                  <SettingsIcon sx={{ fontSize: 20 }} />
                 </Tooltip>
               }
               iconPosition="start"
-              sx={{ flex: 0, minWidth: 48, px: 0.5 }}
+              sx={{ flex: 0, minWidth: 48, px: 0 }}
             />
           </Tabs>
-        </Paper>
+        </Box>
 
         <Box
           id="tabViewContainer"
-          sx={{ flex: 1, overflowY: "auto", overflowX: "hidden" }}>
+          sx={{
+            flex: 1,
+            overflowY: "auto",
+            overflowX: "hidden",
+            position: "relative"
+          }}>
           <CustomTabPanel value={value} index={0}>
             <FocusModeView />
           </CustomTabPanel>
