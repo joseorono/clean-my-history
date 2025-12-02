@@ -67,7 +67,7 @@ export default function SettingsView() {
         subtitle="Configure which content to clean from your browser"
       />
 
-      <div className="mb-3 flex justify-end">
+      <div className="mb-2 flex justify-end">
         <Button
           variant="outlined"
           size="small"
@@ -77,10 +77,10 @@ export default function SettingsView() {
       </div>
 
       {/* Categories Section */}
-      <div className="mb-4 rounded-lg border border-gray-700 bg-gray-800 p-4">
-        <h2 className="mb-2 text-lg font-semibold">Categories to Clean</h2>
+      <div className="mb-3 rounded-lg border border-gray-700 bg-gray-800 p-3">
+        <h2 className="mb-1.5 text-base font-semibold">Categories to Clean</h2>
         <div>
-          <p className="mb-2 text-gray-400">Select categories to clean:</p>
+          <p className="mb-1.5 text-gray-400">Select categories to clean:</p>
           <div className="flex flex-wrap gap-2">
             {badKeyboardCategories.map((category) => (
               <label
@@ -101,13 +101,13 @@ export default function SettingsView() {
       </div>
 
       {/* Custom Keywords Section */}
-      <div className="mb-4 rounded-lg border border-gray-700 bg-gray-800 p-4">
-        <h2 className="mb-2 text-lg font-semibold">Custom Keywords</h2>
-        <p className="mb-2 text-gray-400">
+      <div className="mb-3 rounded-lg border border-gray-700 bg-gray-800 p-3">
+        <h2 className="mb-1.5 text-base font-semibold">Custom Keywords</h2>
+        <p className="mb-1.5 text-gray-400">
           Add custom keywords to clean from your history
         </p>
 
-        <div className="mb-4 flex">
+        <div className="mb-3 flex">
           <input
             type="text"
             placeholder="New Keyword"
@@ -121,7 +121,7 @@ export default function SettingsView() {
             }
           />
           <button
-            className="rounded-md bg-blue-500 px-8 py-2 text-white"
+            className="rounded-md bg-blue-500 px-4 py-1.5 text-sm text-white"
             onClick={handleAddKeyword}>
             Add
           </button>
@@ -148,13 +148,13 @@ export default function SettingsView() {
       </div>
 
       {/* Whitelisted Domains Section */}
-      <div className="mb-4 rounded-lg border border-gray-700 bg-gray-800 p-4">
-        <h2 className="mb-2 text-lg font-semibold">Whitelisted Domains</h2>
-        <p className="mb-2 text-gray-400">
+      <div className="mb-3 rounded-lg border border-gray-700 bg-gray-800 p-3">
+        <h2 className="mb-1.5 text-base font-semibold">Whitelisted Domains</h2>
+        <p className="mb-1.5 text-gray-400">
           Add domains that should never be cleaned
         </p>
 
-        <div className="mb-4 flex">
+        <div className="mb-3 flex">
           <input
             type="text"
             placeholder="New Domain"
@@ -168,7 +168,7 @@ export default function SettingsView() {
             }
           />
           <button
-            className="rounded-md bg-blue-500 px-8 py-2 text-white"
+            className="rounded-md bg-blue-500 px-4 py-1.5 text-sm text-white"
             onClick={handleAddDomain}>
             Add
           </button>
@@ -195,9 +195,9 @@ export default function SettingsView() {
       </div>
 
       {/* Reset Settings */}
-      <div className="mt-4 flex justify-end">
+      <div className="mt-3 flex justify-end">
         <button
-          className="rounded-md bg-red-500 p-2 text-white"
+          className="rounded-md bg-red-500 px-3 py-1.5 text-sm text-white"
           onClick={handleResetSettings}>
           Reset Settings
         </button>
