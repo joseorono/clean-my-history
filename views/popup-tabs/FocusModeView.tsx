@@ -236,7 +236,7 @@ export default function FocusModeView() {
 
   return (
     <Fade in timeout={FOCUS_VIEW_TRANSITION_DURATION}>
-      <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+      <div>
         {/* Current Task Title and Change Button */}
         <div id="focus-mode-top-bar">
           <Stack
@@ -548,7 +548,7 @@ export default function FocusModeView() {
             {focus.sessionsCompleted} / {focus.settings.sessionsUntilLongBreak}
           </Typography>
         </Box>
-      </Box>
+      </div>
     </Fade>
   );
 }

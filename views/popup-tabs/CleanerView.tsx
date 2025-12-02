@@ -93,7 +93,7 @@ export default function CleanerView() {
 
   return (
     <ErrorBoundary>
-      <Box className="p-2 text-white">
+      <div>
         <ViewHeader
           title="Browser Cleaner"
           subtitle="Delete your browser's browsing history, cookies, cache, and more."
@@ -271,7 +271,7 @@ export default function CleanerView() {
             disabled={false}
           />
         </Box>
-      </Box>
+      </div>
     </ErrorBoundary>
   );
 }

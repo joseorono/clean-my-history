@@ -86,7 +86,7 @@ export default function SessionCleanerView() {
   }, [tabsWithKeywords.length, focus.timerStatus, focus.timerMode]);
 
   return (
-    <Box sx={{ p: 2 }}>
+    <div>
       <ViewHeader
         title="Session Cleaner"
         subtitle="Close tabs that might distract you from work"
@@ -231,6 +231,6 @@ export default function SessionCleanerView() {
           Test Notification
         </Button>
       </Stack>
-    </Box>
+    </div>
   );
 }
