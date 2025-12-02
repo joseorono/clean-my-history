@@ -32,7 +32,6 @@ function CustomTabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      className="p-4"
       {...other}>
       {value === index && children}
     </div>
@@ -57,22 +56,30 @@ export default function PopUpLayout() {
             variant="fullWidth"
             sx={{
               "& .MuiTab-root": {
-                minHeight: "64px",
+                minHeight: "44px",
                 textTransform: "none",
-                fontSize: "0.95rem",
-                fontWeight: 500
+                fontSize: "0.85rem",
+                fontWeight: 500,
+                px: 0.5
               }
             }}>
-            <Tab icon={<TimerIcon />} label="Focus Mode" iconPosition="start" />
+            <Tab
+              icon={<TimerIcon />}
+              label={"Focus"}
+              iconPosition="start"
+              sx={{ flex: 1 }}
+            />
             <Tab
               icon={<HistoryIcon />}
               label="Session Cleaner"
               iconPosition="start"
+              sx={{ flex: 1 }}
             />
             <Tab
               icon={<StorageIcon />}
               label="Browser Cleaner"
               iconPosition="start"
+              sx={{ flex: 1 }}
             />
             <Tab
               icon={
@@ -81,6 +88,7 @@ export default function PopUpLayout() {
                 </Tooltip>
               }
               iconPosition="start"
+              sx={{ flex: 0, minWidth: 48, px: 0.5 }}
             />
           </Tabs>
         </Paper>

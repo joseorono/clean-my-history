@@ -60,6 +60,8 @@ export default function CleanerView() {
   const [timeRange, setTimeRange] = useState<TimeRange>("24hours");
   const [onlyMatchingResults, setOnlyMatchingResults] = useState<boolean>(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const isMoreRange: boolean =
+    timeRange === "7days" || timeRange === "30days" || timeRange === "1year";
 
   const handleTimeRangeChange = (newTimeRange: TimeRange): void => {
     setTimeRange(newTimeRange);
@@ -125,6 +127,22 @@ export default function CleanerView() {
             size="small"
             sx={{ height: 24, fontSize: "0.75rem" }}
           />
+          {isMoreRange && (
+            <Chip
+              label={
+                timeRange === "7days"
+                  ? "Last 7 days"
+                  : timeRange === "30days"
+                    ? "Last 30 days"
+                    : "Last year"
+              }
+              onClick={() => handleTimeRangeChange(timeRange)}
+              color="primary"
+              variant="filled"
+              size="small"
+              sx={{ height: 24, fontSize: "0.75rem" }}
+            />
+          )}
           <Chip
             label="More"
             onClick={handleMoreClick}
