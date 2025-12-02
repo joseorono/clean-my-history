@@ -10,8 +10,13 @@
 
 */
 
-// https://www.cisdem.com/resource/list-of-websites-to-block-at-work.html
+// Default Pomodoro Duration
+export const DEFAULT_WORK_MINUTES = 25;
+export const DEFAULT_SHORT_BREAK_MINUTES = 5;
+export const DEFAULT_LONG_BREAK_MINUTES = 15;
+export const DEFAULT_SESSIONS_UNTIL_LONG_BREAK = 4;
 
+// https://www.cisdem.com/resource/list-of-websites-to-block-at-work.html
 export const nsfwKeywords: string[] = [
   "porn",
   "adult",

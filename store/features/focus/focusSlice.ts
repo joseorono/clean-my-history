@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+import {
+  DEFAULT_LONG_BREAK_MINUTES,
+  DEFAULT_SESSIONS_UNTIL_LONG_BREAK,
+  DEFAULT_SHORT_BREAK_MINUTES,
+  DEFAULT_WORK_MINUTES
+} from "~constants";
 import type { TimerMode, TimerStatus, ToDoTask } from "~types/focus";
 
 export interface FocusState {
@@ -53,10 +59,10 @@ const initialState: FocusState = {
     }
   ],
   settings: {
-    workDuration: 25 * 60,
-    shortBreakDuration: 5 * 60,
-    longBreakDuration: 15 * 60,
-    sessionsUntilLongBreak: 4
+    workDuration: DEFAULT_WORK_MINUTES * 60,
+    shortBreakDuration: DEFAULT_SHORT_BREAK_MINUTES * 60,
+    longBreakDuration: DEFAULT_LONG_BREAK_MINUTES * 60,
+    sessionsUntilLongBreak: DEFAULT_SESSIONS_UNTIL_LONG_BREAK
   }
 };
 
