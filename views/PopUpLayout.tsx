@@ -62,26 +62,26 @@ export default function PopUpLayout() {
                 textTransform: "none",
                 fontSize: "0.85rem",
                 fontWeight: 500,
-                px: 0.5
+                px: 1
               }
             }}>
             <Tab
               icon={<TimerIcon />}
               label={"Focus"}
               iconPosition="start"
-              sx={{ flex: 1 }}
+              sx={{ flex: 1, "& .MuiTab-iconWrapper": { mr: 0.5 } }}
             />
             <Tab
               icon={<HistoryIcon />}
               label="Session Cleaner"
               iconPosition="start"
-              sx={{ flex: 1 }}
+              sx={{ flex: 1, "& .MuiTab-iconWrapper": { mr: 0.5 } }}
             />
             <Tab
               icon={<StorageIcon />}
               label="Browser Cleaner"
               iconPosition="start"
-              sx={{ flex: 1 }}
+              sx={{ flex: 1, "& .MuiTab-iconWrapper": { mr: 0.5 } }}
             />
             <Tab
               icon={
