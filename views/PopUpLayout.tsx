@@ -6,12 +6,16 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
+import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
+
+
 
 import CleanerView from "./popup-tabs/CleanerView";
 import FocusModeView from "./popup-tabs/FocusModeView";
 import SessionCleanerView from "./popup-tabs/SessionCleanerView";
 import SettingsView from "./popup-tabs/SettingsVIew";
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -44,13 +48,7 @@ export default function PopUpLayout() {
 
   return (
     <>
-      <div>
-        {
-          //<Link href="/users/1">
-          //  <a className="link">Profile</a>
-          //</Link>
-        }
-
+      <div id="popup-tabs">
         <Paper elevation={2} sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={value}
@@ -77,8 +75,11 @@ export default function PopUpLayout() {
               iconPosition="start"
             />
             <Tab
-              icon={<SettingsIcon />}
-              label="Settings"
+              icon={
+                <Tooltip title="Settings" placement="bottom">
+                  <SettingsIcon />
+                </Tooltip>
+              }
               iconPosition="start"
             />
           </Tabs>
@@ -96,12 +97,6 @@ export default function PopUpLayout() {
         <CustomTabPanel value={value} index={3}>
           <SettingsView />
         </CustomTabPanel>
-
-        {
-          // <Route path="/" component={} />
-          // <Route path="/users/:name" component={CleanerView} />
-          // <Route path="/inbox" component={} />
-        }
       </div>
     </>
   );
