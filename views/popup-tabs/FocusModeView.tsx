@@ -243,7 +243,7 @@ export default function FocusModeView() {
             direction="row"
             spacing={0.75}
             sx={{
-              mb: 1,
+              mb: 0.5,
               justifyContent: "space-between",
               alignItems: "center",
               px: 1,
@@ -296,12 +296,10 @@ export default function FocusModeView() {
             sx={{
               justifyContent: "start",
               alignItems: "center",
-              pb: 0.75,
-              mb: 1,
               mt: 0,
+              mb: 0.5,
               gap: 0.25,
-              px: 1,
-              borderBottom: "1px solid rgba(255,255,255,0.1)"
+              px: 1
             }}>
             {Array.from({ length: focus.settings.sessionsUntilLongBreak }).map(
               (_, index) => {
@@ -310,15 +308,15 @@ export default function FocusModeView() {
                   <Box
                     key={index}
                     sx={{
-                      width: 20,
-                      height: 20,
+                      width: 16,
+                      height: 16,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center"
                     }}>
                     <AccessAlarmIcon
                       sx={{
-                        fontSize: 16,
+                        fontSize: 14,
                         color: modeColor,
                         opacity: isCompleted ? 1 : 0.4
                       }}

@@ -95,7 +95,9 @@ export default function PopUpLayout() {
           </Tabs>
         </Paper>
 
-        <Box id="tabViewContainer" sx={{ flex: 1, overflowY: "auto" }}>
+        <Box
+          id="tabViewContainer"
+          sx={{ flex: 1, overflowY: "auto", overflowX: "hidden" }}>
           <CustomTabPanel value={value} index={0}>
             <FocusModeView />
           </CustomTabPanel>
