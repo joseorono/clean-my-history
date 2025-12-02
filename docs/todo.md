@@ -1,49 +1,64 @@
 # Clean My History - Project TODO
 
-## 🚀 Features
+## 🚀 Current Roadmap
 
-- [x] Panic Button (close tabs with keywords)
-- [x] Clean All Browsing History
-- [x] Onboarding page after install
-- [x] Seems like our Redux Store doesn't Persist. Enable persistence:
-  - [x] Implemented using @plasmohq/storage for cross-context state synchronization
-- [x] Implement Settings View
-  - [x] Allow selecting Categories to clean based on badKeyboardCategories
-  - [x] Allow adding custom keywords
-  - [x] Support for whitelisting domains
-  - [x] Settings must be saved on Redux and made persistant
-- [x] Implement Clean Browser View
-  - [x] It's a Section with a bunch of buttons to clean history, tabs, etc
-- [x] Rename "Panic Button" to "Session Cleaner" [x]
-  - [x] It's not a delete button, maybe use something like a "Play" icon or something.
-  - [x] Implement Session Cleaner with proper mutation handling
-- [x] Es posible que necesites pasarle parametros a la mutacion
-  - [x] Para poder pasarle parametros a la mutacion, necesitarias añadirle un nuevo prop a TaskButton
-- [x] Implement tab closing with keywords in SessionCleanerView
-  - [x] Added proper keyword filtering based on selected categories
-  - [x] Enhanced UI to show selected categories and keywords
-- [x] Update cleaner functions to respect whitelisted domains
-  - [x] Modified cleanSession to accept whitelisted domains
-  - [x] Added helper function to check if URL is whitelisted
-  - [x] Updated SessionCleanerView to pass whitelisted domains
-  - [x] Added visual indicator for whitelisted domains count
+### Critical / High Priority
+- [ ] **UI Polish & Consistency**
+  - [ ] Standardize view wrappers using `ViewContainer` across all views
+  - [ ] Reduce icon-label gap in tabs (Settings tab already icon-only)
+  - [ ] Fix any remaining MUI transition/ref issues
 
-## 🐛 Bug Fixes
+### Nice to Have
+- [ ] **Enhanced Session Cleaner**
+  - [ ] Show preview of tabs to be closed before execution
+  - [ ] Add undo functionality for recently closed tabs
+  - [ ] Move periodic tab checking to background script for persistence
 
-- [x] For some reason, Tailwind isn't working on the onboarding.html page
+- [ ] **Browser Cleaner Improvements**
+  - [ ] Add time range scoping (last hour/day/week) with preview
+  - [ ] Remove debug message UI from production
+  - [ ] Better error handling and user feedback
 
-## ✅ Completed
+- [ ] **Code Quality & Architecture**
+  - [ ] Split `lib/history.ts` into pure functions + React Query hooks
+  - [ ] Split `lib/tabs.ts` responsibilities and move mutations to hooks/
+  - [ ] Add JSDoc documentation for public functions and hooks
+  - [ ] Debounce Redux persistence writes to avoid excessive storage operations
 
-- [x] Initial project setup
-- [x] Basic history scanning functionality
-- [x] Simple UI for history management
-- [x] Clean All Browsing History
-- [x] Onboarding after install
-- [x] Session Cleaner Quick Productivity Button
+- [ ] **Settings & UX**
+  - [ ] Replace `confirm()` dialogs with MUI dialogs
+  - [ ] Centralize toast messages in constants/utility module
+  - [ ] Review and optimize naming conventions (e.g., `badKeyboardCategories`)
 
-## 💡 Future Ideas
+## ✅ Completed Features
 
-- Add export/import settings functionality
-- Integrate with multiple browsers (Firefox, Edge)
-- Cloud sync for settings and preferences using Firebase
-- Keyboard shortcuts for quick actions
+- [x] **Core Functionality**
+  - [x] Panic Button (renamed to Session Cleaner)
+  - [x] Clean All Browsing History by category
+  - [x] Onboarding flow after install
+  - [x] Redux persistence using @plasmohq/storage
+  - [x] Settings view with categories, custom keywords, and whitelist
+  - [x] Browser Cleaner view with time range selection
+  - [x] Focus Mode with Pomodoro timer and task management
+  - [x] Real-time notifications for distracting tabs
+  - [x] Cross-context state synchronization
+
+- [x] **UI/UX Foundation**
+  - [x] Tab-based navigation layout
+  - [x] Material UI integration with dark theme
+  - [x] Responsive popup design
+  - [x] Toast notifications system
+  - [x] Error boundaries for robustness
+
+## 📝 Notes
+
+- The project uses Plasmo framework for Chrome extension development
+- State management via Redux Toolkit with persistence
+- UI built with React + Material-UI + Tailwind CSS
+- All processing happens locally (privacy-focused)
+- Extension targets Manifest V3
+
+## 🔗 Related Docs
+
+- See [docs/improvements.md](improvements.md) for detailed technical improvement suggestions
+- Check [README.md](../README.md) for setup and development instructions

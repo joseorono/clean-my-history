@@ -1,38 +1,28 @@
 # FocusSpace
 
-**FocusSpace** is a productivity-focused Chrome Extension designed to help you reclaim your attention. It removes digital clutter: distracting tabs, social media history, and NSFW content to prepare your browser environment for Deep Work.
+**FocusSpace** is a productivity-focused Chrome Extension designed to help you reclaim your attention. It removes digital clutter: distracting tabs, social media history, and time-wasting content to prepare your browser environment for Deep Work.
 
 This is a Browser Extension project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
 
-
 ## ✨ Features
 
-- **⚡ Session Cleaner**: Instantly close tabs that don't match your workflow using smart keyword filtering.
-- **🧹 Digital Declutter**: Remove distraction-related entries (Social Media, Memes, NSFW) from your browser history without wiping everything.
-- **🛡️ Privacy First**: All processing happens locally on your device. Your history never leaves your browser.
-- **✅ Smart Whitelist**: Protect important work domains from being accidentally closed or cleaned.
+- **⚡ Session Cleaner**: Instantly close distracting tabs using smart keyword filtering and custom rules
+- **🧹 Browser Cleaner**: Remove distraction-related entries from your browser history by category (Social Media, Memes, NSFW) without wiping everything
+- **🎯 Focus Mode**: Pomodoro timer with task management and session tracking
+- **🛡️ Privacy First**: All processing happens locally on your device. Your data never leaves your browser
+- **⚙️ Smart Settings**: Configure custom keywords, categories, and whitelisted domains
+- **🔔 Real-time Notifications**: Get alerted when distracting tabs are opened during focus sessions
 
 ## 🛠️ Tech Stack
 
-- React
-- Redux Toolkit
-- Plasmo
-- Tailwind
-- MaterialUI (MUI)
-- React Hot Toast
 - **Framework**: [Plasmo](https://docs.plasmo.com/) (Browser Extension Framework)
-- **UI Library**: [React](https://reactjs.org/) + [Material UI (MUI)](https://mui.com/)
+- **UI**: [React](https://reactjs.org/) + [Material UI (MUI)](https://mui.com/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **State Management**: [Redux Toolkit](https://redux-toolkit.js.org/) (with persistence)
+- **State Management**: [Redux Toolkit](https://redux-toolkit.js.org/) with persistence via @plasmohq/storage
 - **Icons**: @mui/icons-material
-- **Toast Notifications**: @react-hot-toast
+- **Notifications**: @react-hot-toast
 
-### Considered Dependecies
-- N/A
-
-## 🚀 Getting Started (For Developers)
-
-This is a standard Plasmo project.
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -60,65 +50,50 @@ pnpm dev
    - Click **Load unpacked**
    - Select the `build/chrome-mv3-dev` folder
 
-As per the Plasmo docs, the development build is automatically reloaded when you make changes to the source code.
-
-> <br>
-> Open your browser and load the appropriate development build. > For example, if you are developing for the chrome browser, using
-> manifest v3, use: `build/chrome-mv3-dev`.
-> <br>
-
+The development build automatically reloads when you make changes to the source code.
 
 ## 📦 Building for Production
-
-To create a production-ready bundle:
 
 ```bash
 pnpm build
 ```
 
-This will create a zip file in the `build` directory ready for submission to the Chrome Web Store.
+Creates a production-ready zip file in the `build` directory for Chrome Web Store submission.
 
 ## 🎨 Design Philosophy
 
-- **Lightweight**: Minimized asset usage for fast load times.
-- **Privacy-Centric**: No external analytics or data collection.
-- **User Control**: Granular settings for what gets cleaned and what stays.
+- **Lightweight**: Minimal assets for fast load times
+- **Privacy-Centric**: No external analytics or data collection
+- **User Control**: Granular settings for what gets cleaned and what stays
+- **Non-Intrusive**: Works seamlessly without disrupting your workflow
 
 ## 📝 Project Status
 
-Check out [docs/todo.md](docs/todo.md) for the detailed roadmap and current task list.
+🟢 **Core Features Complete** - All main functionality is implemented and working.
 
-# 🚧 Development Progress
+See [docs/todo.md](docs/todo.md) for the detailed roadmap and [docs/improvements.md](docs/improvements.md) for technical improvements.
 
-## Foundations
+## 🚧 Completed Features
 
-- [x] Set Up a Basic Exception
-- [x] Create Static pages
-- [x] Set Up Folder Structure
-- [x] Implement Router and UI Tabs
+- [x] Session Cleaner with keyword filtering (create new tab and switch to it, close all problematic tabs)
+- [x] Browser Cleaner with category-based history removal
+- [x] Focus Mode with Pomodoro Timer and ToDo List
+- [x] Settings management with persistence
+- [x] Real-time notifications
 
-## Features
-
-- [x] Create Utils folder for functions
-- [x] Tabs Functions
-- [x] History Functions
-- [x] Implement Radial Progress
-- [x] Remove history by Category
-- [x] Program PANIC function (create new tab and switch to it, close all problematic tabs)
-- [x] Program Session Cleaner' Quick Productivity Button
-- [x] Real-time Notifications when distracting tabs are opened
-
-#  External Docs
-
+## 📚 Documentation
 For further guidance, [visit the Plasmo Documentation](https://docs.plasmo.com/)
 
+- [Development Roadmap](docs/todo.md)
+- [Technical Improvements](docs/improvements.md)
+- [Plasmo Documentation](https://docs.plasmo.com/)
 
-## Submit to the webstores
-
-The easiest way to deploy a Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action.
+## 📤 Deployment
 
 Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
 
 ---
 
-*Note: This project is a work in progress.*
+Made with ❤️ by [The Exologic Team](https://exologic.agency/).
+
+*This project is actively maintained. Contributions welcome!*
