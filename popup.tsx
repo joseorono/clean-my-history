@@ -32,8 +32,55 @@ function IndexPopup() {
     () =>
       createTheme({
         palette: {
-          //mode: prefersDarkMode ? 'dark' : 'light',
-          mode: "dark"
+          mode: "dark",
+          primary: {
+            main: "#3b82f6", // Blue 500
+            light: "#60a5fa",
+            dark: "#2563eb"
+          },
+          secondary: {
+            main: "#8b5cf6", // Violet 500
+            light: "#a78bfa",
+            dark: "#7c3aed"
+          },
+          background: {
+            default: "transparent",
+            paper: "rgba(30, 41, 59, 0.7)" // Slate 800 with opacity
+          },
+          text: {
+            primary: "#f1f5f9", // Slate 100
+            secondary: "#94a3b8" // Slate 400
+          }
+        },
+        shape: {
+          borderRadius: 12
+        },
+        components: {
+          MuiCssBaseline: {
+            styleOverrides: {
+              body: {
+                backgroundColor: "transparent"
+              }
+            }
+          },
+          MuiPaper: {
+            styleOverrides: {
+              root: {
+                backgroundImage: "none",
+                backdropFilter: "blur(12px)",
+                border: "1px solid rgba(255, 255, 255, 0.1)"
+              }
+            }
+          },
+          MuiButton: {
+            styleOverrides: {
+              root: {
+                textTransform: "none",
+                fontWeight: 600,
+                borderRadius: "9999px"
+              }
+            }
+          }
         }
       }),
     [prefersDarkMode]
@@ -68,16 +115,20 @@ function IndexPopup() {
 
                 success: {
                   style: {
-                    background: "#030e18",
+                    background: "rgba(15, 23, 42, 0.9)",
                     color: "#fff",
-                    fontWeight: "500"
+                    fontWeight: "500",
+                    backdropFilter: "blur(8px)",
+                    border: "1px solid rgba(255, 255, 255, 0.1)"
                   }
                 },
                 error: {
                   style: {
-                    background: "#d32f2f",
-                    color: "#fff",
-                    fontWeight: "500"
+                    background: "rgba(69, 10, 10, 0.9)",
+                    color: "#fecaca",
+                    fontWeight: "500",
+                    backdropFilter: "blur(8px)",
+                    border: "1px solid rgba(239, 68, 68, 0.2)"
                   }
                 }
               }}

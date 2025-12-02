@@ -40,6 +40,9 @@
 body {
   font-family: "Roboto", sans-serif;
   margin: 0;
+  background: linear-gradient(to bottom right, #0f172a, #1e293b);
+    color: #f8fafc;
+    min-height: 600px;
 }
 
 /* Global Scrollbar Styling */
