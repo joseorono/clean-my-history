@@ -12,11 +12,16 @@ interface ViewHeaderProps {
  */
 export default function ViewHeader({ title, subtitle }: ViewHeaderProps) {
   return (
-    <Box sx={{ mb: 3 }}>
-      <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>
+    <Box sx={{ mb: 2 }}>
+      <Typography
+        variant="h6"
+        sx={{ fontWeight: 600, mb: 0.5, fontSize: "1rem" }}>
         {title}
       </Typography>
-      <Typography variant="body2" color="textSecondary">
+      <Typography
+        variant="body2"
+        color="textSecondary"
+        sx={{ fontSize: "0.8rem" }}>
         {subtitle}
       </Typography>
     </Box>
