@@ -28,27 +28,21 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
+
+
 import { Storage } from "@plasmohq/storage";
 
-import {
-  breakEncouragementMessages,
-  FOCUS_VIEW_TRANSITION_DURATION,
-  focusEncouragementMessages
-} from "~constants";
+
+
+import ViewContainer from "~components/view-container";
+import { breakEncouragementMessages, FOCUS_VIEW_TRANSITION_DURATION, focusEncouragementMessages } from "~constants";
 import { sendNotification } from "~lib/notification";
 import { getRandomElement } from "~lib/utils";
-import {
-  completeSession,
-  pauseTimer,
-  resetTimer,
-  setCurrentTaskIndex,
-  startTimer,
-  switchMode,
-  tick,
-  updateTask
-} from "~store/features/focus/focusSlice";
+import { completeSession, pauseTimer, resetTimer, setCurrentTaskIndex, startTimer, switchMode, tick, updateTask } from "~store/features/focus/focusSlice";
 import type { RootState } from "~store/store";
 import type { TimerMode } from "~types/focus";
+
+
 
 import ViewHeader from "../../components/view-header";
 import TaskSelectionView from "./TaskSelectionView";
@@ -236,7 +230,7 @@ export default function FocusModeView() {
 
   return (
     <Fade in timeout={FOCUS_VIEW_TRANSITION_DURATION}>
-      <div>
+      <ViewContainer>
         {/* Current Task Title and Change Button */}
         <div id="focus-mode-top-bar">
           <Stack
@@ -548,7 +542,7 @@ export default function FocusModeView() {
             {focus.sessionsCompleted} / {focus.settings.sessionsUntilLongBreak}
           </Typography>
         </Box>
-      </div>
+      </ViewContainer>
     </Fade>
   );
 }

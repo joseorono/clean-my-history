@@ -2,22 +2,20 @@ import Button from "@mui/material/Button";
 import { useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+
+
+import ViewContainer from "~components/view-container";
 import { badKeyboardCategories } from "~constants";
 import type { BadKeyboardCategory } from "~constants";
 import { openOnboardingTab } from "~lib/utils";
-import {
-  addCustomKeyword,
-  addWhitelistedDomain,
-  removeCustomKeyword,
-  removeWhitelistedDomain,
-  resetSettings,
-  toggleCategory,
-  type SettingsState
-} from "~store/features/settings/settingsSlice";
+import { addCustomKeyword, addWhitelistedDomain, removeCustomKeyword, removeWhitelistedDomain, resetSettings, toggleCategory, type SettingsState } from "~store/features/settings/settingsSlice";
 import type { RootState } from "~store/store";
 import formatCategoryLabel from "~utils/format-category-label";
 
+
+
 import ViewHeader from "../../components/view-header";
+
 
 export default function SettingsView() {
   const dispatch = useDispatch();
@@ -61,7 +59,7 @@ export default function SettingsView() {
   };
 
   return (
-    <div>
+    <ViewContainer>
       <ViewHeader
         title="Settings"
         subtitle="Configure which content to clean from your browser"
@@ -202,6 +200,6 @@ export default function SettingsView() {
           Reset Settings
         </button>
       </div>
-    </div>
+    </ViewContainer>
   );
 }

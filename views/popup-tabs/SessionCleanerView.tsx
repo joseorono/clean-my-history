@@ -12,13 +12,18 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
-import ViewHeader from "../../components/view-header";
+
+
+import ViewContainer from "~components/view-container";
 import { useCloseTabsMutation } from "~hooks/mutations";
 import { useGetKeywordsFromSettings } from "~hooks/useGetKeywordsFromSetting";
 import useTabsPersisted from "~hooks/useTabsStored";
 import { sendNotification } from "~lib/notification";
 import type { SettingsState } from "~store/features/settings/settingsSlice";
 import type { RootState } from "~store/store";
+
+import ViewHeader from "../../components/view-header";
+
 
 export default function SessionCleanerView() {
   const [closedTabsCount, setClosedTabsCount] = useState<number>(0);
@@ -86,7 +91,7 @@ export default function SessionCleanerView() {
   }, [tabsWithKeywords.length, focus.timerStatus, focus.timerMode]);
 
   return (
-    <div>
+    <ViewContainer>
       <ViewHeader
         title="Session Cleaner"
         subtitle="Close tabs that might distract you from work"
@@ -231,6 +236,6 @@ export default function SessionCleanerView() {
           Test Notification
         </Button>
       </Stack>
-    </div>
+    </ViewContainer>
   );
 }

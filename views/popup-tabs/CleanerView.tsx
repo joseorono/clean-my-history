@@ -1,17 +1,20 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
-import Tooltip from "@mui/material/Tooltip";
 import Chip from "@mui/material/Chip";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
-import ViewHeader from "../../components/view-header";
+import ViewContainer from "~components/view-container";
+
 import TaskButton from "../../components/task-button";
+import ViewHeader from "../../components/view-header";
 import { cleanAllHistory } from "../../lib/history";
+
 
 // Simple error boundary component
 class ErrorBoundary extends React.Component<
@@ -93,7 +96,7 @@ export default function CleanerView() {
 
   return (
     <ErrorBoundary>
-      <div>
+      <ViewContainer>
         <ViewHeader
           title="Browser Cleaner"
           subtitle="Delete your browser's browsing history, cookies, cache, and more."
@@ -176,12 +179,14 @@ export default function CleanerView() {
               sx={{
                 color: "#9ca3af",
                 "&.Mui-checked": {
-                  color: "#1e40af",
-                },
+                  color: "#1e40af"
+                }
               }}
             />
             <Box className="flex-1">
-              <Typography variant="subtitle2" className="font-semibold text-white">
+              <Typography
+                variant="subtitle2"
+                className="font-semibold text-white">
                 Browsing history
               </Typography>
               <Typography variant="body2" className="text-gray-400">
@@ -197,16 +202,19 @@ export default function CleanerView() {
               sx={{
                 color: "#9ca3af",
                 "&.Mui-checked": {
-                  color: "#1e40af",
-                },
+                  color: "#1e40af"
+                }
               }}
             />
             <Box className="flex-1">
-              <Typography variant="subtitle2" className="font-semibold text-white">
+              <Typography
+                variant="subtitle2"
+                className="font-semibold text-white">
                 Cookies and site data
               </Typography>
               <Typography variant="body2" className="text-gray-400">
-                From 147 sites. To delete Google cookies from this device, use Chrome settings.
+                From 147 sites. To delete Google cookies from this device, use
+                Chrome settings.
               </Typography>
             </Box>
           </Box>
@@ -218,12 +226,14 @@ export default function CleanerView() {
               sx={{
                 color: "#9ca3af",
                 "&.Mui-checked": {
-                  color: "#1e40af",
-                },
+                  color: "#1e40af"
+                }
               }}
             />
             <Box className="flex-1">
-              <Typography variant="subtitle2" className="font-semibold text-white">
+              <Typography
+                variant="subtitle2"
+                className="font-semibold text-white">
                 Cached images and files
               </Typography>
               <Typography variant="body2" className="text-gray-400">
@@ -239,12 +249,14 @@ export default function CleanerView() {
               sx={{
                 color: "#9ca3af",
                 "&.Mui-checked": {
-                  color: "#1e40af",
-                },
+                  color: "#1e40af"
+                }
               }}
             />
             <Box className="flex-1">
-              <Typography variant="subtitle2" className="font-semibold text-white">
+              <Typography
+                variant="subtitle2"
+                className="font-semibold text-white">
                 Download history
               </Typography>
               <Typography variant="body2" className="text-gray-400">
@@ -271,7 +283,7 @@ export default function CleanerView() {
             disabled={false}
           />
         </Box>
-      </div>
+      </ViewContainer>
     </ErrorBoundary>
   );
 }
