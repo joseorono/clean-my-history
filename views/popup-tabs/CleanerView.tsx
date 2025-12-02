@@ -91,12 +91,11 @@ export default function CleanerView() {
 
   return (
     <ErrorBoundary>
-      <Box className="p-4 text-white">
+      <Box className="p-2 text-white">
         <ViewHeader
-          title="History Cleaner"
-          subtitle="Delete all your browsing history, cookies, cache, and tabs"
+          title="Browser Cleaner"
+          subtitle="Delete your browser's browsing history, cookies, cache, and more."
         />
-
         {/* Time Range Selector */}
         <Stack
           direction="row"
