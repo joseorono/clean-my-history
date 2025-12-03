@@ -6,6 +6,7 @@
   "author": " Jose Orono <joseomaker@gmail.com>",
   "scripts": {
     "dev": "plasmo dev",
+    "dev-verbose": "plasmo dev --verbose",
     "build": "plasmo build",
     "test": "plasmo test",
     "dev-expose-host": "vite --host",
