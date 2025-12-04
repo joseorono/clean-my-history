@@ -83,12 +83,19 @@ export default function SettingsView() {
         subtitle="Configure which content to clean from your browser"
       />
 
-      <div className="mb-2 flex justify-end">
+      <div className="mb-2 flex justify-end gap-2">
         <Button
           variant="outlined"
           size="small"
           onClick={() => openOnboardingTab()}>
           Go to Onboarding
+        </Button>
+        <Button
+          variant="outlined"
+          color="error"
+          size="small"
+          onClick={handleOpenResetDialog}>
+          Reset Settings
         </Button>
       </div>
 
@@ -208,15 +215,6 @@ export default function SettingsView() {
             <p className="text-gray-400">No domains whitelisted yet</p>
           )}
         </div>
-      </div>
-
-      {/* Reset Settings */}
-      <div className="mt-3 flex justify-end">
-        <button
-          className="rounded-md bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
-          onClick={handleOpenResetDialog}>
-          Reset Settings
-        </button>
       </div>
 
       {/* Reset Confirmation Dialog */}
