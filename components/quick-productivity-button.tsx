@@ -1,5 +1,5 @@
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
 import { memo } from "react";
 
 interface QuickProductivityButtonProps {
@@ -16,49 +16,47 @@ function QuickProductivityButtonComponent({
   onClick
 }: QuickProductivityButtonProps) {
   return (
-    <Box
+    <button
       id="quick-productivity-button"
-      component="button"
       onClick={onClick}
       disabled={disabled}
-      sx={{
-        width: 96,
-        height: 96,
-        borderRadius: "50%",
-        backgroundColor: "#90CAF9",
-        border: "none",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        cursor: "pointer",
-        boxShadow: 3,
-        transition: "all 0.5s ease",
-        "&:hover:not(:disabled)": {
-          backgroundColor: "#64B5F6",
-          boxShadow: 4
-        },
-        "&:disabled": {
-          opacity: 0.5,
-          cursor: "not-allowed"
-        }
-      }}>
-      {isLoading ? (
-        <CircularProgress size={32} color="primary" />
-      ) : (
-        <svg
-          width="32"
-          height="32"
-          viewBox="0 0 24 24"
-          fill="none"
-          style={{
-            transition: "transform 0.3s ease",
-            transform: isAnimating ? "scale(1)" : "scale(1)"
-          }}>
-          <rect x="2" y="4" width="18" height="14" rx="2" fill="#1a1a1a" />
-          <rect x="4" y="2" width="14" height="2" rx="1" fill="#1a1a1a" />
-        </svg>
+      className={`group relative flex h-24 w-24 items-center justify-center rounded-full border-none outline-none transition-all duration-500 ${
+        disabled
+          ? "cursor-not-allowed bg-gray-200 opacity-70 dark:bg-gray-700"
+          : "cursor-pointer bg-gradient-to-br from-blue-400 to-blue-600 shadow-lg shadow-blue-500/30 hover:scale-105 hover:shadow-blue-500/50 active:scale-95"
+      } `}
+      aria-label="Quick clean session">
+      {/* Pulse rings when animating */}
+      {isAnimating && !disabled && (
+        <>
+          <span className="absolute h-full w-full animate-ping rounded-full bg-blue-400 opacity-20 duration-1000"></span>
+          <span className="absolute h-full w-full scale-110 animate-pulse rounded-full border-2 border-blue-400 opacity-30"></span>
+        </>
       )}
-    </Box>
+
+      {/* Inner content */}
+      <div className="relative z-10 flex items-center justify-center text-white">
+        {isLoading ? (
+          <CircularProgress size={32} sx={{ color: "white" }} />
+        ) : (
+          <AutoAwesomeIcon
+            className={`transition-transform duration-700 ease-out ${
+              isAnimating
+                ? "rotate-180 scale-110"
+                : "group-hover:rotate-12 group-hover:scale-110"
+            } `}
+            sx={{ fontSize: 40 }}
+          />
+        )}
+      </div>
+
+      {/* Shine effect overlay */}
+      {!disabled && !isLoading && (
+        <div className="absolute inset-0 -z-0 overflow-hidden rounded-full">
+          <div className="absolute -left-full top-0 h-full w-1/2 skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 transition-all duration-700 group-hover:left-full"></div>
+        </div>
+      )}
+    </button>
   );
 }
 
