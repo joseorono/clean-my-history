@@ -5,15 +5,13 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
-import CircularProgress from "@mui/material/CircularProgress";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
-
-
+import QuickProductivityButton from "~components/quick-productivity-button";
 import ViewContainer from "~components/view-container";
 import { useCloseTabsMutation } from "~hooks/mutations";
 import { useGetKeywordsFromSettings } from "~hooks/useGetKeywordsFromSetting";
@@ -21,6 +19,8 @@ import useTabsPersisted from "~hooks/useTabsStored";
 import { sendNotification } from "~lib/notification";
 import type { SettingsState } from "~store/features/settings/settingsSlice";
 import type { RootState } from "~store/store";
+
+
 
 import ViewHeader from "../../components/view-header";
 
@@ -170,49 +170,12 @@ export default function SessionCleanerView() {
 
       <Stack spacing={3} sx={{ alignItems: "center", pt: 2 }}>
         {/* Main session cleaner button */}
-        <Box
-          id="quick-productivity-button"
-          component="button"
+        <QuickProductivityButton
           onClick={handleCleanSession}
           disabled={closeTabsMutation.isPending || isAnimating}
-          sx={{
-            width: 96,
-            height: 96,
-            borderRadius: "50%",
-            backgroundColor: "#90CAF9",
-            border: "none",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            boxShadow: 3,
-            transition: "all 0.5s ease",
-            "&:hover:not(:disabled)": {
-              backgroundColor: "#64B5F6",
-              boxShadow: 4
-            },
-            "&:disabled": {
-              opacity: 0.5,
-              cursor: "not-allowed"
-            }
-          }}>
-          {closeTabsMutation.isPending ? (
-            <CircularProgress size={32} color="primary" />
-          ) : (
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 24 24"
-              fill="none"
-              style={{
-                transition: "transform 0.3s ease",
-                transform: isAnimating ? "scale(1)" : "scale(1)"
-              }}>
-              <rect x="2" y="4" width="18" height="14" rx="2" fill="#1a1a1a" />
-              <rect x="4" y="2" width="14" height="2" rx="1" fill="#1a1a1a" />
-            </svg>
-          )}
-        </Box>
+          isLoading={closeTabsMutation.isPending}
+          isAnimating={isAnimating}
+        />
 
         {/* Status text */}
         <Typography variant="body2" sx={{ textAlign: "center" }}>
