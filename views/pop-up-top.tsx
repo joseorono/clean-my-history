@@ -1,6 +1,7 @@
 import ThemeSwitcher from "../components/theme-switcher";
 
-export default function WelcomePopUp() {
+
+export default function PopUpTop() {
   return (
     <>
       <div

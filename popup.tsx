@@ -6,10 +6,10 @@ import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 
+import PopUpTop from "~/views/pop-up-top";
 // Redux Store
 import { store } from "~store/store";
 import PopUpLayout from "~views/PopUpLayout";
-import WelcomePopUp from "~views/WelcomePopUp";
 
 import "./style.css";
 
@@ -53,7 +53,7 @@ function IndexPopup() {
               // process.env.NODE_ENV === "development" && <TestView />
             }
 
-            <WelcomePopUp />
+            <PopUpTop />
 
             <PopUpLayout />
             {/* configure global toast settings, like theme */}
