@@ -5,6 +5,7 @@ export interface ToDoTask {
   pomsTaken: number;
   completed: boolean;
   createdAt: number;
+  completedAt?: number;
 }
 
 export type TimerMode = "work" | "shortBreak" | "longBreak";

@@ -126,3 +126,6 @@ export const breakEncouragementMessages: string[] = [
 
 // Focus mode animation constants
 export const FOCUS_VIEW_TRANSITION_DURATION = 300; // milliseconds
+
+// Task archiving
+export const MAX_PAST_TASKS_ARCHIVED = 10;
