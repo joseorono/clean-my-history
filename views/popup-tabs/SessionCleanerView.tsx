@@ -11,7 +11,10 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
-import QuickProductivityButton from "~components/quick-productivity-button";
+
+
+import ViewHeader from "~/components/view-header";
+import SessionCleanerButton from "~components/session-cleaner-button";
 import ViewContainer from "~components/view-container";
 import { useCloseTabsMutation } from "~hooks/mutations";
 import { useGetKeywordsFromSettings } from "~hooks/useGetKeywordsFromSetting";
@@ -19,11 +22,6 @@ import useTabsPersisted from "~hooks/useTabsStored";
 import { sendNotification } from "~lib/notification";
 import type { SettingsState } from "~store/features/settings/settingsSlice";
 import type { RootState } from "~store/store";
-
-
-
-import ViewHeader from "../../components/view-header";
-
 
 export default function SessionCleanerView() {
   const [closedTabsCount, setClosedTabsCount] = useState<number>(0);
@@ -170,7 +168,7 @@ export default function SessionCleanerView() {
 
       <Stack spacing={3} sx={{ alignItems: "center", pt: 2 }}>
         {/* Main session cleaner button */}
-        <QuickProductivityButton
+        <SessionCleanerButton
           onClick={handleCleanSession}
           disabled={closeTabsMutation.isPending || isAnimating}
           isLoading={closeTabsMutation.isPending}
@@ -182,8 +180,8 @@ export default function SessionCleanerView() {
           {closeTabsMutation.isPending
             ? "Cleaning up tabs..."
             : closedTabsCount > 0
-              ? `Closed ${closedTabsCount} distracting tabs`
-              : `Currently open tabs with distractions: ${tabsWithKeywords.length}`}
+            ? `Closed ${closedTabsCount} distracting tabs`
+            : `Currently open tabs with distractions: ${tabsWithKeywords.length}`}
         </Typography>
 
         {/* Test notification button */}

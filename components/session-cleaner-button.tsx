@@ -4,19 +4,19 @@ import { memo, useEffect, useRef, useState } from "react";
 
 import { SweepIcon } from "~/components/icons/sweep-icon";
 
-interface QuickProductivityButtonProps {
+interface SessionCleanerButtonProps {
   readonly disabled: boolean;
   readonly isLoading: boolean;
   readonly isAnimating: boolean;
   readonly onClick: () => void;
 }
 
-function QuickProductivityButtonComponent({
+function SessionCleanerButtonComponent({
   disabled,
   isLoading,
   isAnimating,
   onClick
-}: QuickProductivityButtonProps) {
+}: SessionCleanerButtonProps) {
   const [isPressed, setIsPressed] = useState<boolean>(false);
   const [justCompleted, setJustCompleted] = useState<boolean>(false);
   const completionTimerRef = useRef<number>();
@@ -114,6 +114,6 @@ function QuickProductivityButtonComponent({
   );
 }
 
-const QuickProductivityButton = memo(QuickProductivityButtonComponent);
+const SessionCleanerButton = memo(SessionCleanerButtonComponent);
 
-export default QuickProductivityButton;
+export default SessionCleanerButton;
