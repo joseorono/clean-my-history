@@ -1,6 +1,8 @@
-import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CircularProgress from "@mui/material/CircularProgress";
-import { memo } from "react";
+import { memo, useEffect, useRef, useState } from "react";
+
+import { SweepIcon } from "~/components/icons/sweep-icon";
 
 interface QuickProductivityButtonProps {
   readonly disabled: boolean;
@@ -15,45 +17,97 @@ function QuickProductivityButtonComponent({
   isAnimating,
   onClick
 }: QuickProductivityButtonProps) {
+  const [isPressed, setIsPressed] = useState<boolean>(false);
+  const [justCompleted, setJustCompleted] = useState<boolean>(false);
+  const completionTimerRef = useRef<number>();
+  const prevAnimatingRef = useRef<boolean>(isAnimating);
+
+  useEffect(() => {
+    if (prevAnimatingRef.current && !isAnimating && !isLoading) {
+      setJustCompleted(true);
+      if (completionTimerRef.current) {
+        window.clearTimeout(completionTimerRef.current);
+      }
+      completionTimerRef.current = window.setTimeout(() => {
+        setJustCompleted(false);
+      }, 800);
+    }
+    prevAnimatingRef.current = isAnimating;
+    return () => {
+      if (completionTimerRef.current) {
+        window.clearTimeout(completionTimerRef.current);
+      }
+    };
+  }, [isAnimating, isLoading]);
+
+  const handlePointerDown = () => {
+    if (!disabled) {
+      setIsPressed(true);
+    }
+  };
+
+  const handlePointerUp = () => {
+    setIsPressed(false);
+  };
+
+  const handlePointerLeave = () => {
+    setIsPressed(false);
+  };
+
   return (
     <button
       id="quick-productivity-button"
       onClick={onClick}
       disabled={disabled}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerLeave={handlePointerLeave}
       className={`group relative flex h-24 w-24 items-center justify-center rounded-full border-none outline-none transition-all duration-500 ${
         disabled
           ? "cursor-not-allowed bg-gray-200 opacity-70 dark:bg-gray-700"
-          : "cursor-pointer bg-gradient-to-br from-blue-400 to-blue-600 shadow-lg shadow-blue-500/30 hover:scale-105 hover:shadow-blue-500/50 active:scale-95"
-      } `}
+          : "cursor-pointer bg-gradient-to-br from-blue-500 via-sky-500 to-indigo-600 shadow-lg shadow-blue-500/25 hover:scale-105 hover:shadow-blue-500/45 active:scale-95"
+      } ${justCompleted ? "ring-2 ring-sky-200 ring-offset-2" : "ring-0"}`}
       aria-label="Quick clean session">
-      {/* Pulse rings when animating */}
       {isAnimating && !disabled && (
         <>
-          <span className="absolute h-full w-full animate-ping rounded-full bg-blue-400 opacity-20 duration-1000"></span>
-          <span className="absolute h-full w-full scale-110 animate-pulse rounded-full border-2 border-blue-400 opacity-30"></span>
+          <span
+            className="absolute h-full w-full rounded-full bg-blue-400/20"
+            style={{
+              animation: "sweepTrail 1.2s ease-in-out infinite"
+            }}></span>
+          <span
+            className="absolute inset-1 rounded-full border border-white/20"
+            style={{
+              animation: "sweepTrail 1.4s ease-in-out infinite alternate"
+            }}></span>
         </>
       )}
 
-      {/* Inner content */}
+      <span
+        className="absolute inset-[14px] rounded-full bg-white/15 transition-opacity duration-300"
+        style={{ opacity: isPressed ? 0.55 : 0 }}></span>
+
       <div className="relative z-10 flex items-center justify-center text-white">
         {isLoading ? (
-          <CircularProgress size={32} sx={{ color: "white" }} />
+          <CircularProgress size={34} sx={{ color: "white" }} />
         ) : (
-          <AutoAwesomeIcon
-            className={`transition-transform duration-700 ease-out ${
-              isAnimating
-                ? "rotate-180 scale-110"
-                : "group-hover:rotate-12 group-hover:scale-110"
-            } `}
-            sx={{ fontSize: 40 }}
-          />
+          <SweepIcon active={isAnimating} pressed={isPressed} />
         )}
       </div>
 
-      {/* Shine effect overlay */}
+      {justCompleted && !isLoading && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center">
+          <CheckCircleOutlineIcon
+            className="text-white drop-shadow"
+            sx={{ fontSize: 34 }}
+            style={{ animation: "buttonCompletionPop 0.6s ease forwards" }}
+          />
+        </div>
+      )}
+
       {!disabled && !isLoading && (
-        <div className="absolute inset-0 -z-0 overflow-hidden rounded-full">
-          <div className="absolute -left-full top-0 h-full w-1/2 skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 transition-all duration-700 group-hover:left-full"></div>
+        <div className="absolute inset-0 -z-10 overflow-hidden rounded-full">
+          <div className="absolute -left-full top-0 h-full w-1/2 skew-x-12 bg-gradient-to-r from-transparent to-white/60 opacity-20 transition-all duration-700 group-hover:left-full"></div>
         </div>
       )}
     </button>
