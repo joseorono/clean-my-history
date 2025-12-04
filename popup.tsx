@@ -58,7 +58,9 @@ function IndexPopup() {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                height: "100vh",
+                minHeight:'100svh',
+                height: "600px",
+                maxHeight: "600px",
                 overflow: "hidden"
               }}>
               <PopUpTop />
