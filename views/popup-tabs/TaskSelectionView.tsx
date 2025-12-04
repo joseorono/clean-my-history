@@ -1,26 +1,30 @@
 import AddIcon from "@mui/icons-material/Add";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 import Fade from "@mui/material/Fade";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+
+
 import { FOCUS_VIEW_TRANSITION_DURATION } from "~constants";
-import {
-  addTask,
-  deleteTask,
-  setCurrentTaskIndex,
-  updateTask
-} from "~store/features/focus/focusSlice";
+import { addTask, copyPastTask, deleteTask, setCurrentTaskIndex, updateTask } from "~store/features/focus/focusSlice";
 import type { RootState } from "~store/store";
+
+
+
+
 
 interface TaskSelectionViewProps {
   onTaskSelect: (taskIndex: number) => void;
@@ -57,6 +61,23 @@ export default function TaskSelectionView({
 
   const handleToggleComplete = (taskId: string, completed: boolean) => {
     dispatch(updateTask({ id: taskId, updates: { completed: !completed } }));
+  };
+
+  const handleCopyPastTask = (taskId: string) => {
+    dispatch(copyPastTask(taskId));
+  };
+
+  const formatCompletionTime = (timestamp: number | undefined): string => {
+    if (!timestamp) return "";
+    const now = Date.now();
+    const diffMs = now - timestamp;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMins / 60);
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffMins < 1) return "just now";
+    if (diffMins < 60) return `${diffMins}m ago`;
+    if (diffHours < 24) return `${diffHours}h ago`;
+    return `${diffDays}d ago`;
   };
 
   return (
@@ -206,74 +227,135 @@ export default function TaskSelectionView({
               <Typography variant="body2">No tasks available</Typography>
             </Box>
           ) : (
-            activeTasks.map((task, index) => {
-              const taskIndex = focus.tasks.findIndex((t) => t.id === task.id);
-              const isSelected = taskIndex === currentTaskIndex;
-              return (
-                <Stack
-                  key={task.id}
-                  direction="row"
-                  spacing={1}
-                  sx={{
-                    alignItems: "center",
-                    px: 2,
-                    py: 1.5,
-                    border: isSelected
-                      ? "2px solid rgba(66, 165, 245, 0.8)"
-                      : "1px solid rgba(255, 255, 255, 0.2)",
-                    borderRadius: 2,
-                    backgroundColor: isSelected
-                      ? "rgba(66, 165, 245, 0.15)"
-                      : "rgba(255, 255, 255, 0.05)",
-                    cursor: "pointer",
-                    "&:hover": {
+            <>
+              {activeTasks.map((task) => {
+                const taskIndex = focus.tasks.findIndex((t) => t.id === task.id);
+                const isSelected = taskIndex === currentTaskIndex;
+                return (
+                  <Stack
+                    key={task.id}
+                    direction="row"
+                    spacing={1}
+                    sx={{
+                      alignItems: "center",
+                      px: 2,
+                      py: 1.5,
+                      border: isSelected
+                        ? "2px solid rgba(66, 165, 245, 0.8)"
+                        : "1px solid rgba(255, 255, 255, 0.2)",
+                      borderRadius: 2,
                       backgroundColor: isSelected
-                        ? "rgba(66, 165, 245, 0.25)"
-                        : "rgba(255, 255, 255, 0.12)"
-                    }
-                  }}
-                  onClick={() => onTaskSelect(taskIndex)}>
-                  <IconButton
-                    size="small"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleToggleComplete(task.id, task.completed);
-                    }}>
-                    {task.completed ? (
-                      <CheckCircleIcon fontSize="small" color="success" />
-                    ) : (
-                      <RadioButtonUncheckedIcon
-                        fontSize="small"
-                        sx={{ color: "text.secondary" }}
-                      />
-                    )}
-                  </IconButton>
-                  <Box sx={{ flex: 1 }}>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "text.primary",
-                        fontWeight: isSelected ? 500 : 400,
-                        textDecoration: task.completed ? "line-through" : "none"
-                      }}>
-                      {task.name}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {task.pomsTaken} / {task.pomsExpected} pomodoros
-                    </Typography>
-                  </Box>
-                  <IconButton
-                    size="small"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteTask(task.id);
+                        ? "rgba(66, 165, 245, 0.15)"
+                        : "rgba(255, 255, 255, 0.05)",
+                      cursor: "pointer",
+                      "&:hover": {
+                        backgroundColor: isSelected
+                          ? "rgba(66, 165, 245, 0.25)"
+                          : "rgba(255, 255, 255, 0.12)"
+                      }
                     }}
-                    sx={{ color: "text.secondary" }}>
-                    <DeleteIcon fontSize="small" />
-                  </IconButton>
-                </Stack>
-              );
-            })
+                    onClick={() => onTaskSelect(taskIndex)}>
+                    <Box sx={{ flex: 1 }}>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: "text.primary",
+                          fontWeight: isSelected ? 500 : 400,
+                          textDecoration: task.completed ? "line-through" : "none"
+                        }}>
+                        {task.name}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {task.pomsTaken} / {task.pomsExpected} pomodoros
+                      </Typography>
+                    </Box>
+                    <Tooltip title="Mark complete">
+                      <IconButton
+                        size="small"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleToggleComplete(task.id, task.completed);
+                        }}
+                        sx={{ color: "text.secondary" }}>
+                        <CheckCircleIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete">
+                      <IconButton
+                        size="small"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteTask(task.id);
+                        }}
+                        sx={{ color: "text.secondary" }}>
+                        <DeleteIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Stack>
+                );
+              })}
+              {focus.pastTasks.length > 0 && (
+                <>
+                  <Divider sx={{ my: 1 }} />
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      display: "block",
+                      color: "text.secondary",
+                      fontSize: "0.75rem",
+                      fontWeight: 600,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.5px",
+                      px: 2
+                    }}>
+                    Completed Tasks
+                  </Typography>
+                  {focus.pastTasks.map((task) => (
+                    <Stack
+                      key={task.id}
+                      direction="row"
+                      spacing={1}
+                      sx={{
+                        alignItems: "center",
+                        px: 2,
+                        py: 1,
+                        border: "1px solid rgba(255, 255, 255, 0.1)",
+                        borderRadius: 2,
+                        backgroundColor: "rgba(255, 255, 255, 0.02)",
+                        "&:hover": {
+                          backgroundColor: "rgba(255, 255, 255, 0.08)"
+                        }
+                      }}>
+                      <Box sx={{ flex: 1 }}>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color: "text.primary",
+                            textDecoration: "line-through",
+                            fontSize: "0.875rem"
+                          }}>
+                          {task.name}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {formatCompletionTime(task.completedAt)}
+                        </Typography>
+                      </Box>
+                      <Tooltip title="Copy to current tasks">
+                        <IconButton
+                          size="small"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleCopyPastTask(task.id);
+                          }}
+                          sx={{ color: "text.secondary" }}>
+                          <ContentCopyIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </Stack>
+                  ))}
+                </>
+              )}
+            </>
           )}
         </Stack>
       </Box>
