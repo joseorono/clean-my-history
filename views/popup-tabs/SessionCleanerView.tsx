@@ -9,23 +9,26 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
-
-
+import { useDispatch, useSelector } from "react-redux";
 
 import ViewHeader from "~/components/view-header";
 import SessionCleanerButton from "~components/session-cleaner-button";
 import ViewContainer from "~components/view-container";
+import { CATEGORIES } from "~constants";
 import { useCloseTabsMutation } from "~hooks/mutations";
 import { useGetKeywordsFromSettings } from "~hooks/useGetKeywordsFromSetting";
 import useTabsPersisted from "~hooks/useTabsStored";
 import { sendNotification } from "~lib/notification";
-import type { SettingsState } from "~store/features/settings/settingsSlice";
+import {
+  selectAllCategories,
+  type SettingsState
+} from "~store/features/settings/settingsSlice";
 import type { RootState } from "~store/store";
 
 export default function SessionCleanerView() {
   const [closedTabsCount, setClosedTabsCount] = useState<number>(0);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   // Get settings from Redux store
   const settings = useSelector(
@@ -37,6 +40,10 @@ export default function SessionCleanerView() {
 
   // Use the proper mutation hook
   const closeTabsMutation = useCloseTabsMutation();
+
+  const handleSelectAll = () => {
+    dispatch(selectAllCategories());
+  };
 
   // Handle the clean session action
   const handleCleanSession = () => {
@@ -120,19 +127,39 @@ export default function SessionCleanerView() {
       {/* Display selected categories */}
       <Card sx={{ mb: 3 }}>
         <CardContent>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1.5 }}>
-            Active Filters
-          </Typography>
+          <Stack
+            direction="row"
+            sx={{
+              alignItems: "center",
+              justifyContent: "space-between",
+              mb: 1.5
+            }}>
+            <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+              Active Filters
+            </Typography>
+            <Button
+              size="small"
+              variant="outlined"
+              onClick={handleSelectAll}
+              disabled={
+                settings.selectedCategories.length === CATEGORIES.length
+              }>
+              Select All
+            </Button>
+          </Stack>
           <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
-            {settings.selectedCategories.map((category) => (
-              <Chip
-                key={category}
-                label={category}
-                size="small"
-                color="primary"
-                variant="outlined"
-              />
-            ))}
+            {settings.selectedCategories.map((category) => {
+              const categoryMeta = CATEGORIES.find((c) => c.id === category);
+              return (
+                <Chip
+                  key={category}
+                  label={categoryMeta?.label || category}
+                  size="small"
+                  color="primary"
+                  variant="outlined"
+                />
+              );
+            })}
             {settings.customKeywords.length > 0 && (
               <Chip
                 label={`+${settings.customKeywords.length} custom`}

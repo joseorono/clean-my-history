@@ -1,21 +1,29 @@
 import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import { useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-
 
 import ViewContainer from "~components/view-container";
 import { badKeyboardCategories } from "~constants";
 import type { BadKeyboardCategory } from "~constants";
 import { openOnboardingTab } from "~lib/utils";
-import { addCustomKeyword, addWhitelistedDomain, removeCustomKeyword, removeWhitelistedDomain, resetSettings, toggleCategory, type SettingsState } from "~store/features/settings/settingsSlice";
+import {
+  addCustomKeyword,
+  addWhitelistedDomain,
+  removeCustomKeyword,
+  removeWhitelistedDomain,
+  resetSettings,
+  toggleCategory,
+  type SettingsState
+} from "~store/features/settings/settingsSlice";
 import type { RootState } from "~store/store";
 import formatCategoryLabel from "~utils/format-category-label";
 
-
-
 import ViewHeader from "../../components/view-header";
-
 
 export default function SettingsView() {
   const dispatch = useDispatch();
@@ -25,6 +33,7 @@ export default function SettingsView() {
 
   const [newKeyword, setNewKeyword] = useState("");
   const [newDomain, setNewDomain] = useState("");
+  const [openResetDialog, setOpenResetDialog] = useState(false);
 
   const handleToggleCategory = (category: BadKeyboardCategory) => {
     dispatch(toggleCategory(category));
@@ -52,10 +61,17 @@ export default function SettingsView() {
     dispatch(removeWhitelistedDomain(domain));
   };
 
-  const handleResetSettings = () => {
-    if (confirm("Are you sure you want to reset all settings to default?")) {
-      dispatch(resetSettings());
-    }
+  const handleOpenResetDialog = () => {
+    setOpenResetDialog(true);
+  };
+
+  const handleCloseResetDialog = () => {
+    setOpenResetDialog(false);
+  };
+
+  const handleConfirmReset = () => {
+    dispatch(resetSettings());
+    setOpenResetDialog(false);
   };
 
   return (
@@ -195,11 +211,44 @@ export default function SettingsView() {
       {/* Reset Settings */}
       <div className="mt-3 flex justify-end">
         <button
-          className="rounded-md bg-red-500 px-3 py-1.5 text-sm text-white"
-          onClick={handleResetSettings}>
+          className="rounded-md bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+          onClick={handleOpenResetDialog}>
           Reset Settings
         </button>
       </div>
+
+      {/* Reset Confirmation Dialog */}
+      <Dialog
+        open={openResetDialog}
+        onClose={handleCloseResetDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">Reset All Settings?</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            This will reset all your settings to their default values,
+            including:
+            <ul style={{ marginTop: "8px", marginLeft: "16px" }}>
+              <li>Selected categories</li>
+              <li>Custom keywords</li>
+              <li>Whitelisted domains</li>
+            </ul>
+            This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseResetDialog} color="primary">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleConfirmReset}
+            color="error"
+            variant="contained"
+            autoFocus>
+            Reset
+          </Button>
+        </DialogActions>
+      </Dialog>
     </ViewContainer>
   );
 }

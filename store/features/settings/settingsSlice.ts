@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+
+
+
 import type { BadKeyboardCategory } from "~constants";
-import { badKeyboardCategories } from "~constants";
+import { badKeyboardCategories, CATEGORIES } from "~constants";
 
 export interface SettingsState {
   selectedCategories: BadKeyboardCategory[];
@@ -9,8 +12,14 @@ export interface SettingsState {
   whitelistedDomains: string[];
 }
 
+const getDefaultCategories = (): BadKeyboardCategory[] => {
+  return CATEGORIES.filter((cat) => cat.defaultEnabled).map(
+    (cat) => cat.id
+  ) as BadKeyboardCategory[];
+};
+
 const initialState: SettingsState = {
-  selectedCategories: [...badKeyboardCategories], // Default to all categories selected
+  selectedCategories: getDefaultCategories(),
   customKeywords: [],
   whitelistedDomains: []
 };
@@ -24,20 +33,21 @@ export const settingsSlice = createSlice({
       if (action.payload?.settings) {
         // Validate and ensure the structure matches our state
         const savedSettings = action.payload.settings;
-        
+
         // Restore selected categories if they exist
         if (Array.isArray(savedSettings.selectedCategories)) {
           // Filter to ensure only valid categories are included
           state.selectedCategories = savedSettings.selectedCategories.filter(
-            (cat: string) => badKeyboardCategories.includes(cat as BadKeyboardCategory)
+            (cat: string) =>
+              badKeyboardCategories.includes(cat as BadKeyboardCategory)
           ) as BadKeyboardCategory[];
         }
-        
+
         // Restore custom keywords if they exist
         if (Array.isArray(savedSettings.customKeywords)) {
           state.customKeywords = savedSettings.customKeywords;
         }
-        
+
         // Restore whitelisted domains if they exist
         if (Array.isArray(savedSettings.whitelistedDomains)) {
           state.whitelistedDomains = savedSettings.whitelistedDomains;
@@ -47,7 +57,7 @@ export const settingsSlice = createSlice({
     toggleCategory: (state, action: PayloadAction<BadKeyboardCategory>) => {
       const category = action.payload;
       const index = state.selectedCategories.indexOf(category);
-      
+
       if (index !== -1) {
         // Remove category if it exists
         state.selectedCategories.splice(index, 1);
@@ -56,31 +66,39 @@ export const settingsSlice = createSlice({
         state.selectedCategories.push(category);
       }
     },
-    
+
+    selectAllCategories: (state) => {
+      state.selectedCategories = [
+        ...badKeyboardCategories
+      ] as BadKeyboardCategory[];
+    },
+
     addCustomKeyword: (state, action: PayloadAction<string>) => {
       const keyword = action.payload.trim().toLowerCase();
       if (keyword && !state.customKeywords.includes(keyword)) {
         state.customKeywords.push(keyword);
       }
     },
-    
+
     removeCustomKeyword: (state, action: PayloadAction<string>) => {
       const keyword = action.payload.toLowerCase();
-      state.customKeywords = state.customKeywords.filter(k => k !== keyword);
+      state.customKeywords = state.customKeywords.filter((k) => k !== keyword);
     },
-    
+
     addWhitelistedDomain: (state, action: PayloadAction<string>) => {
       const domain = action.payload.trim().toLowerCase();
       if (domain && !state.whitelistedDomains.includes(domain)) {
         state.whitelistedDomains.push(domain);
       }
     },
-    
+
     removeWhitelistedDomain: (state, action: PayloadAction<string>) => {
       const domain = action.payload.toLowerCase();
-      state.whitelistedDomains = state.whitelistedDomains.filter(d => d !== domain);
+      state.whitelistedDomains = state.whitelistedDomains.filter(
+        (d) => d !== domain
+      );
     },
-    
+
     resetSettings: (state) => {
       return initialState;
     }
@@ -88,12 +106,13 @@ export const settingsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { 
+export const {
   initializeFromStorage,
-  toggleCategory, 
-  addCustomKeyword, 
-  removeCustomKeyword, 
-  addWhitelistedDomain, 
+  toggleCategory,
+  selectAllCategories,
+  addCustomKeyword,
+  removeCustomKeyword,
+  addWhitelistedDomain,
   removeWhitelistedDomain,
   resetSettings
 } = settingsSlice.actions;

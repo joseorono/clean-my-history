@@ -1,3 +1,4 @@
+;
 /*
 
     This file contains all the constants used in the project.
@@ -9,6 +10,8 @@
 
 
 */
+
+import type { CategoryMetadata } from "~types/misc";
 
 // Default Pomodoro Duration
 export const DEFAULT_WORK_MINUTES = 25;
@@ -73,7 +76,6 @@ export const gamingKeywords: string[] = [
   "gaming",
   "playstation",
   "psx",
-
   "ps2",
   "ps3",
   "ps4",
@@ -97,23 +99,105 @@ export const gamingKeywords: string[] = [
   "twitch"
 ];
 
+export const entertainmentKeywords: string[] = [
+  "netflix",
+  "hulu",
+  "disney",
+  "prime video",
+  "hbo",
+  "peacock",
+  "paramount",
+  "movie",
+  "film",
+  "series",
+  "episode",
+  "watch",
+  "streaming"
+];
+
+export const healthKeywords: string[] = [
+  "gym",
+  "fitness",
+  "yoga",
+  "peloton",
+  "strava",
+  "myfitnesspal",
+  "workout",
+  "exercise",
+  "health",
+  "wellness"
+];
+
+export const shoppingKeywords: string[] = [
+  "amazon",
+  "ebay",
+  "etsy",
+  "walmart",
+  "target",
+  "costco",
+  "doordash",
+  "ubereats",
+  "grubhub",
+  "shopping",
+  "checkout",
+  "cart"
+];
+
+export const travelKeywords: string[] = [
+  "airbnb",
+  "booking",
+  "expedia",
+  "kayak",
+  "tripadvisor",
+  "hotels",
+  "flight",
+  "travel",
+  "vacation",
+  "destination"
+];
+
 // The Spread operator is a perfomrance killer. We can probably optimize this later.
 export const allBadKeywords = [
   ...nsfwKeywords,
   ...gamingKeywords,
-  ...socialMediaKeywords
+  ...socialMediaKeywords,
+  ...entertainmentKeywords,
+  ...healthKeywords,
+  ...shoppingKeywords,
+  ...travelKeywords
 ];
 
-export const badKeyboardCategories = ["nsfw", "gaming", "social"];
+export const CATEGORIES: readonly CategoryMetadata[] = [
+  { id: "nsfw", label: "NSFW", defaultEnabled: true },
+  { id: "gaming", label: "Games", defaultEnabled: true },
+  { id: "social", label: "Social Media", defaultEnabled: true },
+  { id: "entertainment", label: "Entertainment", defaultEnabled: true },
+  { id: "health", label: "Health & Fitness", defaultEnabled: false },
+  { id: "shopping", label: "Shopping & Food", defaultEnabled: false },
+  { id: "travel", label: "Travel", defaultEnabled: false }
+];
+
+export const badKeyboardCategories = CATEGORIES.map((cat) => cat.id);
 
 export type BadKeyboardCategory = (typeof badKeyboardCategories)[number];
+
+// Map category IDs to their keywords
+export const CATEGORY_KEYWORDS: Record<BadKeyboardCategory, string[]> = {
+  nsfw: nsfwKeywords,
+  gaming: gamingKeywords,
+  social: socialMediaKeywords,
+  entertainment: entertainmentKeywords,
+  health: healthKeywords,
+  shopping: shoppingKeywords,
+  travel: travelKeywords
+};
 
 export const focusEncouragementMessages: string[] = [
   "Break time is over! Ready to focus?",
   "Deep work awaits. Let’s get back in the zone.",
   "Shift back into focus mode—you’ve got this.",
   "Time to tune out distractions and dial in.",
-  "Let’s pick up where you left off and push a little further."
+  "Let's pick up where you left off and push a little further."
 ];
 
 export const breakEncouragementMessages: string[] = [
