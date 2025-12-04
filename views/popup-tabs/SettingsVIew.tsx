@@ -7,9 +7,11 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+
+
 import ViewContainer from "~components/view-container";
-import { badKeyboardCategories } from "~constants";
-import type { BadKeyboardCategory } from "~constants";
+import { badKeywordCategories } from "~constants";
+import type { BadKeywordCategory } from "~constants";
 import { openOnboardingTab } from "~lib/utils";
 import {
   addCustomKeyword,
@@ -35,7 +37,7 @@ export default function SettingsView() {
   const [newDomain, setNewDomain] = useState("");
   const [openResetDialog, setOpenResetDialog] = useState(false);
 
-  const handleToggleCategory = (category: BadKeyboardCategory) => {
+  const handleToggleCategory = (category: BadKeywordCategory) => {
     dispatch(toggleCategory(category));
   };
 
@@ -96,7 +98,7 @@ export default function SettingsView() {
         <div>
           <p className="mb-1.5 text-gray-400">Select categories to clean:</p>
           <div className="flex flex-wrap gap-2">
-            {badKeyboardCategories.map((category) => (
+            {badKeywordCategories.map((category) => (
               <label
                 key={category}
                 className="flex cursor-pointer items-center rounded-md p-1 hover:bg-gray-700">

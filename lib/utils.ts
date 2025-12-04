@@ -1,10 +1,10 @@
-import type { BadKeyboardCategory } from "../constants";
+import type { BadKeywordCategory } from "../constants";
 
 export function openOnboardingTab() {
   chrome.tabs.create({ url: "/static/onboarding.html" });
 }
 
-export function formatCategoryLabel(category: BadKeyboardCategory): string {
+export function formatCategoryLabel(category: BadKeywordCategory): string {
   if (category === "nsfw") {
     return "NSFW";
   }

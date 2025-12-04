@@ -1,5 +1,5 @@
 import { CATEGORY_KEYWORDS } from "~constants";
-import type { BadKeyboardCategory } from "~constants";
+import type { BadKeywordCategory } from "~constants";
 import type { SettingsState } from "~store/features/settings/settingsSlice";
 
 /**
@@ -15,7 +15,7 @@ export const useGetKeywordsFromSettings = (
 
   // Add keywords from selected categories using the CATEGORY_KEYWORDS mapping
   settings.selectedCategories.forEach((category) => {
-    const categoryKeywords = CATEGORY_KEYWORDS[category as BadKeyboardCategory];
+    const categoryKeywords = CATEGORY_KEYWORDS[category as BadKeywordCategory];
     if (categoryKeywords) {
       selectedKeywords.push(...categoryKeywords);
     }

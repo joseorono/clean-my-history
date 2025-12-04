@@ -3,19 +3,19 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 
 
-import type { BadKeyboardCategory } from "~constants";
-import { badKeyboardCategories, CATEGORIES } from "~constants";
+import type { BadKeywordCategory } from "~constants";
+import { badKeywordCategories, CATEGORIES } from "~constants";
 
 export interface SettingsState {
-  selectedCategories: BadKeyboardCategory[];
+  selectedCategories: BadKeywordCategory[];
   customKeywords: string[];
   whitelistedDomains: string[];
 }
 
-const getDefaultCategories = (): BadKeyboardCategory[] => {
+const getDefaultCategories = (): BadKeywordCategory[] => {
   return CATEGORIES.filter((cat) => cat.defaultEnabled).map(
     (cat) => cat.id
-  ) as BadKeyboardCategory[];
+  ) as BadKeywordCategory[];
 };
 
 const initialState: SettingsState = {
@@ -39,8 +39,8 @@ export const settingsSlice = createSlice({
           // Filter to ensure only valid categories are included
           state.selectedCategories = savedSettings.selectedCategories.filter(
             (cat: string) =>
-              badKeyboardCategories.includes(cat as BadKeyboardCategory)
-          ) as BadKeyboardCategory[];
+              badKeywordCategories.includes(cat as BadKeywordCategory)
+          ) as BadKeywordCategory[];
         }
 
         // Restore custom keywords if they exist
@@ -54,7 +54,7 @@ export const settingsSlice = createSlice({
         }
       }
     },
-    toggleCategory: (state, action: PayloadAction<BadKeyboardCategory>) => {
+    toggleCategory: (state, action: PayloadAction<BadKeywordCategory>) => {
       const category = action.payload;
       const index = state.selectedCategories.indexOf(category);
 
@@ -69,8 +69,8 @@ export const settingsSlice = createSlice({
 
     selectAllCategories: (state) => {
       state.selectedCategories = [
-        ...badKeyboardCategories
-      ] as BadKeyboardCategory[];
+        ...badKeywordCategories
+      ] as BadKeywordCategory[];
     },
 
     addCustomKeyword: (state, action: PayloadAction<string>) => {

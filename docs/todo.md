@@ -28,7 +28,7 @@
 - [ ] **Settings & UX**
   - [ ] Replace `confirm()` dialogs with MUI dialogs
   - [ ] Centralize toast messages in constants/utility module
-  - [ ] Review and optimize naming conventions (e.g., `badKeyboardCategories`)
+  - [ ] Review and optimize naming conventions (e.g., `badKeywordCategories`)
 
 ## ✅ Completed Features
 
