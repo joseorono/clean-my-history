@@ -1,42 +1,46 @@
-import { useState } from "react";
-
-import "./style.css";
-
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 
 // Redux Store
 import { store } from "~store/store";
 import PopUpLayout from "~views/PopUpLayout";
-import TestView from "~views/TestView";
 import WelcomePopUp from "~views/WelcomePopUp";
 
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark"
-  }
-});
+import "./style.css";
 
 function IndexPopup() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const [data, setData] = useState("");
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
   // Create a client
   const queryClient = new QueryClient();
+
+  React.useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    const initialDark = savedTheme ? savedTheme === "dark" : prefersDarkMode;
+    setIsDarkMode(initialDark);
+
+    const handleStorageChange = () => {
+      const theme = localStorage.getItem("theme");
+      setIsDarkMode(theme === "dark");
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, [prefersDarkMode]);
 
   const theme = React.useMemo(
     () =>
       createTheme({
         palette: {
-          //mode: prefersDarkMode ? 'dark' : 'light',
-          mode: "dark"
+          mode: isDarkMode ? "dark" : "light"
         }
       }),
-    [prefersDarkMode]
+    [isDarkMode]
   );
 
   return (
