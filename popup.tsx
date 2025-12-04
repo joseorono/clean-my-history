@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -53,9 +54,16 @@ function IndexPopup() {
               // process.env.NODE_ENV === "development" && <TestView />
             }
 
-            <PopUpTop />
-
-            <PopUpLayout />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                height: "100vh",
+                overflow: "hidden"
+              }}>
+              <PopUpTop />
+              <PopUpLayout />
+            </Box>
             {/* configure global toast settings, like theme */}
             <Toaster
               toastOptions={{
