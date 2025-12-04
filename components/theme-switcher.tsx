@@ -1,11 +1,10 @@
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
 import { useEffect, useState } from "react";
 
 /**
  * ThemeSwitcher component that toggles between light and dark modes
+ * Styled as a pill-shaped toggle with sliding circle
  * Manages both MUI and Tailwind CSS themes
  */
 export default function ThemeSwitcher() {
@@ -15,7 +14,9 @@ export default function ThemeSwitcher() {
   useEffect(() => {
     setMounted(true);
     const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
     const initialDark = savedTheme ? savedTheme === "dark" : prefersDark;
     setIsDark(initialDark);
     applyTheme(initialDark);
@@ -42,24 +43,41 @@ export default function ThemeSwitcher() {
     return null;
   }
 
+  const pillColor = isDark ? "#0f172a" : "#1f2937";
+  const iconSx = (active: boolean) => ({
+    fontSize: "0.875rem",
+    color: pillColor,
+    opacity: active ? 1 : 0.6,
+    transform: active ? "scale(1)" : "scale(0.92)",
+    transition: "opacity 0.35s ease, transform 0.35s ease, color 0.35s ease"
+  });
+  const knobOffset = isDark ? "0.25rem" : "calc(100% - 1.75rem)";
+
   return (
-    <Tooltip title={isDark ? "Light mode" : "Dark mode"}>
-      <IconButton
-        onClick={handleToggle}
-        size="small"
-        sx={{
-          color: "text.secondary",
-          transition: "all 0.3s ease",
-          "&:hover": {
-            backgroundColor: "rgba(255, 255, 255, 0.1)"
-          }
-        }}>
-        {isDark ? (
-          <LightModeIcon fontSize="small" />
-        ) : (
-          <DarkModeIcon fontSize="small" />
-        )}
-      </IconButton>
-    </Tooltip>
+    <button
+      type="button"
+      onClick={handleToggle}
+      className="relative flex h-8 w-16 cursor-pointer items-center justify-between rounded-full px-1 transition-transform duration-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2"
+      style={{
+        backgroundColor: pillColor,
+        transition: "background-color 0.35s ease, box-shadow 0.35s ease"
+      }}
+      aria-label={isDark ? "Activate light theme" : "Activate dark theme"}>
+      <div
+        className="absolute h-6 w-6 rounded-full bg-white shadow-sm"
+        style={{
+          left: knobOffset,
+          top: "50%",
+          transform: "translateY(-50%)",
+          transition: "left 0.35s ease, transform 0.35s ease"
+        }}
+      />
+      <div className="relative z-0 flex h-6 w-6 items-center justify-center">
+        <DarkModeIcon sx={iconSx(isDark)} />
+      </div>
+      <div className="relative z-0 flex h-6 w-6 items-center justify-center">
+        <LightModeIcon sx={iconSx(!isDark)} />
+      </div>
+    </button>
   );
 }
