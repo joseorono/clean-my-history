@@ -1,4 +1,3 @@
-;
 /*
 
     This file contains all the constants used in the project.
@@ -57,13 +56,20 @@ export const socialMediaKeywords: string[] = [
   "omegle",
   "periscope",
   "meowchat",
+  "youtube"
+];
+
+export const datingKeywords: string[] = [
+  "tinder",
   "bumble",
+  "hinge",
   "grindr",
   "okcupid",
-  "tinder",
   "match",
-  "hinge",
-  "youtube"
+  "eharmony",
+  "coffeemeetsbagel",
+  "plentyoffish",
+  "happn"
 ];
 
 export const gamingKeywords: string[] = [
@@ -156,36 +162,58 @@ export const travelKeywords: string[] = [
   "destination"
 ];
 
+export type BadKeywordCategory =
+  | "nsfw"
+  | "gaming"
+  | "social"
+  | "dating"
+  | "entertainment"
+  | "health"
+  | "shopping"
+  | "travel";
+
+export const badKeywordCategories: readonly BadKeywordCategory[] = [
+  "nsfw",
+  "gaming",
+  "social",
+  "dating",
+  "entertainment",
+  "health",
+  "shopping",
+  "travel"
+];
+
 // The Spread operator is a perfomrance killer. We can probably optimize this later.
 export const allBadKeywords = [
   ...nsfwKeywords,
   ...gamingKeywords,
   ...socialMediaKeywords,
+  ...datingKeywords,
   ...entertainmentKeywords,
   ...healthKeywords,
   ...shoppingKeywords,
   ...travelKeywords
 ];
 
-export const CATEGORIES: readonly CategoryMetadata[] = [
+export const CATEGORIES: ReadonlyArray<
+  CategoryMetadata & { readonly id: BadKeywordCategory }
+> = [
   { id: "nsfw", label: "NSFW", defaultEnabled: true },
   { id: "gaming", label: "Games", defaultEnabled: true },
   { id: "social", label: "Social Media", defaultEnabled: true },
+  { id: "dating", label: "Dating", defaultEnabled: true },
   { id: "entertainment", label: "Entertainment", defaultEnabled: true },
   { id: "health", label: "Health & Fitness", defaultEnabled: false },
   { id: "shopping", label: "Shopping & Food", defaultEnabled: false },
   { id: "travel", label: "Travel", defaultEnabled: false }
 ];
 
-export const badKeyboardCategories = CATEGORIES.map((cat) => cat.id);
-
-export type BadKeyboardCategory = (typeof badKeyboardCategories)[number];
-
 // Map category IDs to their keywords
-export const CATEGORY_KEYWORDS: Record<BadKeyboardCategory, string[]> = {
+export const CATEGORY_KEYWORDS: Record<BadKeywordCategory, string[]> = {
   nsfw: nsfwKeywords,
   gaming: gamingKeywords,
   social: socialMediaKeywords,
+  dating: datingKeywords,
   entertainment: entertainmentKeywords,
   health: healthKeywords,
   shopping: shoppingKeywords,
