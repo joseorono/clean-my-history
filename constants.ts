@@ -6,11 +6,15 @@
     We do not want to hardcode the list of websites to block, so as to prevent this
     file from being used to access those sites. We'll simply block generic keywords
     like lots of security software out there.
-
-
 */
 
 import type { CategoryMetadata } from "~types/misc";
+
+// Focus mode animation constants
+export const FOCUS_VIEW_TRANSITION_DURATION = 300; // milliseconds
+
+// Task archiving
+export const MAX_PAST_TASKS_ARCHIVED = 10;
 
 // Default Pomodoro Duration
 export const DEFAULT_WORK_MINUTES = 25;
@@ -231,13 +235,7 @@ export const focusEncouragementMessages: string[] = [
 export const breakEncouragementMessages: string[] = [
   "Great work! Time for a break.",
   "Nice session—take a moment to recharge.",
-  "You’ve earned a breather. Step away for a bit.",
+  "You've earned a breather. Step away for a bit.",
   "Stand up, stretch, and enjoy a short break.",
   "Pause and reset—your next focus block will be even better."
 ];
-
-// Focus mode animation constants
-export const FOCUS_VIEW_TRANSITION_DURATION = 300; // milliseconds
-
-// Task archiving
-export const MAX_PAST_TASKS_ARCHIVED = 10;
