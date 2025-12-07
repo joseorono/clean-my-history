@@ -1,4 +1,13 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
 import type { BadKeywordCategory } from "../constants";
+
+export const noop = () => {};
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 export function openOnboardingTab() {
   chrome.tabs.create({ url: "/static/onboarding.html" });
