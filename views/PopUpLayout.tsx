@@ -3,7 +3,6 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import StorageIcon from "@mui/icons-material/Storage";
 import TimerIcon from "@mui/icons-material/Timer";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Tooltip from "@mui/material/Tooltip";
@@ -54,21 +53,52 @@ export default function PopUpLayout() {
           flexDirection: "column",
           flex: 1,
           minHeight: 0,
-          overflow: "hidden"
+          overflow: "hidden",
         }}>
-        <Paper elevation={2} sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <div 
+         className="mx-4 mt-2 border-rounded" 
+         style={{
+          borderBottom: "1px solid rgba(229, 231, 235, 0.2)",
+          borderRadius: "12px",
+          overflow: "hidden"
+         }}>
           <Tabs
             value={value}
             onChange={handleChange}
             aria-label="Section Tabs"
             variant="fullWidth"
             sx={{
+              backgroundColor: "rgba(30, 41, 59, 0.5)",
+              backdropFilter: "blur(12px)",
+              borderRadius: "12px",
+              p: 0.5,
+              border: "1px solid rgba(255, 255, 255, 0.08)",
+              minHeight: "48px",
               "& .MuiTab-root": {
-                minHeight: "44px",
+                minHeight: "40px",
                 textTransform: "none",
                 fontSize: "0.85rem",
-                fontWeight: 500,
-                px: 1
+                fontWeight: 600,
+                borderRadius: "12px",
+                transition: "all 0.2s ease",
+                color: "text.secondary",
+                opacity: 0.7,
+                "&:hover": {
+                  opacity: 1,
+                  backgroundColor: "rgba(255, 255, 255, 0.05)"
+                },
+                "&.Mui-selected": {
+                  color: "text.primary",
+                  backgroundColor: "rgba(59, 130, 246, 0.2)", // Blue tint
+                  opacity: 1
+                },
+                "& .MuiTab-root": {
+                  minHeight: "44px",
+                  textTransform: "none",
+                  fontSize: "0.85rem",
+                  fontWeight: 500,
+                  px: 1
+                }
               }
             }}>
             <Tab
@@ -99,7 +129,7 @@ export default function PopUpLayout() {
               sx={{ flex: 0, minWidth: 48, px: 0.5 }}
             />
           </Tabs>
-        </Paper>
+        </div>
 
         <Box
           id="tabViewContainer"

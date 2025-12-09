@@ -230,17 +230,17 @@ export default function FocusModeView() {
 
   return (
     <Fade in timeout={FOCUS_VIEW_TRANSITION_DURATION}>
-      <ViewContainer>
+      <ViewContainer className="px-0">
         {/* Current Task Title and Change Button */}
         <div id="focus-mode-top-bar">
           <Stack
+            className="px-6"
             direction="row"
             spacing={0.75}
             sx={{
               mb: 0.5,
               justifyContent: "space-between",
               alignItems: "center",
-              px: 1,
               py: 0,
               height: 32
             }}>
@@ -285,6 +285,7 @@ export default function FocusModeView() {
           </Stack>
           {/* Pomodoro Cycles Indicator */}
           <Stack
+            className="px-6"
             id="pomodoro-cycles"
             direction="row"
             sx={{
@@ -294,7 +295,6 @@ export default function FocusModeView() {
               pb: 0.75,
               mb: 1,
               gap: 0.25,
-              px: 1,
               borderBottom: "1px solid rgba(255,255,255,0.1)"
             }}>
             {Array.from({ length: focus.settings.sessionsUntilLongBreak }).map(
@@ -327,9 +327,18 @@ export default function FocusModeView() {
         {/* Mode Selector */}
         <Stack
           id="modeSelectorBottons"
+          className="bg-[#181e27] p-4"
           direction="row"
-          spacing={0.75}
-          sx={{ mb: 1.5, justifyContent: "center" }}>
+          spacing={1}
+          sx={{ 
+            mb: 4,
+            justifyContent: "center",
+            backgroundColor: "rgba(0, 0, 0, 0.2)",
+            p: 0.5,
+            borderRadius: "9999px",
+            width: "fit-content",
+            mx: "auto"
+           }}>
           <Chip
             label="Deep Work"
             onClick={() => handleModeSwitch("work")}
@@ -515,6 +524,7 @@ export default function FocusModeView() {
 
         {/* Reset Session button at bottom */}
         <Box
+          className="px-6"
           sx={{
             borderTop: "1px solid rgba(255,255,255,0.1)",
             pt: 1.5,

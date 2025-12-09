@@ -11,6 +11,7 @@ import PopUpTop from "~/views/pop-up-top";
 // Redux Store
 import { store } from "~store/store";
 import PopUpLayout from "~views/PopUpLayout";
+import { themeOptionsLight, themeOptionsDark } from "~mui-themes";
 
 import "./style.css";
 
@@ -35,12 +36,10 @@ function IndexPopup() {
   }, [prefersDarkMode]);
 
   const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: isDarkMode ? "dark" : "light"
-        }
-      }),
+    () => {
+      const baseTheme = isDarkMode ? themeOptionsDark : themeOptionsLight;
+      return createTheme(baseTheme);
+    },
     [isDarkMode]
   );
 
