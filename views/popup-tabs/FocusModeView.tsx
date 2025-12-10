@@ -489,28 +489,36 @@ export default function FocusModeView() {
           spacing={1.5}
           sx={{ mb: 2, justifyContent: "center" }}>
           <Button
-            variant="text"
+            variant="outlined"
             startIcon={<CheckIcon fontSize="small" />}
             onClick={handleDoneTask}
             sx={{
               color: "text.secondary",
-              textTransform: "none",
-              fontSize: "0.8rem",
-              py: 0.5,
-              px: 1
+              borderColor: "rgba(255, 255, 255, 0.1)",
+              borderRadius: "12px",
+              px: 3,
+              py: 1,
+              "&:hover": {
+                borderColor: "rgba(255, 255, 255, 0.2)",
+                backgroundColor: "rgba(255, 255, 255, 0.05)"
+              }
             }}>
             Done
           </Button>
           <Button
-            variant="text"
+            variant="outlined"
             startIcon={<SwapHorizIcon fontSize="small" />}
             onClick={handleSwitchTask}
             sx={{
-              color: "text.primary",
-              textTransform: "none",
-              fontSize: "0.8rem",
-              py: 0.5,
-              px: 1
+              color: "text.secondary",
+              borderColor: "rgba(255, 255, 255, 0.1)",
+              borderRadius: "12px",
+              px: 3,
+              py: 1,
+              "&:hover": {
+                borderColor: "rgba(255, 255, 255, 0.2)",
+                backgroundColor: "rgba(255, 255, 255, 0.05)"
+              }
             }}>
             Switch task
           </Button>
