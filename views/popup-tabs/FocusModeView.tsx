@@ -327,52 +327,46 @@ export default function FocusModeView() {
         {/* Mode Selector */}
         <Stack
           id="modeSelectorBottons"
-          className="bg-[#181e27] p-4"
+          className="!bg-[#181e27] p-2"
           direction="row"
           spacing={1}
           sx={{ 
             mb: 4,
             justifyContent: "center",
-            backgroundColor: "rgba(0, 0, 0, 0.2)",
-            p: 0.5,
             borderRadius: "9999px",
             width: "fit-content",
             mx: "auto"
            }}>
-          <Chip
-            label="Deep Work"
-            onClick={() => handleModeSwitch("work")}
-            color={focus.timerMode === "work" ? "error" : "default"}
-            variant={focus.timerMode === "work" ? "filled" : "outlined"}
-            disabled={
-              focus.timerStatus === "running" && focus.timerMode !== "work"
-            }
-            size="small"
-            sx={{ height: 24, fontSize: "0.75rem" }}
-          />
-          <Chip
-            label="Short Break"
-            onClick={() => handleModeSwitch("shortBreak")}
-            color={focus.timerMode === "shortBreak" ? "success" : "default"}
-            variant={focus.timerMode === "shortBreak" ? "filled" : "outlined"}
-            disabled={
-              focus.timerStatus === "running" &&
-              focus.timerMode !== "shortBreak"
-            }
-            size="small"
-            sx={{ height: 24, fontSize: "0.75rem" }}
-          />
-          <Chip
-            label="Long Break"
-            onClick={() => handleModeSwitch("longBreak")}
-            color={focus.timerMode === "longBreak" ? "primary" : "default"}
-            variant={focus.timerMode === "longBreak" ? "filled" : "outlined"}
-            disabled={
-              focus.timerStatus === "running" && focus.timerMode !== "longBreak"
-            }
-            size="small"
-            sx={{ height: 24, fontSize: "0.75rem" }}
-          />
+            {[
+            { id: "work", label: "Deep Work", color: "#ef5350" },
+            { id: "shortBreak", label: "Short", color: "#66bb6a" },
+            { id: "longBreak", label: "Long", color: "#42a5f5" }
+          ].map((mode) => (
+            <Box
+              key={mode.id}
+              onClick={() => handleModeSwitch(mode.id as TimerMode)}
+              sx={{
+                px: 2,
+                py: 0.75,
+                borderRadius: "9999px",
+                cursor: "pointer",
+                backgroundColor: focus.timerMode === mode.id ? "rgba(255, 255, 255, 0.1)" : "transparent",
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  backgroundColor: focus.timerMode === mode.id ? "rgba(255, 255, 255, 0.15)" : "rgba(255, 255, 255, 0.05)"
+                }
+              }}>
+              <Typography
+                sx={{
+                  fontSize: "0.8rem",
+                  fontWeight: 600,
+                  color: focus.timerMode === mode.id ? mode.color : "text.secondary",
+                  transition: "color 0.2s ease"
+                }}>
+                {mode.label}
+              </Typography>
+            </Box>
+          ))}
         </Stack>
 
         {/* Timer Display with Circular Progress */}
