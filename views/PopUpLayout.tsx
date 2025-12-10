@@ -54,6 +54,7 @@ export default function PopUpLayout() {
           flex: 1,
           minHeight: 0,
           overflow: "hidden",
+          backgroundColor: "background.paper",
         }}>
         <div 
          className="mx-4 mt-2 border-rounded" 
