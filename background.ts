@@ -95,9 +95,14 @@ async function handleSessionComplete(state: ReduxState) {
 storage.watch({
   reduxState: (change) => {
     const timerStatus = change.newValue?.focus?.timerStatus;
+    const oldTimerStatus = change.oldValue?.focus?.timerStatus;
 
-    if (timerStatus === "running" && !timerInterval) {
+    // Start timer if status changed to running
+    if (timerStatus === "running" && oldTimerStatus !== "running") {
       console.log("Starting background timer from storage watch");
+      if (timerInterval) {
+        clearInterval(timerInterval);
+      }
       startBackgroundTimer();
     } else if (timerStatus !== "running" && timerInterval) {
       console.log("Stopping background timer from storage watch");
