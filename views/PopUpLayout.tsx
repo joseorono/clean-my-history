@@ -67,6 +67,23 @@ export default function PopUpLayout() {
             onChange={handleChange}
             aria-label="Section Tabs"
             variant="fullWidth"
+            TabIndicatorProps={{
+              sx: {
+                height: 0,
+                bottom: 0,
+                top: "auto",
+                "&::before": {
+                  content: "''",
+                  display: "block",
+                  margin: "0 auto",
+                  width: "60%",
+                  height: 2,
+                  borderRadius: "0 0 12px 12px",
+                  borderBottom: "2px solid #42a5f5",
+                  backgroundColor: "rgba(59, 130, 246, 0.9)"
+                }
+              }
+            }}
             sx={{
               backgroundColor: "rgba(30, 41, 59, 0.5)",
               backdropFilter: "blur(12px)",
@@ -75,6 +92,8 @@ export default function PopUpLayout() {
               border: "1px solid rgba(255, 255, 255, 0.08)",
               minHeight: "48px",
               "& .MuiTab-root": {
+                position: "relative",
+                zIndex: 1,
                 minHeight: "40px",
                 textTransform: "none",
                 fontSize: "0.85rem",
@@ -90,7 +109,8 @@ export default function PopUpLayout() {
                 "&.Mui-selected": {
                   color: "text.primary",
                   backgroundColor: "rgba(59, 130, 246, 0.2)", // Blue tint
-                  opacity: 1
+                  opacity: 1,
+                  borderRadius: "12px",
                 },
                 "& .MuiTab-root": {
                   minHeight: "44px",
