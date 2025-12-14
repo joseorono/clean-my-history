@@ -70,19 +70,7 @@ export default function PopUpLayout() {
             variant="fullWidth"
             TabIndicatorProps={{
               sx: {
-                height: 0,
-                bottom: 0,
-                top: "auto",
-                "&::before": {
-                  content: "''",
-                  display: "block",
-                  margin: "0 auto",
-                  width: "60%",
-                  height: 2,
-                  borderRadius: "0 0 12px 12px",
-                  borderBottom: "2px solid #42a5f5",
-                  backgroundColor: "rgba(59, 130, 246, 0.9)"
-                }
+                display: "none",
               }
             }}
             sx={{
@@ -112,6 +100,8 @@ export default function PopUpLayout() {
                   backgroundColor: "rgba(59, 130, 246, 0.2)", // Blue tint
                   opacity: 1,
                   borderRadius: "12px",
+                  borderBottom: "2px solid rgba(59, 130, 246, 0.9)",
+                  zIndex: 2,
                 },
                 "& .MuiTab-root": {
                   minHeight: "44px",
