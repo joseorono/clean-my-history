@@ -7,7 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,6 +17,7 @@ import ViewContainer from "~components/view-container";
 import { CATEGORIES } from "~constants";
 import { useCloseTabsMutation } from "~hooks/mutations";
 import { useGetKeywordsFromSettings } from "~hooks/useGetKeywordsFromSetting";
+import { useInterval } from "~hooks/useInterval";
 import useTabsPersisted from "~hooks/useTabsStored";
 import { sendNotification } from "~lib/notification";
 import {
@@ -76,24 +77,28 @@ export default function SessionCleanerView() {
     refresh: refreshTabsCheck
   } = useTabsPersisted();
 
-  // Send notification every minute only when in Focus Mode work session
+  // Use ref to access latest tabs count without causing interval restart
+  const tabsCountRef = useRef(tabsWithKeywords.length);
+  
   useEffect(() => {
-    const shouldAutoCheck =
-      focus.timerStatus === "running" && focus.timerMode === "work";
+    tabsCountRef.current = tabsWithKeywords.length;
+  }, [tabsWithKeywords.length]);
 
-    if (!shouldAutoCheck) {
-      return;
-    }
+  // Send notification every minute only when in Focus Mode work session
+  const shouldAutoCheck =
+    focus.timerStatus === "running" && focus.timerMode === "work";
 
-    const intervalId = setInterval(() => {
-      if (tabsWithKeywords.length > 0) {
-        sendNotification(tabsWithKeywords.length);
+  // Use our custom useInterval hook - only depends on focus state, not tabs count
+  useInterval(
+    () => {
+      // Use ref to get current tabs count without adding it to dependencies
+      if (tabsCountRef.current > 0) {
+        sendNotification(tabsCountRef.current);
       }
-    }, 60000);
-
-    // Cleanup interval on unmount
-    return () => clearInterval(intervalId);
-  }, [tabsWithKeywords.length, focus.timerStatus, focus.timerMode]);
+    },
+    shouldAutoCheck ? 60000 : null, // 60 seconds or null to pause
+    false
+  );
 
   return (
     <ViewContainer>

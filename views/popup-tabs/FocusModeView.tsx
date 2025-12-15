@@ -28,21 +28,28 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
-
-
 import { Storage } from "@plasmohq/storage";
 
-
-
 import ViewContainer from "~components/view-container";
-import { breakEncouragementMessages, FOCUS_VIEW_TRANSITION_DURATION, focusEncouragementMessages } from "~constants";
+import {
+  breakEncouragementMessages,
+  FOCUS_VIEW_TRANSITION_DURATION,
+  focusEncouragementMessages
+} from "~constants";
 import { sendNotification } from "~lib/notification";
 import { getRandomElement } from "~lib/utils";
-import { completeSession, pauseTimer, resetTimer, setCurrentTaskIndex, startTimer, switchMode, tick, updateTask } from "~store/features/focus/focusSlice";
+import {
+  completeSession,
+  pauseTimer,
+  resetTimer,
+  setCurrentTaskIndex,
+  startTimer,
+  switchMode,
+  tick,
+  updateTask
+} from "~store/features/focus/focusSlice";
 import type { RootState } from "~store/store";
 import type { TimerMode } from "~types/focus";
-
-
 
 import ViewHeader from "../../components/view-header";
 import TaskSelectionView from "./TaskSelectionView";
@@ -88,6 +95,7 @@ export default function FocusModeView() {
   // Watch for storage changes from background timer
   useEffect(() => {
     // Set up storage watcher once on mount
+    // Note: Plasmo storage watchers are persistent and don't return an unsubscribe function
     storage.watch({
       reduxState: (change) => {
         if (change.newValue?.focus) {
@@ -100,7 +108,7 @@ export default function FocusModeView() {
       }
     });
 
-    // No cleanup needed - Plasmo storage watchers are persistent
+    // Note: Plasmo storage watchers are managed internally and persist across component lifecycle
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Run only once on mount
 
@@ -283,10 +291,10 @@ export default function FocusModeView() {
               Tasks
             </Button>
           </Stack>
-          {/* Pomodoro Cycles Indicator */}
+          {/* Task Progress Indicator */}
           <Stack
             className="px-6"
-            id="pomodoro-cycles"
+            id="task-progress"
             direction="row"
             sx={{
               justifyContent: "start",
@@ -297,29 +305,39 @@ export default function FocusModeView() {
               gap: 0.25,
               borderBottom: "1px solid rgba(255,255,255,0.1)"
             }}>
-            {Array.from({ length: focus.settings.sessionsUntilLongBreak }).map(
-              (_, index) => {
-                const isCompleted = index < focus.sessionsCompleted;
-                return (
-                  <Box
-                    key={index}
-                    sx={{
-                      width: 16,
-                      height: 16,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center"
-                    }}>
-                    <AccessAlarmIcon
-                      sx={{
-                        fontSize: 14,
-                        color: modeColor,
-                        opacity: isCompleted ? 1 : 0.4
-                      }}
-                    />
-                  </Box>
-                );
-              }
+            {currentTask ? (
+              <>
+                {Array.from({ length: currentTask.pomsExpected }).map(
+                  (_, index) => {
+                    const isCompleted = index < currentTask.pomsTaken;
+                    return (
+                      <Box
+                        key={index}
+                        sx={{
+                          width: 16,
+                          height: 16,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center"
+                        }}>
+                        <AccessAlarmIcon
+                          sx={{
+                            fontSize: 14,
+                            color: modeColor,
+                            opacity: isCompleted ? 1 : 0.4
+                          }}
+                        />
+                      </Box>
+                    );
+                  }
+                )}
+              </>
+            ) : (
+              <Typography
+                variant="caption"
+                sx={{ color: "text.secondary", fontSize: "0.75rem" }}>
+                No task selected
+              </Typography>
             )}
           </Stack>
         </div>
@@ -330,14 +348,14 @@ export default function FocusModeView() {
           className="!bg-[#181e27] p-2"
           direction="row"
           spacing={1}
-          sx={{ 
+          sx={{
             mb: 4,
             justifyContent: "center",
             borderRadius: "9999px",
             width: "fit-content",
             mx: "auto"
-           }}>
-            {[
+          }}>
+          {[
             { id: "work", label: "Deep Work", color: "#ef5350" },
             { id: "shortBreak", label: "Short", color: "#66bb6a" },
             { id: "longBreak", label: "Long", color: "#42a5f5" }
@@ -350,17 +368,24 @@ export default function FocusModeView() {
                 py: 0.75,
                 borderRadius: "9999px",
                 cursor: "pointer",
-                backgroundColor: focus.timerMode === mode.id ? "rgba(255, 255, 255, 0.1)" : "transparent",
+                backgroundColor:
+                  focus.timerMode === mode.id
+                    ? "rgba(255, 255, 255, 0.1)"
+                    : "transparent",
                 transition: "all 0.2s ease",
                 "&:hover": {
-                  backgroundColor: focus.timerMode === mode.id ? "rgba(255, 255, 255, 0.15)" : "rgba(255, 255, 255, 0.05)"
+                  backgroundColor:
+                    focus.timerMode === mode.id
+                      ? "rgba(255, 255, 255, 0.15)"
+                      : "rgba(255, 255, 255, 0.05)"
                 }
               }}>
               <Typography
                 sx={{
                   fontSize: "0.8rem",
                   fontWeight: 600,
-                  color: focus.timerMode === mode.id ? mode.color : "text.secondary",
+                  color:
+                    focus.timerMode === mode.id ? mode.color : "text.secondary",
                   transition: "color 0.2s ease"
                 }}>
                 {mode.label}

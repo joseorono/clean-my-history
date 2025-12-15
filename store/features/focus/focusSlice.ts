@@ -147,8 +147,15 @@ export const focusSlice = createSlice({
           ? state.settings.longBreakDuration
           : state.settings.shortBreakDuration;
       } else {
+        // Completing a break (short or long)
         state.timerMode = "work";
         state.timeRemaining = state.settings.workDuration;
+        
+        // Reset sessions counter after completing a long break
+        // This ensures the counter cycles: 1/4, 2/4, 3/4, 4/4, then back to 0/4
+        if (state.timerMode === "work" && state.sessionsCompleted >= state.settings.sessionsUntilLongBreak) {
+          state.sessionsCompleted = 0;
+        }
       }
       state.timerStatus = "idle";
       state.currentSessionStartTime = null;
