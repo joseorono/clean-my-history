@@ -1,12 +1,12 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import Chip from "@mui/material/Chip";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+
 import React, { useState } from "react";
 
 import ViewContainer from "~components/view-container";
@@ -14,7 +14,6 @@ import ViewContainer from "~components/view-container";
 import TaskButton from "../../components/task-button";
 import ViewHeader from "../../components/view-header";
 import { cleanAllHistory } from "../../lib/history";
-
 
 // Simple error boundary component
 class ErrorBoundary extends React.Component<
@@ -65,6 +64,12 @@ export default function CleanerView() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMoreRange: boolean =
     timeRange === "7days" || timeRange === "30days" || timeRange === "1year";
+  const moreRangeLabel: string =
+    timeRange === "7days"
+      ? "Last 7 days"
+      : timeRange === "30days"
+        ? "Last 30 days"
+        : "Last year";
 
   const handleTimeRangeChange = (newTimeRange: TimeRange): void => {
     setTimeRange(newTimeRange);
@@ -104,56 +109,69 @@ export default function CleanerView() {
         {/* Time Range Selector */}
         <Stack
           direction="row"
-          spacing={0.75}
-          sx={{ mb: 2, justifyContent: "flex-start", flexWrap: "wrap" }}>
-          <Chip
-            label="Last 15 min"
-            onClick={() => handleTimeRangeChange("15min")}
-            color={timeRange === "15min" ? "primary" : "default"}
-            variant={timeRange === "15min" ? "filled" : "outlined"}
-            size="small"
-            sx={{ height: 24, fontSize: "0.75rem" }}
-          />
-          <Chip
-            label="Last hour"
-            onClick={() => handleTimeRangeChange("1hour")}
-            color={timeRange === "1hour" ? "primary" : "default"}
-            variant={timeRange === "1hour" ? "filled" : "outlined"}
-            size="small"
-            sx={{ height: 24, fontSize: "0.75rem" }}
-          />
-          <Chip
-            label="Last 24 hours"
-            onClick={() => handleTimeRangeChange("24hours")}
-            color={timeRange === "24hours" ? "primary" : "default"}
-            variant={timeRange === "24hours" ? "filled" : "outlined"}
-            size="small"
-            sx={{ height: 24, fontSize: "0.75rem" }}
-          />
+          spacing={1}
+          className="!bg-[#181e27] p-2"
+          sx={{ mb: 2, justifyContent: "space-around", borderRadius: "9999px", width: "100%" }}>
+          {[{ id: "15min", label: "Last 15 min" }, { id: "1hour", label: "Last hour" }, { id: "24hours", label: "Last 24 hours" }].map((option) => (
+            <Box
+              key={option.id}
+              onClick={() => handleTimeRangeChange(option.id as TimeRange)}
+              sx={{
+                p: 0.75,
+                borderRadius: "9999px",
+                cursor: "pointer",
+                backgroundColor: timeRange === option.id ? "rgba(255, 255, 255, 0.1)" : "transparent",
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  backgroundColor:
+                    timeRange === option.id
+                      ? "rgba(255, 255, 255, 0.15)"
+                      : "rgba(255, 255, 255, 0.05)",
+                },
+              }}>
+              <Typography
+                sx={{
+                  fontSize: "0.8rem",
+                  fontWeight: 600,
+                  color: timeRange === option.id ? "#42a5f5" : "text.secondary",
+                  transition: "color 0.2s ease",
+                }}>
+                {option.label}
+              </Typography>
+            </Box>
+          ))}
           {isMoreRange && (
-            <Chip
-              label={
-                timeRange === "7days"
-                  ? "Last 7 days"
-                  : timeRange === "30days"
-                    ? "Last 30 days"
-                    : "Last year"
-              }
+            <Box
               onClick={() => handleTimeRangeChange(timeRange)}
-              color="primary"
-              variant="filled"
-              size="small"
-              sx={{ height: 24, fontSize: "0.75rem" }}
-            />
+              sx={{
+                px: 2,
+                py: 0.75,
+                borderRadius: "9999px",
+                cursor: "pointer",
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                transition: "all 0.2s ease",
+                "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.15)" },
+              }}>
+              <Typography sx={{ fontSize: "0.8rem", fontWeight: 600, color: "#42a5f5", transition: "color 0.2s ease" }}>
+                {moreRangeLabel}
+              </Typography>
+            </Box>
           )}
-          <Chip
-            label="More"
+          <Box
             onClick={handleMoreClick}
-            color="default"
-            variant="outlined"
-            size="small"
-            sx={{ height: 24, fontSize: "0.75rem" }}
-          />
+            sx={{
+              px: 2,
+              py: 0.75,
+              borderRadius: "9999px",
+              cursor: "pointer",
+              backgroundColor: "transparent",
+              transition: "all 0.2s ease",
+              "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.05)" },
+            }}>
+            <Typography sx={{ fontSize: "0.8rem", fontWeight: 600, color: "text.secondary", transition: "color 0.2s ease" }}>
+              More
+            </Typography>
+          </Box>
           <Menu
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
