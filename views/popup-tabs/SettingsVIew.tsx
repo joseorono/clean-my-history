@@ -100,15 +100,15 @@ export default function SettingsView() {
       </div>
 
       {/* Categories Section */}
-      <div className="mb-3 rounded-lg border border-gray-700 bg-gray-800 p-3">
+      <div className="mb-3 rounded-lg border border-gray-200 bg-white p-3 text-slate-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
         <h2 className="mb-1.5 text-base font-semibold">Categories to Clean</h2>
         <div>
-          <p className="mb-1.5 text-gray-400">Select categories to clean:</p>
+          <p className="mb-1.5 text-slate-600 dark:text-gray-400">Select categories to clean:</p>
           <div className="flex flex-wrap gap-2">
             {badKeywordCategories.map((category) => (
               <label
                 key={category}
-                className="flex cursor-pointer items-center rounded-md p-1 hover:bg-gray-700">
+                className="flex cursor-pointer items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-gray-700">
                 <input
                   type="checkbox"
                   className="mr-2"
@@ -124,9 +124,9 @@ export default function SettingsView() {
       </div>
 
       {/* Custom Keywords Section */}
-      <div className="mb-3 rounded-lg border border-gray-700 bg-gray-800 p-3">
+      <div className="mb-3 rounded-lg border border-gray-200 bg-white p-3 text-slate-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
         <h2 className="mb-1.5 text-base font-semibold">Custom Keywords</h2>
-        <p className="mb-1.5 text-gray-400">
+        <p className="mb-1.5 text-slate-600 dark:text-gray-400">
           Add custom keywords to clean from your history
         </p>
 
@@ -134,7 +134,7 @@ export default function SettingsView() {
           <input
             type="text"
             placeholder="New Keyword"
-            className="mr-2 flex-1 rounded-md border border-gray-600 bg-gray-700 p-2 text-white"
+            className="mr-2 flex-1 rounded-md border border-gray-300 bg-white p-2 text-slate-900 placeholder:text-slate-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400"
             value={newKeyword}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setNewKeyword(e.target.value)
@@ -154,10 +154,10 @@ export default function SettingsView() {
           {settings.customKeywords.map((keyword: string) => (
             <span
               key={keyword}
-              className="mb-2 mr-2 flex items-center rounded-md border border-gray-600 bg-gray-700 p-2 text-sm">
+              className="mb-2 mr-2 flex items-center rounded-md border border-gray-300 bg-white p-2 text-sm text-slate-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
               {keyword}
               <button
-                className="ml-2 text-gray-400 hover:text-white"
+                className="ml-2 text-slate-500 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white"
                 onClick={() => handleRemoveKeyword(keyword)}
                 aria-label="Remove keyword">
                 &times;
@@ -165,15 +165,15 @@ export default function SettingsView() {
             </span>
           ))}
           {settings.customKeywords.length === 0 && (
-            <p className="text-gray-400">No custom keywords added yet</p>
+            <p className="text-slate-600 dark:text-gray-400">No custom keywords added yet</p>
           )}
         </div>
       </div>
 
       {/* Whitelisted Domains Section */}
-      <div className="mb-3 rounded-lg border border-gray-700 bg-gray-800 p-3">
+      <div className="mb-3 rounded-lg border border-gray-200 bg-white p-3 text-slate-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
         <h2 className="mb-1.5 text-base font-semibold">Whitelisted Domains</h2>
-        <p className="mb-1.5 text-gray-400">
+        <p className="mb-1.5 text-slate-600 dark:text-gray-400">
           Add domains that should never be cleaned
         </p>
 
@@ -181,7 +181,7 @@ export default function SettingsView() {
           <input
             type="text"
             placeholder="New Domain"
-            className="mr-2 flex-1 rounded-md border border-gray-600 bg-gray-700 p-2 text-white"
+            className="mr-2 flex-1 rounded-md border border-gray-300 bg-white p-2 text-slate-900 placeholder:text-slate-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400"
             value={newDomain}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setNewDomain(e.target.value)
@@ -201,10 +201,10 @@ export default function SettingsView() {
           {settings.whitelistedDomains.map((domain: string) => (
             <span
               key={domain}
-              className="mb-2 mr-2 flex items-center rounded-md border border-gray-600 bg-gray-700 p-2 text-sm">
+              className="mb-2 mr-2 flex items-center rounded-md border border-gray-300 bg-white p-2 text-sm text-slate-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
               {domain}
               <button
-                className="ml-2 text-gray-400 hover:text-white"
+                className="ml-2 text-slate-500 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white"
                 onClick={() => handleRemoveDomain(domain)}
                 aria-label="Remove domain">
                 &times;
@@ -212,7 +212,7 @@ export default function SettingsView() {
             </span>
           ))}
           {settings.whitelistedDomains.length === 0 && (
-            <p className="text-gray-400">No domains whitelisted yet</p>
+            <p className="text-slate-600 dark:text-gray-400">No domains whitelisted yet</p>
           )}
         </div>
       </div>

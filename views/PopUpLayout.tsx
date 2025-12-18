@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Tooltip from "@mui/material/Tooltip";
+import { useTheme } from "@mui/material/styles";
 import * as React from "react";
 
 
@@ -39,6 +40,29 @@ function CustomTabPanel(props: TabPanelProps) {
 
 export default function PopUpLayout() {
   const [value, setValue] = React.useState(0);
+  const theme = useTheme();
+  const tabsBackgroundColor: string =
+    theme.palette.mode === "dark"
+      ? "rgba(30, 41, 59, 0.5)"
+      : "rgba(15, 23, 42, 0.06)";
+  const tabsBorderColor: string =
+    theme.palette.mode === "dark"
+      ? "rgba(255, 255, 255, 0.08)"
+      : "rgba(0, 0, 0, 0.08)";
+  const tabsWrapperBorderBottom: string =
+    theme.palette.mode === "dark"
+      ? "1px solid rgba(255, 255, 255, 0.12)"
+      : "1px solid rgba(0, 0, 0, 0.08)";
+  const tabHoverBackgroundColor: string =
+    theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.04)";
+  const tabSelectedBackgroundColor: string =
+    theme.palette.mode === "dark"
+      ? "rgba(59, 130, 246, 0.2)"
+      : "rgba(25, 118, 210, 0.12)";
+  const tabSelectedBorderBottomColor: string =
+    theme.palette.mode === "dark"
+      ? "rgba(59, 130, 246, 0.9)"
+      : "rgba(25, 118, 210, 0.75)";
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -59,7 +83,7 @@ export default function PopUpLayout() {
         <div 
          className="mx-4 mt-2 border-rounded" 
          style={{
-          borderBottom: "1px solid rgba(229, 231, 235, 0.2)",
+          borderBottom: tabsWrapperBorderBottom,
           borderRadius: "12px",
           overflow: "hidden"
          }}>
@@ -74,11 +98,11 @@ export default function PopUpLayout() {
               }
             }}
             sx={{
-              backgroundColor: "rgba(30, 41, 59, 0.5)",
+              backgroundColor: tabsBackgroundColor,
               backdropFilter: "blur(12px)",
               borderRadius: "12px",
               p: 0.5,
-              border: "1px solid rgba(255, 255, 255, 0.08)",
+              border: `1px solid ${tabsBorderColor}`,
               minHeight: "48px",
               "& .MuiTab-root": {
                 position: "relative",
@@ -93,14 +117,14 @@ export default function PopUpLayout() {
                 opacity: 0.7,
                 "&:hover": {
                   opacity: 1,
-                  backgroundColor: "rgba(255, 255, 255, 0.05)"
+                  backgroundColor: tabHoverBackgroundColor
                 },
                 "&.Mui-selected": {
                   color: "text.primary",
-                  backgroundColor: "rgba(59, 130, 246, 0.2)", // Blue tint
+                  backgroundColor: tabSelectedBackgroundColor,
                   opacity: 1,
                   borderRadius: "12px",
-                  borderBottom: "2px solid rgba(59, 130, 246, 0.9)",
+                  borderBottom: `2px solid ${tabSelectedBorderBottomColor}`,
                   zIndex: 2,
                 },
                 "& .MuiTab-root": {

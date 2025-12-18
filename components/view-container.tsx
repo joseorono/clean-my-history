@@ -8,7 +8,7 @@ interface ViewContainerProps extends HTMLAttributes<HTMLDivElement> {
   readonly children: ReactNode;
 }
 
-const VIEW_CONTAINER_BASE_CLASS = "pt-2 pb-0 px-6 text-white" as const;
+const VIEW_CONTAINER_BASE_CLASS = "pt-2 pb-0 px-6 text-slate-900 dark:text-white" as const;
 
 const ViewContainer = forwardRef<HTMLDivElement, ViewContainerProps>(function ViewContainer(
   { children, className, ...rest }: ViewContainerProps,

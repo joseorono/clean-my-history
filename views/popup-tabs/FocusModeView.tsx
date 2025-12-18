@@ -24,6 +24,7 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { useTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -87,10 +88,21 @@ const storage = new Storage();
 
 export default function FocusModeView() {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const focus = useSelector((state: RootState) => state.focus);
   const [newTodoText, setNewTodoText] = useState("");
   const [autoBreak, setAutoBreak] = useState(false);
   const [showTaskSelection, setShowTaskSelection] = useState(false);
+  const isDarkMode: boolean = theme.palette.mode === "dark";
+  const dividerColor: string = isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)";
+  const hoverBackgroundColor: string = isDarkMode ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.04)";
+  const modeSelectorBackgroundColor: string = isDarkMode ? "#181e27" : "rgba(15, 23, 42, 0.06)";
+  const modeOptionSelectedBackgroundColor: string = isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.06)";
+  const modeOptionHoverBackgroundColor: string = isDarkMode ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.04)";
+  const modeOptionSelectedHoverBackgroundColor: string = isDarkMode ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.08)";
+  const outlinedButtonBorderColor: string = isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.12)";
+  const outlinedButtonHoverBorderColor: string = isDarkMode ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.2)";
+  const outlinedButtonHoverBackgroundColor: string = isDarkMode ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.03)";
 
   // Watch for storage changes from background timer
   useEffect(() => {
@@ -285,7 +297,7 @@ export default function FocusModeView() {
                 display: "flex",
                 alignItems: "center",
                 "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.08)"
+                  backgroundColor: hoverBackgroundColor
                 }
               }}>
               Tasks
@@ -303,7 +315,7 @@ export default function FocusModeView() {
               pb: 0.75,
               mb: 1,
               gap: 0.25,
-              borderBottom: "1px solid rgba(255,255,255,0.1)"
+              borderBottom: `1px solid ${dividerColor}`
             }}>
             {currentTask ? (
               <>
@@ -345,7 +357,6 @@ export default function FocusModeView() {
         {/* Mode Selector */}
         <Stack
           id="modeSelectorBottons"
-          className="!bg-[#181e27] p-2"
           direction="row"
           spacing={1}
           sx={{
@@ -353,7 +364,9 @@ export default function FocusModeView() {
             justifyContent: "center",
             borderRadius: "9999px",
             width: "fit-content",
-            mx: "auto"
+            mx: "auto",
+            backgroundColor: modeSelectorBackgroundColor,
+            p: 1
           }}>
           {[
             { id: "work", label: "Deep Work", color: "#ef5350" },
@@ -368,16 +381,10 @@ export default function FocusModeView() {
                 py: 0.75,
                 borderRadius: "9999px",
                 cursor: "pointer",
-                backgroundColor:
-                  focus.timerMode === mode.id
-                    ? "rgba(255, 255, 255, 0.1)"
-                    : "transparent",
+                backgroundColor: focus.timerMode === mode.id ? modeOptionSelectedBackgroundColor : "transparent",
                 transition: "all 0.2s ease",
                 "&:hover": {
-                  backgroundColor:
-                    focus.timerMode === mode.id
-                      ? "rgba(255, 255, 255, 0.15)"
-                      : "rgba(255, 255, 255, 0.05)"
+                  backgroundColor: focus.timerMode === mode.id ? modeOptionSelectedHoverBackgroundColor : modeOptionHoverBackgroundColor
                 }
               }}>
               <Typography
@@ -519,13 +526,13 @@ export default function FocusModeView() {
             onClick={handleDoneTask}
             sx={{
               color: "text.secondary",
-              borderColor: "rgba(255, 255, 255, 0.1)",
+              borderColor: outlinedButtonBorderColor,
               borderRadius: "12px",
               px: 3,
               py: 1,
               "&:hover": {
-                borderColor: "rgba(255, 255, 255, 0.2)",
-                backgroundColor: "rgba(255, 255, 255, 0.05)"
+                borderColor: outlinedButtonHoverBorderColor,
+                backgroundColor: outlinedButtonHoverBackgroundColor
               }
             }}>
             Done
@@ -536,13 +543,13 @@ export default function FocusModeView() {
             onClick={handleSwitchTask}
             sx={{
               color: "text.secondary",
-              borderColor: "rgba(255, 255, 255, 0.1)",
+              borderColor: outlinedButtonBorderColor,
               borderRadius: "12px",
               px: 3,
               py: 1,
               "&:hover": {
-                borderColor: "rgba(255, 255, 255, 0.2)",
-                backgroundColor: "rgba(255, 255, 255, 0.05)"
+                borderColor: outlinedButtonHoverBorderColor,
+                backgroundColor: outlinedButtonHoverBackgroundColor
               }
             }}>
             Switch task
@@ -553,7 +560,7 @@ export default function FocusModeView() {
         <Box
           className="px-6"
           sx={{
-            borderTop: "1px solid rgba(255,255,255,0.1)",
+            borderTop: `1px solid ${dividerColor}`,
             pt: 1.5,
             display: "flex",
             alignItems: "center",

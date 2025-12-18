@@ -6,6 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { useTheme } from "@mui/material/styles";
 
 import React, { useState } from "react";
 
@@ -58,6 +59,12 @@ class ErrorBoundary extends React.Component<
 type TimeRange = "15min" | "1hour" | "24hours" | "7days" | "30days" | "1year";
 
 export default function CleanerView() {
+  const theme = useTheme();
+  const isDarkMode: boolean = theme.palette.mode === "dark";
+  const selectorBackgroundColor: string = isDarkMode ? "#181e27" : "rgba(15, 23, 42, 0.06)";
+  const selectorSelectedBackgroundColor: string = isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.06)";
+  const selectorHoverBackgroundColor: string = isDarkMode ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.04)";
+  const selectorSelectedHoverBackgroundColor: string = isDarkMode ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.08)";
   const [debugMessage, setDebugMessage] = useState<string>("");
   const [timeRange, setTimeRange] = useState<TimeRange>("24hours");
   const [onlyMatchingResults, setOnlyMatchingResults] = useState<boolean>(true);
@@ -110,8 +117,7 @@ export default function CleanerView() {
         <Stack
           direction="row"
           spacing={1}
-          className="!bg-[#181e27] p-2"
-          sx={{ mb: 2, justifyContent: "space-around", borderRadius: "9999px", width: "100%" }}>
+          sx={{ mb: 2, justifyContent: "space-around", borderRadius: "9999px", width: "100%", backgroundColor: selectorBackgroundColor, p: 1 }}>
           {[{ id: "15min", label: "Last 15 min" }, { id: "1hour", label: "Last hour" }, { id: "24hours", label: "Last 24 hours" }].map((option) => (
             <Box
               key={option.id}
@@ -120,13 +126,13 @@ export default function CleanerView() {
                 p: 0.75,
                 borderRadius: "9999px",
                 cursor: "pointer",
-                backgroundColor: timeRange === option.id ? "rgba(255, 255, 255, 0.1)" : "transparent",
+                backgroundColor: timeRange === option.id ? selectorSelectedBackgroundColor : "transparent",
                 transition: "all 0.2s ease",
                 "&:hover": {
                   backgroundColor:
                     timeRange === option.id
-                      ? "rgba(255, 255, 255, 0.15)"
-                      : "rgba(255, 255, 255, 0.05)",
+                      ? selectorSelectedHoverBackgroundColor
+                      : selectorHoverBackgroundColor,
                 },
               }}>
               <Typography
@@ -148,9 +154,9 @@ export default function CleanerView() {
                 py: 0.75,
                 borderRadius: "9999px",
                 cursor: "pointer",
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                backgroundColor: selectorSelectedBackgroundColor,
                 transition: "all 0.2s ease",
-                "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.15)" },
+                "&:hover": { backgroundColor: selectorSelectedHoverBackgroundColor },
               }}>
               <Typography sx={{ fontSize: "0.8rem", fontWeight: 600, color: "#42a5f5", transition: "color 0.2s ease" }}>
                 {moreRangeLabel}
@@ -166,7 +172,7 @@ export default function CleanerView() {
               cursor: "pointer",
               backgroundColor: "transparent",
               transition: "all 0.2s ease",
-              "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.05)" },
+              "&:hover": { backgroundColor: selectorHoverBackgroundColor },
             }}>
             <Typography sx={{ fontSize: "0.8rem", fontWeight: 600, color: "text.secondary", transition: "color 0.2s ease" }}>
               More
@@ -191,7 +197,7 @@ export default function CleanerView() {
         {/* Cleaning items list */}
         <Box className="space-y-2">
           {/* Browsing History */}
-          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-3">
+          <Box className="flex items-start gap-3 rounded border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
             <Checkbox
               defaultChecked
               sx={{
@@ -204,17 +210,17 @@ export default function CleanerView() {
             <Box className="flex-1">
               <Typography
                 variant="subtitle2"
-                className="font-semibold text-white">
+                className="font-semibold text-slate-900 dark:text-white">
                 Browsing history
               </Typography>
-              <Typography variant="body2" className="text-gray-400">
+              <Typography variant="body2" className="text-slate-600 dark:text-gray-400">
                 From github.com and 2 more sites (and more on synced devices)
               </Typography>
             </Box>
           </Box>
 
           {/* Cookies and site data */}
-          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-3">
+          <Box className="flex items-start gap-3 rounded border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
             <Checkbox
               defaultChecked
               sx={{
@@ -227,10 +233,10 @@ export default function CleanerView() {
             <Box className="flex-1">
               <Typography
                 variant="subtitle2"
-                className="font-semibold text-white">
+                className="font-semibold text-slate-900 dark:text-white">
                 Cookies and site data
               </Typography>
-              <Typography variant="body2" className="text-gray-400">
+              <Typography variant="body2" className="text-slate-600 dark:text-gray-400">
                 From 147 sites. To delete Google cookies from this device, use
                 Chrome settings.
               </Typography>
@@ -238,7 +244,7 @@ export default function CleanerView() {
           </Box>
 
           {/* Cached images and files */}
-          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-3">
+          <Box className="flex items-start gap-3 rounded border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
             <Checkbox
               defaultChecked
               sx={{
@@ -251,17 +257,17 @@ export default function CleanerView() {
             <Box className="flex-1">
               <Typography
                 variant="subtitle2"
-                className="font-semibold text-white">
+                className="font-semibold text-slate-900 dark:text-white">
                 Cached images and files
               </Typography>
-              <Typography variant="body2" className="text-gray-400">
+              <Typography variant="body2" className="text-slate-600 dark:text-gray-400">
                 Less than 317 MB
               </Typography>
             </Box>
           </Box>
 
           {/* Download history */}
-          <Box className="flex items-start gap-3 rounded border border-gray-700 bg-gray-800 p-3">
+          <Box className="flex items-start gap-3 rounded border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
             <Checkbox
               defaultChecked
               sx={{
@@ -274,10 +280,10 @@ export default function CleanerView() {
             <Box className="flex-1">
               <Typography
                 variant="subtitle2"
-                className="font-semibold text-white">
+                className="font-semibold text-slate-900 dark:text-white">
                 Download history
               </Typography>
-              <Typography variant="body2" className="text-gray-400">
+              <Typography variant="body2" className="text-slate-600 dark:text-gray-400">
                 None
               </Typography>
             </Box>
@@ -286,13 +292,13 @@ export default function CleanerView() {
 
         {/* Debug message */}
         {debugMessage && (
-          <Box className="mt-4 rounded border border-gray-700 bg-gray-800 p-2">
+          <Box className="mt-4 rounded border border-gray-200 bg-white p-2 dark:border-gray-700 dark:bg-gray-800">
             <Typography variant="body2">{debugMessage}</Typography>
           </Box>
         )}
 
         {/* Action button */}
-        <Box className="mt-2">
+        <Box className="mt-2 mb-2">
           <TaskButton
             text="Clear Data"
             successText="Data cleared successfully"
