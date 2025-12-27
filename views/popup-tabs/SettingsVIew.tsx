@@ -100,7 +100,7 @@ export default function SettingsView() {
       </div>
 
       {/* Categories Section */}
-      <div className="mb-3 rounded-lg border border-gray-200 bg-white p-3 text-slate-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+      <div className="mb-3 rounded-xl border border-gray-200 bg-white p-3 text-slate-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
         <h2 className="mb-1.5 text-base font-semibold">Categories to Clean</h2>
         <div>
           <p className="mb-1.5 text-slate-600 dark:text-gray-400">Select categories to clean:</p>

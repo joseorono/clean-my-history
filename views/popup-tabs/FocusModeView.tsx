@@ -562,6 +562,7 @@ export default function FocusModeView() {
           sx={{
             borderTop: `1px solid ${dividerColor}`,
             pt: 1.5,
+            pb: 1.5,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between"

@@ -197,7 +197,7 @@ export default function CleanerView() {
         {/* Cleaning items list */}
         <Box className="space-y-2">
           {/* Browsing History */}
-          <Box className="flex items-start gap-3 rounded border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
+          <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
             <Checkbox
               defaultChecked
               sx={{
@@ -220,7 +220,7 @@ export default function CleanerView() {
           </Box>
 
           {/* Cookies and site data */}
-          <Box className="flex items-start gap-3 rounded border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
+          <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
             <Checkbox
               defaultChecked
               sx={{
@@ -244,7 +244,7 @@ export default function CleanerView() {
           </Box>
 
           {/* Cached images and files */}
-          <Box className="flex items-start gap-3 rounded border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
+          <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
             <Checkbox
               defaultChecked
               sx={{
@@ -267,7 +267,7 @@ export default function CleanerView() {
           </Box>
 
           {/* Download history */}
-          <Box className="flex items-start gap-3 rounded border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
+          <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
             <Checkbox
               defaultChecked
               sx={{
