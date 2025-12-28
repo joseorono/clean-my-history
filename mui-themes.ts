@@ -14,12 +14,12 @@ export const themeOptionsLight: ThemeOptions = {
       dark: '#7c3aed',
     },
     background: {
-        default: "transparent",
-        paper: "rgba(255, 255, 255, 0.95)"
+        default: 'transparent',
+        paper: 'rgba(255, 255, 255, 0.95)'
     },
     text: {
-        primary: "#1f2937", // Gris oscuro para light mode
-        secondary: "#6b7280" // Gris medio para light mode
+        primary: '#1f2937',
+        secondary: '#6b7280'
     }
   },
   shape: {
@@ -50,8 +50,37 @@ export const themeOptionsLight: ThemeOptions = {
                 borderRadius: "9999px"
             }
         }
-    }
+    },
+    MuiCheckbox: {
+        styleOverrides: {
+            root: {
+                color: 'var(--color-text-secondary)',
+                '&.Mui-checked': {
+                    color: 'var(--color-primary-main)',
+                    '&:hover': {
+                        backgroundColor: 'rgba(25, 118, 210, 0.04)'
+                    }
+                },
+                '&:hover': {
+                    backgroundColor: 'rgba(0, 0, 0, 0.04)'
+                },
+                '&.Mui-disabled': {
+                    color: 'rgba(0, 0, 0, 0.26)'
+                }
+            }
+        }
+    },
   },
+};
+
+export const checkboxColors = {
+  color: "#9ca3af",
+  "&.Mui-hover": {
+    color: "#60a5fa"
+  },
+  "&.Mui-checked": {
+    color: "#1976d2"
+  }
 };
 
 export const themeOptionsDark: ThemeOptions = {
@@ -68,12 +97,12 @@ export const themeOptionsDark: ThemeOptions = {
       dark: '#7c3aed',
     },
     background: {
-        default: "transparent",
-        paper: "rgba(30, 41, 59, 0.7)" // Slate 800 with opacity
+        default: 'transparent',
+        paper: 'rgba(30, 41, 59, 0.7)'
     },
     text: {
-        primary: "#f1f5f9", // Slate 100 para dark mode
-        secondary: "#94a3b8" // Slate 400 para dark mode
+        primary: '#f1f5f9',
+        secondary: '#94a3b8'
     }
   },
   shape: {
@@ -102,6 +131,25 @@ export const themeOptionsDark: ThemeOptions = {
                 textTransform: "none",
                 fontWeight: 600,
                 borderRadius: "9999px"
+            }
+        }
+    },
+    MuiCheckbox: {
+        styleOverrides: {
+            root: {
+                color: 'var(--color-text-secondary)',
+                '&.Mui-checked': {
+                    color: 'var(--color-primary-main)',
+                    '&:hover': {
+                        backgroundColor: 'rgba(25, 118, 210, 0.08)'
+                    }
+                },
+                '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.04)'
+                },
+                '&.Mui-disabled': {
+                    color: 'rgba(255, 255, 255, 0.3)'
+                }
             }
         }
     }

@@ -15,6 +15,7 @@ import ViewContainer from "~components/view-container";
 import TaskButton from "../../components/task-button";
 import ViewHeader from "../../components/view-header";
 import { cleanAllHistory } from "../../lib/history";
+import { checkboxColors } from "~mui-themes";
 
 // Simple error boundary component
 class ErrorBoundary extends React.Component<
@@ -200,12 +201,7 @@ export default function CleanerView() {
           <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
             <Checkbox
               defaultChecked
-              sx={{
-                color: "#9ca3af",
-                "&.Mui-checked": {
-                  color: "#1e40af"
-                }
-              }}
+              sx={checkboxColors}
             />
             <Box className="flex-1">
               <Typography
@@ -223,12 +219,7 @@ export default function CleanerView() {
           <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
             <Checkbox
               defaultChecked
-              sx={{
-                color: "#9ca3af",
-                "&.Mui-checked": {
-                  color: "#1e40af"
-                }
-              }}
+              sx={checkboxColors}
             />
             <Box className="flex-1">
               <Typography
@@ -247,12 +238,7 @@ export default function CleanerView() {
           <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
             <Checkbox
               defaultChecked
-              sx={{
-                color: "#9ca3af",
-                "&.Mui-checked": {
-                  color: "#1e40af"
-                }
-              }}
+              sx={checkboxColors}
             />
             <Box className="flex-1">
               <Typography
@@ -270,12 +256,7 @@ export default function CleanerView() {
           <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
             <Checkbox
               defaultChecked
-              sx={{
-                color: "#9ca3af",
-                "&.Mui-checked": {
-                  color: "#1e40af"
-                }
-              }}
+              sx={checkboxColors}
             />
             <Box className="flex-1">
               <Typography

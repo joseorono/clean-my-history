@@ -1,16 +1,22 @@
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import { useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-
+import { 
+  Button, 
+  Checkbox, 
+  Box, 
+  Dialog, 
+  DialogActions, 
+  DialogContent, 
+  DialogContentText, 
+  DialogTitle 
+} from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 import ViewContainer from "~components/view-container";
+import ViewHeader from "~components/view-header";
 import { badKeywordCategories } from "~constants";
+import { cleanAllHistory } from "~lib/history";
+import { checkboxColors } from "~mui-themes";
 import type { BadKeywordCategory } from "~constants";
 import { openOnboardingTab } from "~lib/utils";
 import {
@@ -23,9 +29,14 @@ import {
   type SettingsState
 } from "~store/features/settings/settingsSlice";
 import type { RootState } from "~store/store";
-import formatCategoryLabel from "~utils/format-category-label";
 
-import ViewHeader from "../../components/view-header";
+// Simple function to format category labels
+const formatCategoryLabel = (category: string): string => {
+  return category
+    .split('_')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
 
 export default function SettingsView() {
   const dispatch = useDispatch();
@@ -104,20 +115,30 @@ export default function SettingsView() {
         <h2 className="mb-1.5 text-base font-semibold">Categories to Clean</h2>
         <div>
           <p className="mb-1.5 text-slate-600 dark:text-gray-400">Select categories to clean:</p>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1">
             {badKeywordCategories.map((category) => (
-              <label
-                key={category}
-                className="flex cursor-pointer items-center rounded-md p-1 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <input
-                  type="checkbox"
-                  className="mr-2"
+              <Box 
+                key={category} 
+                className="flex items-center rounded-md pr-2 py-0.5 hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                <Checkbox
                   checked={settings.selectedCategories.includes(category)}
                   onChange={() => handleToggleCategory(category)}
                   name={category}
+                  sx={{
+                    ...checkboxColors,
+                    padding: '4px',
+                    marginRight: '2px'
+                  }}
+                  size="small"
                 />
-                <span>{formatCategoryLabel(category)}</span>
-              </label>
+                <span 
+                  className="cursor-pointer text-sm" 
+                  onClick={() => handleToggleCategory(category)}
+                >
+                  {formatCategoryLabel(category)}
+                </span>
+              </Box>
             ))}
           </div>
         </div>
