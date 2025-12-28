@@ -129,12 +129,10 @@ export default function TaskSelectionView({
         {/* Add Task Form */}
         <Box
           id="add-task-form"
+          className="border border-gray-200 dark:border-gray-700 rounded-xl p-3 transition-all duration-200 ease-in-out hover:border-blue-300 hover:shadow-sm dark:hover:border-blue-600"
           sx={{
             mb: 2,
-            p: 2,
-            border: "1px solid rgba(255, 255, 255, 0.2)",
-            borderRadius: 2,
-            backgroundColor: "rgba(255, 255, 255, 0.05)"
+            backgroundColor: 'background.paper'
           }}>
           <Typography
             variant="caption"
@@ -236,23 +234,13 @@ export default function TaskSelectionView({
                     key={task.id}
                     direction="row"
                     spacing={1}
+                    className={`flex items-start gap-3 rounded-xl border border-gray-200 p-3 transition-all duration-200 ease-in-out hover:border-blue-300 hover:shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-600 ${
+                      isSelected ? 'border-blue-500 dark:border-blue-500' : ''
+                    }`}
                     sx={{
                       alignItems: "center",
-                      px: 2,
-                      py: 1.5,
-                      border: isSelected
-                        ? "2px solid rgba(66, 165, 245, 0.8)"
-                        : "1px solid rgba(255, 255, 255, 0.2)",
-                      borderRadius: 2,
-                      backgroundColor: isSelected
-                        ? "rgba(66, 165, 245, 0.15)"
-                        : "rgba(255, 255, 255, 0.05)",
-                      cursor: "pointer",
-                      "&:hover": {
-                        backgroundColor: isSelected
-                          ? "rgba(66, 165, 245, 0.25)"
-                          : "rgba(255, 255, 255, 0.12)"
-                      }
+                      backgroundColor: 'background.paper',
+                      cursor: "pointer"
                     }}
                     onClick={() => onTaskSelect(taskIndex)}>
                     <Box sx={{ flex: 1 }}>
@@ -315,16 +303,11 @@ export default function TaskSelectionView({
                       key={task.id}
                       direction="row"
                       spacing={1}
+                      className="flex items-start gap-3 rounded-xl border border-gray-200 p-3 transition-all duration-200 ease-in-out hover:border-blue-300 hover:shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-600"
                       sx={{
                         alignItems: "center",
-                        px: 2,
-                        py: 1,
-                        border: "1px solid rgba(255, 255, 255, 0.1)",
-                        borderRadius: 2,
-                        backgroundColor: "rgba(255, 255, 255, 0.02)",
-                        "&:hover": {
-                          backgroundColor: "rgba(255, 255, 255, 0.08)"
-                        }
+                        backgroundColor: 'background.paper',
+                        opacity: 0.7
                       }}>
                       <Box sx={{ flex: 1 }}>
                         <Typography
