@@ -91,41 +91,48 @@ export default function TaskSelectionView({
           backgroundColor: "background.default"
         }}>
         {/* Header with Tasks title and Timer button */}
-        <Stack
-          id="task-selection-top-bar"
-          direction="row"
-          sx={{
-            mb: 3,
-            justifyContent: "space-between",
-            alignItems: "center"
-          }}>
-          <Typography
-            variant="h5"
+        <div 
+          id="task-selection-top-bar" 
+          className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 py-2 px-6"
+        >
+          <Stack
+            direction="row"
+            spacing={0.75}
             sx={{
-              color: "text.primary",
-              fontWeight: 500,
-              fontSize: "1.5rem"
+              mb: 0.5,
+              justifyContent: "space-between",
+              alignItems: "center",
+              py: 0,
+              width: '100%'
             }}>
-            Tasks
-          </Typography>
-          <Button
-            size="small"
-            onClick={onTimerClick}
-            endIcon={<ArrowForwardIcon sx={{ fontSize: 24 }} />}
-            sx={{
-              color: "text.secondary",
-              textTransform: "none",
-              fontSize: "0.875rem",
-              px: 1.5,
-              py: 0.5,
-              minWidth: "auto",
-              "&:hover": {
-                backgroundColor: "rgba(255, 255, 255, 0.08)"
-              }
-            }}>
-            Timer
-          </Button>
-        </Stack>
+            <Typography
+              variant="h5"
+              sx={{
+                color: "text.primary",
+                fontWeight: 500,
+                fontSize: "1.5rem"
+              }}>
+              Tasks
+            </Typography>
+            <Button
+              size="small"
+              onClick={onTimerClick}
+              endIcon={<ArrowForwardIcon sx={{ fontSize: 24 }} />}
+              sx={{
+                color: "text.secondary",
+                textTransform: "none",
+                fontSize: "0.875rem",
+                px: 1.5,
+                py: 0.5,
+                minWidth: "auto",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.08)"
+                }
+              }}>
+              Timer
+            </Button>
+          </Stack>
+        </div>
 
         {/* Add Task Form */}
         <Box
