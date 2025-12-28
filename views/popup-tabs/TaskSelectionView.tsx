@@ -92,6 +92,7 @@ export default function TaskSelectionView({
         }}>
         {/* Header with Tasks title and Timer button */}
         <Stack
+          id="task-selection-top-bar"
           direction="row"
           sx={{
             mb: 3,
@@ -234,7 +235,7 @@ export default function TaskSelectionView({
                     key={task.id}
                     direction="row"
                     spacing={1}
-                    className={`flex items-start gap-3 rounded-xl border border-gray-200 p-3 transition-all duration-200 ease-in-out hover:border-blue-300 hover:shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-600 ${
+                    className={`flex items-start gap-1 rounded-xl border border-gray-200 p-3 transition-all duration-200 ease-in-out hover:border-blue-300 hover:shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-600 ${
                       isSelected ? 'border-blue-500 dark:border-blue-500' : ''
                     }`}
                     sx={{
@@ -270,6 +271,7 @@ export default function TaskSelectionView({
                     </Tooltip>
                     <Tooltip title="Delete">
                       <IconButton
+                        className="!ml-0"
                         size="small"
                         onClick={(e) => {
                           e.stopPropagation();

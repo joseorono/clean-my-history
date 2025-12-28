@@ -252,17 +252,16 @@ export default function FocusModeView() {
     <Fade in timeout={FOCUS_VIEW_TRANSITION_DURATION}>
       <ViewContainer className="px-0">
         {/* Current Task Title and Change Button */}
-        <div id="focus-mode-top-bar">
+        <div id="focus-mode-top-bar" className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 py-2 px-6">
           <Stack
-            className="px-6"
-            direction="row"
+            className=""
+            direction="column"
             spacing={0.75}
             sx={{
               mb: 0.5,
               justifyContent: "space-between",
-              alignItems: "center",
+              alignItems: "start",
               py: 0,
-              height: 32
             }}>
             <Typography
               variant="h6"
@@ -282,7 +281,57 @@ export default function FocusModeView() {
                 ? "Add a task"
                 : currentTask?.name || "No task selected"}
             </Typography>
-            <Button
+            <Stack
+              className=""
+              id="task-progress"
+              direction="row"
+              sx={{
+                justifyContent: "start",
+                alignItems: "center",
+                mt: 0,
+                pb: 0.75,
+                mb: 1,
+                gap: 0.25,
+                // borderBottom: `1px solid ${dividerColor}`
+              }}>
+              {currentTask ? (
+                <>
+                  {Array.from({ length: currentTask.pomsExpected }).map(
+                    (_, index) => {
+                      const isCompleted = index < currentTask.pomsTaken;
+                      return (
+                        <Box
+                          key={index}
+                          sx={{
+                            width: 16,
+                            height: 16,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center"
+                          }}>
+                          <AccessAlarmIcon
+                            sx={{
+                              fontSize: 14,
+                              color: modeColor,
+                              opacity: isCompleted ? 1 : 0.4
+                            }}
+                          />
+                        </Box>
+                      );
+                    }
+                  )}
+                </>
+              ) : (
+                <Typography
+                  variant="caption"
+                  sx={{ color: "text.secondary", fontSize: "0.75rem" }}>
+                  No task selected
+                </Typography>
+              )}
+            </Stack>
+          </Stack>
+          {/* Task Progress Indicator */}
+          <Button
               size="small"
               onClick={handleShowTaskSelection}
               endIcon={<SwapHorizIcon sx={{ fontSize: 20 }} />}
@@ -302,56 +351,6 @@ export default function FocusModeView() {
               }}>
               Tasks
             </Button>
-          </Stack>
-          {/* Task Progress Indicator */}
-          <Stack
-            className="px-6"
-            id="task-progress"
-            direction="row"
-            sx={{
-              justifyContent: "start",
-              alignItems: "center",
-              mt: 0,
-              pb: 0.75,
-              mb: 1,
-              gap: 0.25,
-              borderBottom: `1px solid ${dividerColor}`
-            }}>
-            {currentTask ? (
-              <>
-                {Array.from({ length: currentTask.pomsExpected }).map(
-                  (_, index) => {
-                    const isCompleted = index < currentTask.pomsTaken;
-                    return (
-                      <Box
-                        key={index}
-                        sx={{
-                          width: 16,
-                          height: 16,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center"
-                        }}>
-                        <AccessAlarmIcon
-                          sx={{
-                            fontSize: 14,
-                            color: modeColor,
-                            opacity: isCompleted ? 1 : 0.4
-                          }}
-                        />
-                      </Box>
-                    );
-                  }
-                )}
-              </>
-            ) : (
-              <Typography
-                variant="caption"
-                sx={{ color: "text.secondary", fontSize: "0.75rem" }}>
-                No task selected
-              </Typography>
-            )}
-          </Stack>
         </div>
 
         {/* Mode Selector */}
