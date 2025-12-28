@@ -130,7 +130,22 @@ export default function SessionCleanerView() {
       </Box>
 
       {/* Display selected categories */}
-      <Card sx={{ mb: 3 }}>
+      <Card 
+        sx={{ 
+          mb: 3, 
+          transition: 'all 0.2s ease-in-out',
+          '&:hover': {
+            borderColor: 'primary.light',
+            boxShadow: 1
+          },
+          '@media (prefers-color-scheme: dark)': {
+            '&:hover': {
+              borderColor: 'primary.dark'
+            }
+          }
+        }}
+        className="border border-gray-200 dark:border-gray-700"
+      >
         <CardContent>
           <Stack
             direction="row"

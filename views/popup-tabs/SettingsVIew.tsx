@@ -111,7 +111,7 @@ export default function SettingsView() {
       </div>
 
       {/* Categories Section */}
-      <div className="mb-3 rounded-xl border border-gray-200 bg-white p-3 text-slate-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+      <div className="mb-3 rounded-xl border border-gray-200 bg-white p-3 text-slate-900 transition-all duration-200 ease-in-out hover:border-blue-300 hover:shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:border-blue-600">
         <h2 className="mb-1.5 text-base font-semibold">Categories to Clean</h2>
         <div>
           <p className="mb-1.5 text-slate-600 dark:text-gray-400">Select categories to clean:</p>
@@ -145,7 +145,7 @@ export default function SettingsView() {
       </div>
 
       {/* Custom Keywords Section */}
-      <div className="mb-3 rounded-lg border border-gray-200 bg-white p-3 text-slate-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+      <div className="mb-3 rounded-xl border border-gray-200 bg-white p-3 text-slate-900 transition-all duration-200 ease-in-out hover:border-blue-300 hover:shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:border-blue-600">
         <h2 className="mb-1.5 text-base font-semibold">Custom Keywords</h2>
         <p className="mb-1.5 text-slate-600 dark:text-gray-400">
           Add custom keywords to clean from your history
@@ -192,7 +192,7 @@ export default function SettingsView() {
       </div>
 
       {/* Whitelisted Domains Section */}
-      <div className="mb-3 rounded-lg border border-gray-200 bg-white p-3 text-slate-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+      <div className="mb-3 rounded-xl border border-gray-200 bg-white p-3 text-slate-900 transition-all duration-200 ease-in-out hover:border-blue-300 hover:shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:border-blue-600">
         <h2 className="mb-1.5 text-base font-semibold">Whitelisted Domains</h2>
         <p className="mb-1.5 text-slate-600 dark:text-gray-400">
           Add domains that should never be cleaned

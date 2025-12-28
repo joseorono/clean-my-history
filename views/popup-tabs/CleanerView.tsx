@@ -198,7 +198,7 @@ export default function CleanerView() {
         {/* Cleaning items list */}
         <Box className="space-y-2">
           {/* Browsing History */}
-          <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
+          <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 transition-all duration-200 ease-in-out hover:border-blue-300 hover:shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-600">
             <Checkbox
               defaultChecked
               sx={checkboxColors}
@@ -216,7 +216,7 @@ export default function CleanerView() {
           </Box>
 
           {/* Cookies and site data */}
-          <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
+          <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 transition-all duration-200 ease-in-out hover:border-blue-300 hover:shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-600">
             <Checkbox
               defaultChecked
               sx={checkboxColors}
@@ -235,7 +235,7 @@ export default function CleanerView() {
           </Box>
 
           {/* Cached images and files */}
-          <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
+          <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 transition-all duration-200 ease-in-out hover:border-blue-300 hover:shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-600">
             <Checkbox
               defaultChecked
               sx={checkboxColors}
@@ -253,7 +253,7 @@ export default function CleanerView() {
           </Box>
 
           {/* Download history */}
-          <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
+          <Box className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 transition-all duration-200 ease-in-out hover:border-blue-300 hover:shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-600">
             <Checkbox
               defaultChecked
               sx={checkboxColors}
