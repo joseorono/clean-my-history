@@ -8,17 +8,17 @@
   --color-primary-main: #1976d2;
   --color-primary-light: #60a5fa;
   --color-primary-dark: #2563eb;
-  
+
   --color-secondary-main: #8b5cf6;
   --color-secondary-light: #a78bfa;
   --color-secondary-dark: #7c3aed;
-  
+
   --color-background-default: transparent;
   --color-background-paper: rgba(255, 255, 255, 0.95);
-  
-  --color-text-primary: #1f2937;  /* Gray-800 */
-  --color-text-secondary: #6b7280;  /* Gray-500 */
-  
+
+  --color-text-primary: #1f2937; /* Gray-800 */
+  --color-text-secondary: #6b7280; /* Gray-500 */
+
   --scrollbar-bg: rgba(255, 255, 255, 0.04);
   --scrollbar-thumb: rgb(144, 202, 249);
   --scrollbar-thumb-hover: rgb(187, 222, 251);
@@ -30,16 +30,21 @@
   --color-primary-main: #1976d2;
   --color-primary-light: #60a5fa;
   --color-primary-dark: #2563eb;
-  
+
   --color-secondary-main: #8b5cf6;
   --color-secondary-light: #a78bfa;
   --color-secondary-dark: #7c3aed;
-  
+
   --color-background-default: transparent;
-  --color-background-paper: rgba(30, 41, 59, 0.7);  /* Slate-800 with 70% opacity */
-  
-  --color-text-primary: #f1f5f9;  /* Slate-100 */
-  --color-text-secondary: #94a3b8;  /* Slate-400 */
+  --color-background-paper: rgba(
+    30,
+    41,
+    59,
+    0.7
+  ); /* Slate-800 with 70% opacity */
+
+  --color-text-primary: #f1f5f9; /* Slate-100 */
+  --color-text-secondary: #94a3b8; /* Slate-400 */
 }
 
 @tailwind base;
@@ -78,6 +83,7 @@
 
 html {
   color-scheme: light dark;
+  scroll-behavior: smooth;
 }
 
 html.dark {
@@ -87,6 +93,11 @@ body {
   font-family: "Roboto", sans-serif;
   margin: 0;
 }
+/* TODO: 
+html,
+body {
+  font-size: 14px;
+} */
 
 /* Global Scrollbar Styling */
 :root {
