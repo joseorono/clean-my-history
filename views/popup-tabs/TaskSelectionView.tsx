@@ -1,4 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -13,15 +14,16 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 
 
+import ViewContainer from "~components/view-container";
 import { FOCUS_VIEW_TRANSITION_DURATION } from "~constants";
 import { addTask, copyPastTask, deleteTask, setCurrentTaskIndex, updateTask } from "~store/features/focus/focusSlice";
 import type { RootState } from "~store/store";
-
 
 
 
@@ -36,11 +38,15 @@ export default function TaskSelectionView({
   onTimerClick
 }: TaskSelectionViewProps) {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const focus = useSelector((state: RootState) => state.focus);
   const [newTaskName, setNewTaskName] = useState("");
   const [newTaskPoms, setNewTaskPoms] = useState("1");
   const activeTasks = focus.tasks.filter((task) => !task.completed);
   const currentTaskIndex = focus.currentTaskIndex;
+
+  const isDarkMode: boolean = theme.palette.mode === "dark";
+  const hoverBackgroundColor: string = isDarkMode ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.04)";
 
   const handleAddTask = () => {
     if (newTaskName.trim() && parseInt(newTaskPoms) > 0) {
@@ -82,62 +88,65 @@ export default function TaskSelectionView({
 
   return (
     <Fade in timeout={FOCUS_VIEW_TRANSITION_DURATION}>
-      <Box
-        sx={{
-          p: 2,
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          backgroundColor: "background.default"
-        }}>
+      <ViewContainer className="px-0">
         {/* Header with Tasks title and Timer button */}
         <div 
           id="task-selection-top-bar" 
           className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 py-2 px-6"
         >
           <Stack
-            direction="row"
+            direction="column"
             spacing={0.75}
             sx={{
               mb: 0.5,
               justifyContent: "space-between",
-              alignItems: "center",
+              alignItems: "start",
               py: 0,
-              width: '100%'
             }}>
             <Typography
-              variant="h5"
+              variant="h6"
               sx={{
                 color: "text.primary",
                 fontWeight: 500,
-                fontSize: "1.5rem"
+                fontSize: "1.1rem",
+                lineHeight: 1,
+                display: "flex",
+                alignItems: "center"
               }}>
               Tasks
             </Typography>
-            <Button
-              size="small"
-              onClick={onTimerClick}
-              endIcon={<ArrowForwardIcon sx={{ fontSize: 24 }} />}
-              sx={{
-                color: "text.secondary",
-                textTransform: "none",
-                fontSize: "0.875rem",
-                px: 1.5,
-                py: 0.5,
-                minWidth: "auto",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.08)"
-                }
-              }}>
-              Timer
-            </Button>
+            <Typography
+              variant="caption"
+              sx={{ color: "text.secondary", fontSize: "0.75rem" }}>
+              {activeTasks.length} active tasks
+            </Typography>
           </Stack>
+          <Button
+            size="small"
+            onClick={onTimerClick}
+            endIcon={<ArrowBackIcon sx={{ fontSize: 20 }} />}
+            sx={{
+              color: "text.secondary",
+              textTransform: "none",
+              fontSize: "0.8rem",
+              px: 1,
+              py: 0,
+              minWidth: "auto",
+              height: 32,
+              display: "flex",
+              alignItems: "center",
+              "&:hover": {
+                backgroundColor: hoverBackgroundColor
+              }
+            }}>
+            Timer
+          </Button>
         </div>
 
         {/* Add Task Form */}
         <Box
           id="add-task-form"
-          className="border border-gray-200 dark:border-gray-700 rounded-xl p-3 transition-all duration-200 ease-in-out hover:border-blue-300 hover:shadow-sm dark:hover:border-blue-600"
+          className="mx-4 border border-gray-200 dark:border-gray-700 rounded-xl p-3 mt-4 transition-all duration-200 ease-in-out hover:border-blue-300 hover:shadow-sm dark:hover:border-blue-600"
           sx={{
             mb: 2,
             backgroundColor: 'background.paper'
@@ -220,7 +229,7 @@ export default function TaskSelectionView({
         </Box>
 
         {/* Task List */}
-        <Stack spacing={1.5} sx={{ flex: 1, overflow: "auto" }}>
+        <Stack spacing={1.5} sx={{ flex: 1, overflow: "auto", px: 2, pb: 2 }}>
           {activeTasks.length === 0 ? (
             <Box
               sx={{
@@ -228,7 +237,8 @@ export default function TaskSelectionView({
                 alignItems: "center",
                 justifyContent: "center",
                 height: "100%",
-                color: "text.secondary"
+                color: "text.secondary",
+                py: 4
               }}>
               <Typography variant="body2">No tasks available</Typography>
             </Box>
@@ -350,7 +360,7 @@ export default function TaskSelectionView({
             </>
           )}
         </Stack>
-      </Box>
+      </ViewContainer>
     </Fade>
   );
 }
